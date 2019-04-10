@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/login/normalize.min.css">
+    <link rel="stylesheet" href="css/login/style.css">
+    <link rel="stylesheet" href="css/login/forget.css">
+    <link href="css/zui.css" rel="stylesheet">
+    <title>忘记密码</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Open Mutual Platform</h1>
+        </div>
+        <div class="card div-card" id="register">
+            <div class="card-content">
+                <img src="image/register.png" class="img-circle" alt="圆形图片">
+                <h1>找回密码</h1>
+                <hr />
+            </div>
+            <form id="form">
+                <div class="form-group">
+                    <label for="exampleInputPhone" class="required">手机号</label>
+                    <input type="number" class="form-control" id="exampleInputPhone" placeholder="请输入手机号" name="mobile">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword" class="required">密码</label>
+                    <input type="password" class="form-control" id="exampleInputPassword" placeholder="密码"
+                           name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="required">确认密码</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="确认密码"
+                           name="confirmPassword">
+                </div>
+                <div>
+                    <input type="text" class="form-control" id="exampleInputCode" placeholder="请输入验证码">
+                    <input type="button" value="获取验证码" class="code" id="code" name="code">
+                </div>
+                <button type="submit" class="btn btn-primary register_second" id="ReadyRegister">立即修改</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/login/forget.js"></script>
+</body>
+</html>

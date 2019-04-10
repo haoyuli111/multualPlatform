@@ -1,0 +1,118 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-03-27 14:56:28
+ * @lastTime: 2019-03-28 11:48:17
+ */
+body {
+    margin: 0;
+    background: url("../../image/logo_bac_pc.jpg") no-repeat fixed;
+    background-size: cover;
+}
+
+.header {
+    color: rgb(174, 174, 174);
+}
+
+.card {
+    background: #ffffffc2;
+    box-shadow: #56545480 10px 10px 10px !important;
+}
+
+.card-content {
+    text-align: center;
+}
+
+.card,
+.card-content {
+    overflow: visible !important;
+}
+
+.card-content img {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    top: -20px;
+    border-radius: 50%;
+}
+
+.card-content h1 {
+    color: #1f3281;
+    letter-spacing: 6px;
+}
+
+.div-card {
+    margin: 50px auto;
+    width: 300px;
+    background: #bce1f2;
+    perspective: 500;
+    -webkit-perspective: 500;
+}
+
+.form-group {
+    margin: 20px 4%;
+    background-color: #aef5f570;
+    color: #5a8080;
+}
+
+
+.move {
+    margin-top: 30px;
+    width: 100%;
+    position: relative !important;
+}
+
+.form-control {
+    opacity: 0.5;
+}
+
+@media screen and (max-width:580px) {
+    body {
+        background: url("../../image/logo_bac.jpg") no-repeat fixed;
+    }
+
+    .header {
+        color: rgb(82, 61, 61);
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .form-img {
+        display: none;
+    }
+
+    .div-card {
+        width: 100%;
+        margin-top: 100px
+    }
+}
+
+.code {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    margin-left: 10px;
+    background: #ed391cc9;
+    color: #fff;
+}
+
+#exampleInputCode {
+    display: inline-block;
+    width: 50%;
+    margin-left: 12px;
+}
+
+.register_second{
+    width:100%;
+    margin:10px auto;
+}
+
+.colse {
+    background-color: #eee;
+    color: #ccc;
+    cursor: not-allowed !important;
+}

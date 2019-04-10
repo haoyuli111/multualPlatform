@@ -1,0 +1,103 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-04-03 11:17:29
+ * @lastTime: 2019-04-07 11:55:54
+ */
+.banner img{
+    width: 100%;
+    background-size: cover;
+}
+ 
+.main{
+    background: #333a54;
+}
+
+.main .main_header{
+    height: 260px;
+    background: #fafafa;
+    position: relative;
+}
+
+.main .main_header .share_exp .card{
+    position: absolute;
+    top: -150px;
+    left: 10%;
+}
+
+.main .main_header .header_other{
+    position: absolute;
+    left: 50%;
+    top: 150px;
+    width: 300px;
+}
+
+.main .main_header .header_other .icon{
+    color:rgba(243, 228, 14, 0.863)
+}
+
+.main .main_header .share_exp img{
+    width:300px;
+    height: 300px;
+}
+
+.main .boxicon {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    border-radius: 30px;
+    background: #d7d2d294;
+    transition: box-shadow 1s;
+    -moz-transition: box-shadow 1s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 1s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 1s;
+}
+
+.main .boxicon:hover{
+    box-shadow: 2px 2px 5px #6d696994;
+}
+
+.main .main-content{
+    background:#f2f2f2;
+    height: 300px;
+}
+
+.main .main-content .nav-tabs{
+    background: #c3d0ff93;
+    margin:10px 10%;
+}
+
+.main .main-content .tab-content .items .item{
+    padding: 10px 50px;
+    height: 66px;
+    overflow: hidden;
+}
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 200px;
+    }
+
+    .main .main_header .share_exp .card{
+        left: 4%;
+    }
+
+    .main .main_header .header_other,.boxicon{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    .main .main_header .share_exp .card{
+        left: 4%;
+    }
+    
+    .main .main_header .header_other{
+        left: 60%;
+        width: 200px;
+    }
+}

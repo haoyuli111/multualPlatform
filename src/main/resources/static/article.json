@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "data": {
+    "articleId": null,
+    "publisherNick": "李歘歘",
+    "publisherAvatar": "12212",
+    "articleType": "科技",
+    "title": "李歘歘热爱学习，身体倍棒",
+    "content": "一篇测试文章的内容，放大发ADSL开发骄傲的附近骄傲的看来放假啊迪斯科浪费建安费地理空间发快递十六分交罚款登上了飞机安康登上了飞机发到楼上看风景阿斯达克反对卡洛斯积分卡螺丝钉解放京东方卡死了就罚款登上了飞机方法",
+    "accessory": "licc",
+    "visual": 0,
+    "updatedAt": 1553769152000,
+    "articleLikeVOList": {
+        "likeUserId": "4028b88169c3ac880169c3ae93670000",
+        "userNick": "1"
+      },
+    "articleCommentVOList": {
+        "createdAt": 1553947067000,
+        "id": "4028b88169ce75600169ce7683720000",
+        "parentId": "4028b88169c3ce380169c3ce85210000",
+        "senderName": "MP-4Cj886",
+        "receiveName": null,
+        "content": "1221"
+      }
+  },
+  "message": "请求成功"
+}

@@ -1,0 +1,131 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-03-30 13:50:32
+ * @lastTime: 2019-03-30 16:49:01
+ */
+.header .navbar_nav li a {
+    color: #9c5c5c;
+    font-weight: 500;
+}
+
+.banner {
+    height: 110px;
+}
+
+
+.main {
+    background: #f8f8f8;
+}
+
+.main .container {
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap-reverse;
+}
+
+.main .left {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.main .left .article:hover {
+    box-shadow: 10px -10px 10px rgba(40, 226, 211, 0.5),
+        -10px -10px 10px rgba(40, 226, 211, 0.5),
+        10px 10px 10px rgba(40, 226, 211, 0.5),
+        -10px 10px 10px rgba(40, 226, 211, 0.5);
+}
+
+.main .left .article {
+    transition: box-shadow 2s;
+    -moz-transition: box-shadow 2s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 2s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 2s;
+    /* Opera */
+}
+
+.main .right {
+    margin: 50px auto;
+}
+
+.main .right .card img{
+    width:200px;
+    height: 200px;
+}
+
+.main .persion,.other_article{
+    width:200px;
+    transition: box-shadow 2s;
+    -moz-transition: box-shadow 2s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 2s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 2s;
+    background: rgba(234, 233, 233, 0.24);
+}
+
+.main .persion:hover,.other_article:hover{
+    box-shadow: 10px -10px 10px rgba(202, 120, 235, 0.5),
+        -10px -10px 10px rgba(202, 120, 235, 0.5),
+        10px 10px 10px rgba(202, 120, 235, 0.5),
+        -10px 10px 10px rgba(202, 120, 235, 0.5);
+}
+
+.main .persion .card-actions{
+    margin:6px auto;
+}
+
+.main .card{
+    text-decoration: none !important;
+}
+
+.main .card-head{
+    font-size:20px;
+    font-weight: 800;
+    letter-spacing: 6px;
+}
+
+.main .other_article{
+    width:200px;
+    margin-top: 30px;
+}
+
+.main .other_article li{
+    margin-top: 10px;
+}
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main .bottom{
+    width:80%;
+    margin: 20px auto;
+}
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+    .main .container{
+        width:100%;
+    }
+
+    .main .left{
+        width:100%;
+    }
+
+    .main .right .other_article{
+        display:none;
+    }
+}
+
+@media screen and (max-width: 992px) {}

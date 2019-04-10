@@ -1,0 +1,96 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-03-30 20:10:19
+ * @lastTime: 2019-03-30 22:45:19
+ */
+.banner {
+    height: 200px;
+}
+
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main .persion img {
+    width: 200px;
+    height: 200px;
+}
+
+.main .persion {
+    width: 100%;
+    padding-top: 30px;
+    transition: box-shadow 4s;
+    -moz-transition: box-shadow 4s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 4s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 4s;
+    background: rgba(234, 233, 233, 0.24);
+    position: relative;
+}
+
+.main .persion:hover {
+    box-shadow: 10px -10px 10px rgba(202, 120, 235, 0.5),
+        -10px -10px 10px rgba(202, 120, 235, 0.5),
+        10px 10px 10px rgba(202, 120, 235, 0.5),
+        -10px 10px 10px rgba(202, 120, 235, 0.5);
+}
+
+.main .persion .card-actions {
+    margin: 6px auto;
+}
+
+.main .card {
+    text-decoration: none !important;
+}
+
+.main .persionbox {
+    display: inline-block;
+}
+
+.main .boxicon {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    border-radius: 30px;
+    background: #d7d2d294;
+    transition: box-shadow 1s;
+    -moz-transition: box-shadow 1s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 1s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 1s;
+}
+
+.main .boxicon:hover{
+    box-shadow: 2px 2px 5px #6d696994;
+}
+
+.main .editor{
+    margin-bottom: 20px;
+}
+
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+    .editor{
+        display: none;
+    }
+
+    .hint{
+        display: block !important;
+    }
+
+}
+
+@media screen and (max-width: 992px) {}

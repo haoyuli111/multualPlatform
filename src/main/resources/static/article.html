@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="styelsheet" href="css/zui.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/index/article.css" />
+    <link rel="stylesheet" href="css/zui-theme.min.css" />
+    <link rel="stylesheet" href="css/zui.lite.min.css" />
+    <link rel="stylesheet" href="css/editormd.css" />
+    <title>文章</title>
+</head>
+
+<body>
+    <!-- 导航 -->
+    <header class="header">
+        <div class="container clearfix">
+            <div class="left">
+                <a href="index.html"><img src="image/logo.png" alt="" class="img1" /></a>
+            </div>
+            <p class="header-p">Open Mutual Platform</p>
+            <div class="nav">
+                <ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="active">
+                        <a href="index.html">首页</a>
+                    </li>
+                    <li>
+                        <a href="study.html">study</a>
+                    </li>
+                    <li>
+                        <a href="share.html">share</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">team</a>
+                    </li>
+                    <li>
+                        <a href="user.html">个人主页</a>
+                    </li>
+                    <li>
+                        <a href="login.html">登陆</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="javascript:void(0)" id="navToggle">
+                <span></span>
+            </a>
+        </div>
+    </header>
+    <!--移动端的导航-->
+    <div class="m_nav">
+        <div class="top clearfix">
+            <img src="image/closed.png" alt="" class="closed" />
+        </div>
+        <div class="logo">
+            <img src="image/logo.png" alt="" />
+            <p>Open Mutual Playform</p>
+        </div>
+        <ul class="ul" data-in="fadeInDown" data-out="fadeOutUp">
+            <li class="active">
+                <a href="index.html">首页</a>
+            </li>
+            <!--<li class="dropdown">-->
+            <!--<a href="st'">-->
+            <!---->
+            <!--</a>-->
+            <!--&lt;!&ndash;<div class="dropdown_menu">&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#">Menu-one</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#">Menu-two</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#">Menu-three</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</li>-->
+            <li class="dropdown">
+                <a href="study.html)">study</a>
+                <!--<div class="dropdown_menu">-->
+                <!--<a href="#">Custom Menu</a>-->
+                <!--<a href="#">Custom Menu</a>-->
+                <!--<a href="#">Custom Menu</a>-->
+                <!--</div>-->
+            </li>
+            <li>
+                <a href="share.html">share</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">team</a>
+            </li>
+            <li>
+                <a href="user.html">个人主页</a>
+            </li>
+            <li>
+                <a href="login.html">登录</a>
+            </li>
+        </ul>
+    </div>
+    <!--main-->
+    <div class="banner">
+        <img src="image/article/nav-banner.png">
+    </div>
+    <div class="main" id="app">
+        <div class="container">
+            <section class="left">
+                <article class="article">
+                    <header style="position:relative">
+                        <h1 class="text-center">{{article.data.title}}</h1>
+                        <div style="position:absolute;right:0;top:10px;">
+                            <a href="#">
+                                <h3 style="display:inline-block;margin-right:10px"><span
+                                        class="icon icon-user">{{article.data.publisherNick}}</span></h3>
+                            </a>
+                        </div>
+                        <dl class="dl-inline">
+                            <dt>来源：</dt>
+                            <dd>{{article.data.articleType}}</dd>
+                            <dt>最后修订：</dt>
+                            <dd><span class="icon icon-time" id="article_uptime">{{article.data.updatedAt | capitalize}}</span></dd>
+                            <dt></dt>
+                            <dd class="pull-right"><span class="label label-success">HTML</span> <span
+                                    class="label label-warning">网页设计</span> <span class="label label-info">W3C</span>
+                                <span class="label label-danger"><i class="icon-eye-open"></i> 235</span></dd>
+                        </dl>
+                    </header>
+                    <section class="content" id="markdown">
+                        <textarea style="display:none;">
+                                {{article.data.content}}
+                        </textarea>
+                    </section>
+                    <footer>
+                        <p class="text-important">
+                            版权声明：本文内容由互联网用户自发贡献，版权归作者所有，本平台不拥有所有权，也不承担相关法律责任。如果您发现本社区中有涉嫌抄袭的内容，欢迎发送邮件至：tyut@163.com
+                            进行举报，并提供相关证据，一经查实，本平台将立刻删除涉嫌侵权内容。 </p>
+                        <a :href="article.data.accessory+'.txt'" :download="article.data.accessory+'.txt'">点击下载资源</a>
+                        <span class="icon icon-thumbs-o-up footer-love" id="article-love" @click="article_love">
+                            点赞{{article.data.articleLikeVOList.userNick}}</span>
+                        <a href="##" class="pull-right" @click="report_article">举报</a>
+                    </footer>
+                </article>
+            </section>
+            <section class="right">
+                <div class="persion">
+                    <a class="card" href="###">
+                        <div class="card-head">达人介绍</div>
+                        <hr />
+                        <img src="image/index/man1.webp" class="img-circle" alt="圆形图片">
+                        <div class="card-heading" style="color:#494c51"><strong>{{article.data.publisherNick}}</strong>
+                        </div>
+                        <div class="card-content text-muted">分享《九阳真经》，一起研究"乾坤大挪移",加入明教团队</div>
+                        <div class="card-actions">
+                            <button type="button" class="btn btn-danger share_button" style="margin-left:0"><i
+                                    class="icon-heart"></i> 喜欢</button>
+                            <div class="pull-right text-danger"><i class="icon-heart-empty"></i> 520 人喜欢</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="other_article">
+                    <a class="card" href="###">
+                        <div class="card-head">作者其他文章</div>
+                        <hr />
+                        <ul>
+                            <li>
+                                <a href="/articles/695746">SaaS加速器 III 技术中心：提供SaaS
+                                    Launchkit，快速定制，一云多端等能力，一云多端将通过小程序云实现</a>
+                            </li>
+                            <li>
+                                <a href="/articles/695744">SaaS加速器 I 商业中心:提供商业助力 共享商业成功</a>
+                            </li>
+                            <li>
+                                <a href="/articles/695561">“练好内功坚持被集成”，阿里云发布SaaS加速器</a>
+                            </li>
+                            <li>
+                                <a href="/articles/691448">畅游采购季，就用云分期！两成首付，轻松上云！</a>
+                            </li>
+                            <li>
+                                <a href="/articles/688548">阿里云数字化转型方案再升级，移动研发平台EMAS助力海底捞超级App“云上捞”</a>
+                            </li>
+                            <li>
+                                <a href="/articles/688270">浙江信访，从统一到智能的互联网转型之路</a>
+                            </li>
+                            <li>
+                                <a href="/articles/672159">揭秘天猫双11背后：20万商家600万张海报，背后只有一个鹿班</a>
+                            </li>
+                            <li>
+                                <a href="/articles/672156">阿里云云效如何保障双11大型项目管理</a>
+                            </li>
+                            <li>
+                                <a href="/articles/672155">阿里云移动研发平台EMAS，是如何连续5年安全护航双11的？</a>
+                            </li>
+                        </ul>
+                    </a>
+                </div>
+            </section>
+        </div>
+        <section class="bottom">
+            <div class="comments">
+                <header>
+                    <h3>所有评论</h3>
+                </header>
+                <section class="comments-list">
+                    <div class="comment" v-for="(comment,index) in article.data.articleCommentVOList">
+                        <a href="###" class="avatar">
+                            <i class="icon-camera-retro icon-2x"></i>
+                        </a>
+                        <div class="content">
+                            <div class="pull-right text-muted">{{comment.createdAt | capitalize}}</div>
+                            <div><a href="###"><strong>{{comment.senderName}}</strong></a>
+                            </div>
+                            <div class="text">{{comment.content}}</div>
+                            <div class="actions">
+                                <a href="##">回复</a>
+                                <a href="#" class="text-right" @click="delete_comment($event)">删除</a>
+                                <div style="display:none" class="commentid">{{comment.id}}</div>
+                                <a href="##" class="pull-right" @click="report($event)">举报</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    <div class="reply-form" id="commentReplyForm2">
+                        <a href="###" class="avatar"><i class="icon-user icon-2x"></i></a>
+                        <form class="form">
+                            <div class="form-group">
+                                <textarea class="form-control new-comment-text" rows="2"
+                                          placeholder="撰写评论..." name="content" id="comment-content"></textarea>
+                            </div>
+                            <input type="hidden" name="accessToken" id="token"/>
+                            <button class="btn btn-primary" type="button" @click="putcomment">评论</button>
+                        </form>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </div>
+    <!-- 尾部-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-p">
+                <p>©2018-2019 Powered By open-mutual-platform team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--js-->
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <script src="js/vue/vue-resource.min.js"></script>
+    <script src="js/zui.min.js"></script>
+    <!---markdown--begin-->
+    <script src="js/editormd.min.js"></script>
+    <script src="lib/marked.min.js"></script>
+    <script src="lib/prettify.min.js"></script>
+    <script src="lib/raphael.min.js"></script>
+    <script src="lib/underscore.min.js"></script>
+    <script src="lib/sequence-diagram.min.js"></script>
+    <script src="lib/flowchart.min.js"></script>
+    <script src="lib/jquery.flowchart.min.js"></script>
+    <!--markdown-over-->
+    <script src="js/index/article.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-03-31 20:37:21
+ * @lastTime: 2019-04-07 18:26:42
+ */
+.banner {
+    height: 200px;
+}
+
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main {
+    background: #f5f5f5;
+    padding-bottom: 30px;
+}
+
+.content {
+    margin-top: 20px;
+    width: 100%;
+    background: rgba(247, 225, 225, 0.5);
+    transition: box-shadow 4s;
+    -moz-transition: box-shadow 4s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 4s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 4s;
+    padding-bottom:30px;
+}
+
+.content:hover {
+    box-shadow: 10px -10px 10px rgba(202, 120, 235, 0.5),
+        -10px -10px 10px rgba(202, 120, 235, 0.5),
+        10px 10px 10px rgba(202, 120, 235, 0.5),
+        -10px 10px 10px rgba(202, 120, 235, 0.5);
+}
+
+.main .content h1 {
+    letter-spacing: 6px;
+    padding-top: 10px;
+    text-align: center;
+    font-family: "helvetica neue", arial, sans-serif;
+    color: #a9a3a4;
+}
+
+.main .setting-unit{
+    background: #fff;
+    transition: box-shadow 4s;
+    -moz-transition: box-shadow 4s;
+    /* Firefox 4 */
+    -webkit-transition: box-shadow 4s;
+    /* Safari and Chrome */
+    -o-transition: box-shadow 4s;
+}
+
+.main .setting-unit:hover {
+    box-shadow:10px 10px 10px rgb(247, 215, 215),
+    -10px -10px 10px rgb(247, 215, 215),
+    10px -10px 10px rgb(247, 215, 215),
+    -10px 10px 10px rgb(247, 215, 215);
+}
+
+.main .setting-unit .inline{
+    display: inline-block;
+    margin-left: 50px;
+}
+
+.main .holder .list{
+    margin:0 auto;
+    color:#8c7e7e;
+    font-size: 16px;
+}
+
+.main .holder .list td{
+    padding-top: 30px;
+}
+
+.main .holder .img-form{
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.main .holder .img-form .fake-file{
+    width: 100px;
+    height: 24px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: brown;
+    background: #ededed;
+    cursor: pointer;
+}
+
+.main .holder .img-form .fake-file:hover{
+    color: rgba(38, 138, 226, 0.74);
+    background: #8b89897a;
+    cursor: pointer;
+}
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+}
+
+@media screen and (max-width: 992px) {}
