@@ -56,6 +56,11 @@ public enum  ErrorCodeEnum {
     ACADEMY_EXIT(12125,"该学院已经存在"),
     ACADEMY_NO_EXIT(12126,"该学院不存在"),
     /**
+     * 队伍不存在
+     */
+    TEAM_NO_EXIT(1333,"队伍不存在"),
+    NO_JURISDICTION(13331,"没有权限"),
+    /**
      * 验证码错误
      * @param code
      * @param message

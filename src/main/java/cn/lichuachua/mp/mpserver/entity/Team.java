@@ -30,8 +30,8 @@ public class Team {
     @Column(name = "header_nick")
     private String headerNick;
 
-    @Column(name = "describe")
-    private String describe;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "header_avatar")
     private String headerAvatar;
@@ -41,6 +41,9 @@ public class Team {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "number")
+    private Integer number;
 
     @Column(name = "status")
     private Integer status;
