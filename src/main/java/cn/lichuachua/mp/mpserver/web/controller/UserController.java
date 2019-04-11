@@ -17,12 +17,15 @@ import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -328,13 +331,21 @@ public class UserController extends BaseController<UserInfoDTO> {
         return ResultWrapper.successWithData(userVO);
     }
 
+    /**
+     *
+     * @param file
+     * @param request
+     * @return
+     */
     @ApiOperation("更换头像")
     @PutMapping("/updateAvatar/{file}")
     public ResultWrapper updateAvatar(
             @PathVariable(value = "file") MultipartFile file,
-            HttpServletRequest request ){
+            HttpServletRequest request ) throws FileNotFoundException {
+        File path = new File(ResourceUtils.getURL("src/main/resources/static/avatar/").getPath());
         String fileName = file.getOriginalFilename();
-        String filePath = request.getSession().getServletContext().getRealPath("imgupload/");
+        File filePath = path;
+        System.out.println(filePath);
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
