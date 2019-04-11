@@ -2,6 +2,7 @@ package cn.lichuachua.mp.mpserver.service.impl;
 
 import cn.lichuachua.mp.core.support.service.impl.BaseServiceImpl;
 import cn.lichuachua.mp.mpserver.entity.Follow;
+import cn.lichuachua.mp.mpserver.entity.FollowPK;
 import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.enums.ErrorCodeEnum;
 import cn.lichuachua.mp.mpserver.enums.FollowStatusEnum;
@@ -26,7 +27,7 @@ import java.util.Optional;
  */
 @Service
 
-public class FollowServiceImpl extends BaseServiceImpl<Follow, String> implements IFollowService {
+public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> implements IFollowService {
 
     @Autowired
     private IUserService userService;

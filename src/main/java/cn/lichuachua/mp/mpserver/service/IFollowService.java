@@ -2,11 +2,12 @@ package cn.lichuachua.mp.mpserver.service;
 
 import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.Follow;
+import cn.lichuachua.mp.mpserver.entity.FollowPK;
 import cn.lichuachua.mp.mpserver.vo.FollowVO;
 
 import java.util.List;
 
-public interface IFollowService extends IBaseService<Follow, String> {
+public interface IFollowService extends IBaseService<Follow, FollowPK> {
     /**
      * 关注
      * @param userId
