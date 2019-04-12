@@ -350,6 +350,12 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         if (!userOptional.isPresent()){
             throw new UserException(ErrorCodeEnum.FORMER_PASSWORD_ERROR);
         }
+        /**
+         * 判断新密码和确认密码是否一致
+         */
+        if (!changePasswordForm.getPassword().equals(changePasswordForm.getConfirmPassword())){
+            throw new UserException(ErrorCodeEnum.TWO_PASSWORD_NO_EQUALS);
+        }
         user.setMobile(userOptional.get().getMobile());
         user.setVisual(userOptional.get().getVisual());
         user.setPassword(changePasswordForm.getPassword());

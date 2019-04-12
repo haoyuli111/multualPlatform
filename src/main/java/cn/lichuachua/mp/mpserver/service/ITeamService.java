@@ -2,8 +2,7 @@ package cn.lichuachua.mp.mpserver.service;
 
 import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.Team;
-import cn.lichuachua.mp.mpserver.form.TeamPasswordForm;
-import cn.lichuachua.mp.mpserver.form.TeamPublishForm;
+import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
 
 import javax.validation.Valid;
@@ -42,4 +41,19 @@ public interface ITeamService extends IBaseService<Team, String> {
      */
     void updatedPassword(@Valid TeamPasswordForm teamPasswordForm, String userId);
 
+    /**
+     * 修改队伍信息
+     * @param teamChangeForm
+     * @param userId
+     */
+    void updatedTeamInfor(@Valid TeamChangeForm teamChangeForm, String userId);
+
+    /**
+     * 队伍转让
+     * @param teamTransfer
+     * @param userId
+     */
+    void transfer(@Valid TeamTransfer teamTransfer, String userId);
+
+    void forgetPassword(@Valid TeamForgetPasswordForm teamForgetPasswordForm, String userId);
 }

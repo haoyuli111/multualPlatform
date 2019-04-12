@@ -5,9 +5,10 @@ import cn.lichuachua.mp.mpserver.entity.Team;
 import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.enums.ErrorCodeEnum;
 import cn.lichuachua.mp.mpserver.enums.TeamStatusEnum;
+import cn.lichuachua.mp.mpserver.enums.UserStatusEnum;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
-import cn.lichuachua.mp.mpserver.form.TeamPasswordForm;
-import cn.lichuachua.mp.mpserver.form.TeamPublishForm;
+import cn.lichuachua.mp.mpserver.exception.UserException;
+import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
@@ -147,6 +148,12 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         if (!teamOptional1.get().getPassword().equals(teamPasswordForm.getFormerPassword())){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
+        /**
+         * 判断新密码和确认密码是否一致
+         */
+        if (!teamPasswordForm.getPassword().equals(teamPasswordForm.getConfirmPassword())){
+            throw new TeamException(ErrorCodeEnum.TWO_PASSWORD_NO_EQUALS);
+        }
         team.setDescription(teamOptional1.get().getDescription());
         team.setNumber(teamOptional1.get().getNumber());
         team.setUpdatedAt(new Date());
@@ -162,5 +169,161 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
     }
 
 
+    /**
+     * 修改队伍信息
+     * @param teamChangeForm
+     * @param userId
+     */
+    @Override
+    public void updatedTeamInfor(TeamChangeForm teamChangeForm, String userId){
+        /**
+         * Team是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamChangeForm.getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+
+        /**
+         * 查看当前登录的用户是否是队长
+         */
+        team.setHeaderId(userId);
+        Optional<Team> teamOptional1 = selectOne(Example.of(team));
+        if (!teamOptional1.isPresent()){
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
+        }
+        /**
+         * 查看密码是否正确
+         */
+        if (!teamOptional1.get().getPassword().equals(teamChangeForm.getPassword())){
+            throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
+        }
+        team.setDescription(teamChangeForm.getDescription());
+        team.setNumber(teamChangeForm.getNumber());
+        team.setUpdatedAt(new Date());
+        team.setCreatedAt(teamOptional1.get().getCreatedAt());
+        team.setHeaderNick(teamOptional1.get().getHeaderNick());
+        team.setHeaderMobile(teamOptional1.get().getHeaderMobile());
+        team.setHeaderAvatar(teamOptional1.get().getHeaderAvatar());
+        team.setVisual(teamChangeForm.getVisual());
+        team.setType(teamChangeForm.getType());
+        team.setPassword(teamOptional1.get().getPassword());
+        team.setTeamName(teamChangeForm.getTeamName());
+        update(team);
+    }
+
+
+    /**
+     * 队伍转让
+     * @param teamTransfer
+     * @param userId
+     */
+    @Override
+    public void transfer(TeamTransfer teamTransfer, String userId){
+        /**
+         * Team是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamTransfer.getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+
+        /**
+         * 查看当前登录的用户是否是队长
+         */
+        team.setHeaderId(userId);
+        Optional<Team> teamOptional1 = selectOne(Example.of(team));
+        if (!teamOptional1.isPresent()){
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
+        }
+        /**
+         * 查看手机号是否注册，用户状态是否正常
+         */
+        User user = new User();
+        user.setMobile(teamTransfer.getMobile());
+        user.setStatus(UserStatusEnum.NORMAL.getStatus());
+        Optional<User> userOptional = userService.selectOne(Example.of(user));
+        if (!userOptional.isPresent()){
+            throw new UserException(ErrorCodeEnum.ERROR_USER_OR_MOBILE_DELETE);
+        }
+        /**
+         * 查看密码是否正确
+         */
+        if (!teamOptional1.get().getPassword().equals(teamTransfer.getPassword())){
+            throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
+        }
+        team.setDescription(teamOptional1.get().getDescription());
+        team.setNumber(teamOptional1.get().getNumber());
+        team.setUpdatedAt(new Date());
+        team.setCreatedAt(teamOptional1.get().getCreatedAt());
+        team.setHeaderNick(userOptional.get().getUserNick());
+        team.setHeaderMobile(userOptional.get().getMobile());
+        team.setHeaderAvatar(userOptional.get().getUserAvatar());
+        team.setHeaderId(userOptional.get().getUserId());
+        team.setVisual(teamOptional1.get().getVisual());
+        team.setType(teamOptional1.get().getType());
+        team.setPassword(teamOptional1.get().getPassword());
+        team.setTeamName(teamOptional1.get().getTeamName());
+        update(team);
+    }
+
+
+    @Override
+    public void forgetPassword(TeamForgetPasswordForm teamForgetPasswordForm, String userId){
+        /**
+         * Team是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamForgetPasswordForm.getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+
+        /**
+         * 查看当前登录的用户是否是队长
+         */
+        team.setHeaderId(userId);
+        Optional<Team> teamOptional1 = selectOne(Example.of(team));
+        if (!teamOptional1.isPresent()){
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
+        }
+        /**
+         * 根据userId查出手机号
+         */
+        Optional<User> userOptional = userService.selectByKey(userId);
+        /**
+         * 检验手机和验证码
+         */
+        userService.verification(userOptional.get().getMobile(),teamForgetPasswordForm.getCode());
+        /**
+         * 判断新密码和确认密码是否一致
+         */
+        if (!teamForgetPasswordForm.getPassword().equals(teamForgetPasswordForm.getConfirmPassword())){
+            throw new TeamException(ErrorCodeEnum.TWO_PASSWORD_NO_EQUALS);
+        }
+        /**
+         * 更新team信息
+         */
+        team.setDescription(teamOptional1.get().getDescription());
+        team.setNumber(teamOptional1.get().getNumber());
+        team.setUpdatedAt(new Date());
+        team.setCreatedAt(teamOptional1.get().getCreatedAt());
+        team.setHeaderNick(teamOptional1.get().getHeaderNick());
+        team.setHeaderMobile(teamOptional1.get().getHeaderMobile());
+        team.setHeaderAvatar(teamOptional1.get().getHeaderAvatar());
+        team.setVisual(teamOptional1.get().getVisual());
+        team.setType(teamOptional1.get().getType());
+        team.setPassword(teamForgetPasswordForm.getPassword());
+        team.setTeamName(teamOptional1.get().getTeamName());
+        update(team);
+    }
 
 }

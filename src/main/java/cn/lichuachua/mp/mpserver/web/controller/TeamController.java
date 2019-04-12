@@ -2,9 +2,9 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
-import cn.lichuachua.mp.mpserver.form.TeamPasswordForm;
-import cn.lichuachua.mp.mpserver.form.TeamPublishForm;
+import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
+import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
 import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
@@ -26,6 +26,7 @@ import java.util.List;
 public class TeamController extends BaseController<UserInfoDTO> {
     @Autowired
     private ITeamService teamService;
+
 
     /**
      * 创建队伍
@@ -102,6 +103,70 @@ public class TeamController extends BaseController<UserInfoDTO> {
     }
 
 
+    /**
+     * 修改队伍信息
+     * @param teamChangeForm
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("修改队伍信息")
+    @PutMapping("/updatedTeamInfor")
+    public ResultWrapper updatedTeamInfor(
+            @Valid TeamChangeForm teamChangeForm,
+            BindingResult bindingResult){
+        /**
+         * 参数检验
+         */
+        validateParams(bindingResult);
+        /**
+         * 获取当前登录的用户Id
+         */
+        String userId = getCurrentUserInfo().getUserId();
+        teamService.updatedTeamInfor(teamChangeForm, userId);
+        return ResultWrapper.success();
+    }
 
+    /**
+     * 队伍转让
+     * @param teamTransfer
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("队伍转让")
+    @PutMapping("/transfer")
+    public ResultWrapper transfer(
+            @Valid TeamTransfer teamTransfer,
+            BindingResult bindingResult) {
+        /**
+         * 检验参数
+         */
+        validateParams(bindingResult);
+        /**
+         * 获取当前用户
+         */
+        String userId = getCurrentUserInfo().getUserId();
+        teamService.transfer(teamTransfer, userId);
+        return ResultWrapper.success();
+    }
+
+    @ApiOperation("忘记队伍密码")
+    @PutMapping("/forgetPassword")
+    public ResultWrapper forgetPassword(
+            @Valid TeamForgetPasswordForm teamForgetPasswordForm,
+            BindingResult bindingResult){
+        /**
+         * 检验参数
+         */
+        validateParams(bindingResult);
+        /**
+         * 回去当前登录的用户Id
+         */
+        String userId = getCurrentUserInfo().getUserId();
+        /**
+         * 在serviceImpl里面进行验证code和mobile
+         */
+        teamService.forgetPassword(teamForgetPasswordForm, userId);
+        return ResultWrapper.success();
+    }
 
 }

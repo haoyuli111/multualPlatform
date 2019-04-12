@@ -14,6 +14,7 @@ public class UserInforForm {
     @NotEmpty(message = "姓名不能为空")
     private String userName;
 
+    @NotEmpty(message = "昵称不能为空")
     private String userNick;
 
     @NotEmpty(message = "学号不能为空")
