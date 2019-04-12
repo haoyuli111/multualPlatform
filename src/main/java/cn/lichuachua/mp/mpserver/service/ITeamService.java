@@ -4,6 +4,7 @@ import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.Team;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
+import cn.lichuachua.mp.mpserver.vo.TeamVO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -55,5 +56,32 @@ public interface ITeamService extends IBaseService<Team, String> {
      */
     void transfer(@Valid TeamTransfer teamTransfer, String userId);
 
+    /**
+     * 忘记队伍密码
+     * @param teamForgetPasswordForm
+     * @param userId
+     */
     void forgetPassword(@Valid TeamForgetPasswordForm teamForgetPasswordForm, String userId);
+
+    /**
+     * 获取该队伍的类型
+     * @param teamId
+     * @return
+     */
+    Integer queryVisual(String teamId);
+
+    /**
+     * 私有队伍显示详情
+     * @param teamId
+     * @return
+     */
+    TeamVO queryPublic(String teamId);
+
+    /**
+     * 公有队伍显示详情
+     * @param teamId
+     * @param userId
+     * @return
+     */
+    TeamVO queryPrivate(String teamId, String userId);
 }

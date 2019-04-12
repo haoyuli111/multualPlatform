@@ -2,16 +2,18 @@ package cn.lichuachua.mp.mpserver.service.impl;
 
 import cn.lichuachua.mp.core.support.service.impl.BaseServiceImpl;
 import cn.lichuachua.mp.mpserver.entity.Team;
+import cn.lichuachua.mp.mpserver.entity.TeamMember;
 import cn.lichuachua.mp.mpserver.entity.User;
-import cn.lichuachua.mp.mpserver.enums.ErrorCodeEnum;
-import cn.lichuachua.mp.mpserver.enums.TeamStatusEnum;
-import cn.lichuachua.mp.mpserver.enums.UserStatusEnum;
+import cn.lichuachua.mp.mpserver.enums.*;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
+import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
 import cn.lichuachua.mp.mpserver.exception.UserException;
 import cn.lichuachua.mp.mpserver.form.*;
+import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
+import cn.lichuachua.mp.mpserver.vo.TeamVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -30,6 +32,8 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ITeamMemberService teamMemberService;
 
     /**
      * 创建队伍
@@ -103,6 +107,11 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         for (Team team : teamList){
             if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())){
                 TeamListVO teamListVO = new TeamListVO();
+                if (team.getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                }else if (team.getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                }
                 teamListVO.setCreatedAt(team.getCreatedAt());
                 teamListVO.setDescription(team.getDescription());
                 teamListVO.setHeaderAvatar(team.getHeaderAvatar());
@@ -274,6 +283,11 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
     }
 
 
+    /**
+     * 忘记队伍密码
+     * @param teamForgetPasswordForm
+     * @param userId
+     */
     @Override
     public void forgetPassword(TeamForgetPasswordForm teamForgetPasswordForm, String userId){
         /**
@@ -324,6 +338,110 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         team.setPassword(teamForgetPasswordForm.getPassword());
         team.setTeamName(teamOptional1.get().getTeamName());
         update(team);
+    }
+
+    /**
+     * 获取该队伍的类型
+     * @param teamId
+     * @return
+     */
+    @Override
+    public Integer queryVisual(String teamId){
+        /**
+         * 查看队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamId);
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        if (teamOptional.get().getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+            return TeamVisualEnum.VISUAL.getStatus();
+        }else {
+            return TeamVisualEnum.NO_VISUAL.getStatus();
+        }
+    }
+
+    /**
+     * 私有队伍显示详情
+     * @param teamId
+     * @param userId
+     * @return
+     */
+    @Override
+    public TeamVO queryPrivate(String teamId, String userId){
+        /**
+         * 查看队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamId);
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        TeamVO teamVO = new TeamVO();
+        teamVO.setTeamName(teamOptional.get().getTeamName());
+        teamVO.setDescription(teamOptional.get().getDescription());
+        teamVO.setHeaderId(teamOptional.get().getHeaderId());
+        teamVO.setHeaderAvatar(teamOptional.get().getHeaderAvatar());
+        teamVO.setHeaderNick(teamOptional.get().getHeaderNick());
+        teamVO.setType(team.getType());
+        teamVO.setCreatedAt(teamOptional.get().getCreatedAt());
+        /**
+         * 队伍是私有的
+         *  查看是否是该队伍成员
+         */
+            TeamMember teamMember = new TeamMember();
+            teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
+            teamMember.setUserId(userId);
+            teamMember.setTeamId(teamId);
+            Optional<TeamMember> teamMemberOptional = teamMemberService.selectOne(Example.of(teamMember));
+            if (!teamMemberOptional.isPresent()){
+                /**
+                 * 用户不在该队内
+                 *  没有权限查看
+                 */
+                throw new TeamMemberException(ErrorCodeEnum.NO_JURISDICTION);
+            }
+
+        teamVO.setTeamMemberVOList(teamMemberService.queryList(teamId));
+        return teamVO;
+    }
+
+    /**
+     * 公有队伍显示详情
+     * @param teamId
+     * @return
+     */
+    @Override
+    public TeamVO queryPublic(String teamId){
+        /**
+         * 查看队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamId);
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        TeamVO teamVO = new TeamVO();
+        teamVO.setTeamName(teamOptional.get().getTeamName());
+        teamVO.setDescription(teamOptional.get().getDescription());
+        teamVO.setHeaderId(teamOptional.get().getHeaderId());
+        teamVO.setHeaderAvatar(teamOptional.get().getHeaderAvatar());
+        teamVO.setHeaderNick(teamOptional.get().getHeaderNick());
+        teamVO.setType(team.getType());
+        teamVO.setCreatedAt(teamOptional.get().getCreatedAt());
+        /**
+         * 队伍是公有的
+         *  查看是否是该队伍成员
+         */
+        teamVO.setTeamMemberVOList(teamMemberService.queryList(teamId));
+        return teamVO;
     }
 
 }

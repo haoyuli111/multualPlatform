@@ -61,6 +61,11 @@ public enum  ErrorCodeEnum {
     TEAM_NO_EXIT(1333,"队伍不存在"),
     NO_JURISDICTION(13331,"没有权限"),
     /**
+     * 已在该队伍中
+     */
+    TEAMMEMBER_EXIT(12211,"已在该队伍中"),
+    TEAMMEMBER_NO_EXIT(12211,"已不在该队伍中"),
+    /**
      * 验证码错误
      * @param code
      * @param message

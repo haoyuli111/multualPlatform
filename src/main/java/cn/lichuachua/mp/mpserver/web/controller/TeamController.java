@@ -2,10 +2,12 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
+import cn.lichuachua.mp.mpserver.enums.TeamVisualEnum;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
+import cn.lichuachua.mp.mpserver.vo.TeamVO;
 import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -149,6 +151,12 @@ public class TeamController extends BaseController<UserInfoDTO> {
         return ResultWrapper.success();
     }
 
+    /**
+     * 忘记队伍密码
+     * @param teamForgetPasswordForm
+     * @param bindingResult
+     * @return
+     */
     @ApiOperation("忘记队伍密码")
     @PutMapping("/forgetPassword")
     public ResultWrapper forgetPassword(
@@ -167,6 +175,36 @@ public class TeamController extends BaseController<UserInfoDTO> {
          */
         teamService.forgetPassword(teamForgetPasswordForm, userId);
         return ResultWrapper.success();
+    }
+
+
+    @ApiOperation("显示队伍详情")
+    @GetMapping("/query/{teamId}")
+    public ResultWrapper<TeamVO> query(
+            @PathVariable(value = "teamId") String teamId) {
+        /**
+         * 获取该队伍的类型
+         */
+        Integer visual = teamService.queryVisual(teamId);
+        if (visual.equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+            /**
+             * 获取当前登录的用户
+             */
+            String userId = getCurrentUserInfo().getUserId();
+            /**
+             * 私有队伍显示详情
+             */
+            TeamVO teamVO= teamService.queryPrivate(teamId, userId);
+            return ResultWrapper.successWithData(teamVO);
+        }else {
+            /**
+             * 公有队伍显示详情
+             */
+            TeamVO teamVO= teamService.queryPublic(teamId);
+            return ResultWrapper.successWithData(teamVO);
+        }
+
+
     }
 
 }
