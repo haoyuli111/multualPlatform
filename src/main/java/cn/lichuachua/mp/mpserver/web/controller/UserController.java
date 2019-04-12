@@ -334,18 +334,14 @@ public class UserController extends BaseController<UserInfoDTO> {
     /**
      *
      * @param file
-     * @param request
      * @return
      */
     @ApiOperation("更换头像")
     @PutMapping("/updateAvatar/{file}")
     public ResultWrapper updateAvatar(
-            @PathVariable(value = "file") MultipartFile file,
-            HttpServletRequest request ) throws FileNotFoundException {
-        File path = new File(ResourceUtils.getURL("src/main/resources/static/avatar/").getPath());
+            @PathVariable(value = "file") MultipartFile file) {
+        String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/avatar/";
         String fileName = file.getOriginalFilename();
-        File filePath = path;
-        System.out.println(filePath);
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
