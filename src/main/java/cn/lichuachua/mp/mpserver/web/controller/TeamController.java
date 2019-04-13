@@ -177,16 +177,29 @@ public class TeamController extends BaseController<UserInfoDTO> {
         return ResultWrapper.success();
     }
 
-
-    @ApiOperation("显示队伍详情")
-    @GetMapping("/query/{teamId}")
-    public ResultWrapper<TeamVO> query(
+    /**
+     * 显示公有队伍详情
+     * @param teamId
+     * @return
+     */
+    @ApiOperation("显示公有队伍详情")
+    @GetMapping("/queryPublic/{teamId}")
+    public ResultWrapper<TeamVO> queryPublic(
             @PathVariable(value = "teamId") String teamId) {
-        /**
-         * 获取该队伍的类型
-         */
-        Integer visual = teamService.queryVisual(teamId);
-        if (visual.equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+            TeamVO teamVO= teamService.queryPublic(teamId);
+            return ResultWrapper.successWithData(teamVO);
+
+    }
+
+    /**
+     * 显示私有队伍详情
+     * @param teamId
+     * @return
+     */
+    @ApiOperation("显示私有队伍详情")
+    @GetMapping("/queryPrivate/{teamId}")
+    public ResultWrapper<TeamVO> queryPrivate(
+            @PathVariable(value = "teamId") String teamId) {
             /**
              * 获取当前登录的用户
              */
@@ -196,15 +209,7 @@ public class TeamController extends BaseController<UserInfoDTO> {
              */
             TeamVO teamVO= teamService.queryPrivate(teamId, userId);
             return ResultWrapper.successWithData(teamVO);
-        }else {
-            /**
-             * 公有队伍显示详情
-             */
-            TeamVO teamVO= teamService.queryPublic(teamId);
-            return ResultWrapper.successWithData(teamVO);
-        }
-
-
     }
+
 
 }

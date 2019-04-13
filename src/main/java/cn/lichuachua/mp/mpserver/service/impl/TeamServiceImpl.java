@@ -340,29 +340,6 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         update(team);
     }
 
-    /**
-     * 获取该队伍的类型
-     * @param teamId
-     * @return
-     */
-    @Override
-    public Integer queryVisual(String teamId){
-        /**
-         * 查看队伍是否存在
-         */
-        Team team = new Team();
-        team.setTeamId(teamId);
-        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
-        Optional<Team> teamOptional = selectOne(Example.of(team));
-        if (!teamOptional.isPresent()){
-            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
-        }
-        if (teamOptional.get().getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
-            return TeamVisualEnum.VISUAL.getStatus();
-        }else {
-            return TeamVisualEnum.NO_VISUAL.getStatus();
-        }
-    }
 
     /**
      * 私有队伍显示详情
@@ -419,7 +396,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
     @Override
     public TeamVO queryPublic(String teamId){
         /**
-         * 查看队伍是否存在
+         * 查看公有队伍是否存在
          */
         Team team = new Team();
         team.setTeamId(teamId);
@@ -427,6 +404,12 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         Optional<Team> teamOptional = selectOne(Example.of(team));
         if (!teamOptional.isPresent()){
             throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        /**
+         * 如果队伍不是公有的
+         */
+        if (!teamOptional.get().getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
         }
         TeamVO teamVO = new TeamVO();
         teamVO.setTeamName(teamOptional.get().getTeamName());
@@ -438,7 +421,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamVO.setCreatedAt(teamOptional.get().getCreatedAt());
         /**
          * 队伍是公有的
-         *  查看是否是该队伍成员
+         *  直接可以查看队伍详情
          */
         teamVO.setTeamMemberVOList(teamMemberService.queryList(teamId));
         return teamVO;

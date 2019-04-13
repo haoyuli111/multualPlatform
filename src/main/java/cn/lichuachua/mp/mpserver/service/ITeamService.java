@@ -63,22 +63,16 @@ public interface ITeamService extends IBaseService<Team, String> {
      */
     void forgetPassword(@Valid TeamForgetPasswordForm teamForgetPasswordForm, String userId);
 
-    /**
-     * 获取该队伍的类型
-     * @param teamId
-     * @return
-     */
-    Integer queryVisual(String teamId);
 
     /**
-     * 私有队伍显示详情
+     * 显示公有队伍详情
      * @param teamId
      * @return
      */
     TeamVO queryPublic(String teamId);
 
     /**
-     * 公有队伍显示详情
+     * 显示私有队伍详情
      * @param teamId
      * @param userId
      * @return
