@@ -3,6 +3,7 @@ package cn.lichuachua.mp.mpserver.service;
 import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.TeamMember;
 import cn.lichuachua.mp.mpserver.entity.TeamMemberPK;
+import cn.lichuachua.mp.mpserver.form.JoinPrivateTeamForm;
 import cn.lichuachua.mp.mpserver.form.RemoveMember;
 import cn.lichuachua.mp.mpserver.vo.TeamMemberVO;
 
@@ -11,11 +12,18 @@ import java.util.List;
 
 public interface ITeamMemberService extends IBaseService<TeamMember, TeamMemberPK>{
     /**
-     * 加入队伍
+     * 加入公有队伍
      * @param teamId
      * @param userId
      */
-    void joinTeam(String teamId, String userId);
+    void joinPublicTeam(String teamId, String userId);
+
+    /**
+     * 加入私有队伍
+     * @param joinPrivateTeamForm
+     * @param userId
+     */
+    void joinPrivateTeam(@Valid JoinPrivateTeamForm joinPrivateTeamForm, String userId);
 
     /**
      * 退出队伍
@@ -37,6 +45,7 @@ public interface ITeamMemberService extends IBaseService<TeamMember, TeamMemberP
      * @param userId
      */
     void remove(@Valid RemoveMember removeMember, String userId);
+
 
 
 }

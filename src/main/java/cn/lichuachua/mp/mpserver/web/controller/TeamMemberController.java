@@ -2,6 +2,7 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
+import cn.lichuachua.mp.mpserver.form.JoinPrivateTeamForm;
 import cn.lichuachua.mp.mpserver.form.RemoveMember;
 import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
 import cn.lichuachua.mp.mpserver.vo.TeamMemberVO;
@@ -28,19 +29,43 @@ public class TeamMemberController extends BaseController<UserInfoDTO> {
     private ITeamMemberService teamMemberService;
 
     /**
-     * 加入队伍
+     * 加入公有队伍
      * @param teamId
      * @return
      */
-    @ApiOperation("加入队伍")
-    @PostMapping("/joinTeam/{teamId}")
-    public ResultWrapper joinTeam(
+    @ApiOperation("加入公有队伍")
+    @PostMapping("/joinPublicTeam/{teamId}")
+    public ResultWrapper joinPublicTeam(
             @PathVariable(value = "teamId") String teamId ){
         /**
          * 获取当前登录的用户Id
          */
         String userId = getCurrentUserInfo().getUserId();
-        teamMemberService.joinTeam(teamId, userId);
+        teamMemberService.joinPublicTeam(teamId, userId);
+        return ResultWrapper.success();
+    }
+
+
+    /**
+     * 加入私有队伍
+     * @param joinPrivateTeamForm
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("加入私有队伍")
+    @PostMapping("/joinPrivateTeam")
+    public ResultWrapper joinPrivateTeam(
+            @Valid JoinPrivateTeamForm joinPrivateTeamForm,
+            BindingResult bindingResult){
+        /**
+         * 参数检验
+         */
+        validateParams(bindingResult);
+        /**
+         * 获取当前登录的用户Id
+         */
+        String userId = getCurrentUserInfo().getUserId();
+        teamMemberService.joinPrivateTeam(joinPrivateTeamForm, userId);
         return ResultWrapper.success();
     }
 

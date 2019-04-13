@@ -12,6 +12,7 @@ import cn.lichuachua.mp.mpserver.enums.UserStatusEnum;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
 import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
 import cn.lichuachua.mp.mpserver.exception.UserException;
+import cn.lichuachua.mp.mpserver.form.JoinPrivateTeamForm;
 import cn.lichuachua.mp.mpserver.form.RemoveMember;
 import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
@@ -41,12 +42,12 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
 
 
     /**
-     * 加入队伍
+     * 加入公有队伍
      * @param teamId
      * @param userId
      */
     @Override
-    public  void joinTeam(String teamId, String userId){
+    public  void joinPublicTeam(String teamId, String userId){
         /**
          * 查询teamId是否存在
          */
@@ -58,10 +59,17 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
             throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
         }
         TeamMember teamMember = new TeamMember();
+        teamMember.setTeamId(teamId);
+        /**
+         * 查看队伍人数是否已经满了
+         */
+        long count = selectCountByExample(Example.of(teamMember));
+        if (count>=teamOpenOption.get().getNumber()){
+            throw new TeamMemberException(ErrorCodeEnum.TEAM_FULL);
+        }
         /**
          * 查询该成员是否已经加入
          */
-        teamMember.setTeamId(teamId);
         teamMember.setUserId(userId);
         teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
         Optional<TeamMember> teamMemberOptional = selectOne(Example.of(teamMember));
@@ -72,6 +80,57 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
         teamMember.setUpdatedAt(new Date());
         save(teamMember);
     }
+
+
+    /**
+     * 加入私有队伍
+     * @param joinPrivateTeamForm
+     * @param userId
+     */
+    @Override
+    public void joinPrivateTeam(JoinPrivateTeamForm joinPrivateTeamForm, String userId){
+        /**
+         * 查询teamId是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(joinPrivateTeamForm.getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOpenOption = teamService.selectOne(Example.of(team));
+        if (!teamOpenOption.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        /**
+         * 密码是否正确
+         */
+        if (!teamOpenOption.get().getPassword().equals(joinPrivateTeamForm.getPassword())){
+            throw new TeamMemberException(ErrorCodeEnum.PASSWORD_ERROR);
+        }
+        TeamMember teamMember = new TeamMember();
+        teamMember.setTeamId(joinPrivateTeamForm.getTeamId());
+        /**
+         * 查看队伍人数是否已经满了
+         */
+        long count = selectCountByExample(Example.of(teamMember));
+        if (count>=teamOpenOption.get().getNumber()){
+            throw new TeamMemberException(ErrorCodeEnum.TEAM_FULL);
+        }
+        /**
+         * 查询该成员是否已经加入
+         */
+        teamMember.setUserId(userId);
+        teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
+        Optional<TeamMember> teamMemberOptional = selectOne(Example.of(teamMember));
+        if (teamMemberOptional.isPresent()){
+            throw new TeamMemberException(ErrorCodeEnum.TEAMMEMBER_EXIT);
+        }
+        teamMember.setCreatedAt(new Date());
+        teamMember.setUpdatedAt(new Date());
+        save(teamMember);
+
+    }
+
+
+
 
     /**
      * 退出队伍

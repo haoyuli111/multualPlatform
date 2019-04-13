@@ -89,7 +89,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
          *  2，加入
          */
         String teamId = queryTeamIdByTeamName(teamPublishForm.getTeamName());
-        teamMemberService.joinTeam(teamId, userId);
+        teamMemberService.joinPublicTeam(teamId, userId);
     }
 
 

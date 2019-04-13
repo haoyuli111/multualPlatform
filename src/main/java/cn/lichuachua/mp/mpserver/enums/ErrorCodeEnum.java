@@ -72,6 +72,10 @@ public enum  ErrorCodeEnum {
     TEAM_TYPE_NO_EXIT(12111,"该队伍类型不存在"),
     TEAM_RESOURCE_NO_EXIT(12111,"该资源不存在"),
     /**
+     * 队伍人数是不是已经满
+     */
+    TEAM_FULL(12111,"队伍已满"),
+    /**
      * 验证码错误
      * @param code
      * @param message
