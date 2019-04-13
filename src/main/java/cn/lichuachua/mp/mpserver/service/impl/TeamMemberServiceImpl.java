@@ -12,6 +12,7 @@ import cn.lichuachua.mp.mpserver.enums.UserStatusEnum;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
 import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
 import cn.lichuachua.mp.mpserver.exception.UserException;
+import cn.lichuachua.mp.mpserver.form.RemoveMember;
 import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
@@ -72,6 +73,11 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
         save(teamMember);
     }
 
+    /**
+     * 退出队伍
+     * @param teamId
+     * @param userId
+     */
     @Override
     public void exitTeam(String teamId, String userId){
         /**
@@ -102,6 +108,11 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
     }
 
 
+    /**
+     * 查询队伍
+     * @param teamId
+     * @return
+     */
     @Override
     public List<TeamMemberVO> queryList(String teamId){
         List<TeamMember> teamMemberList = selectAll();
@@ -122,5 +133,55 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
             }
         }
         return teamMemberVOList;
+    }
+
+
+    /**
+     * 将某人移除队伍
+     * @param removeMember
+     * @param userId
+     */
+    @Override
+    public void remove(RemoveMember removeMember, String userId){
+        /**
+         * 判断队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(removeMember.getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = teamService.selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        /**
+         * 查询当前登录的用户是否是队长
+         */
+        if (!teamOptional.get().getHeaderId().equals(userId)){
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
+        }
+        /**
+         * 判断密码是否正确
+         */
+        if (!teamOptional.get().getPassword().equals(removeMember.getPassword())){
+            throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
+        }
+        /**
+         * 查看该成员是否在队伍
+         */
+        TeamMember teamMember = new TeamMember();
+        teamMember.setUserId(removeMember.getMemberId());
+        teamMember.setTeamId(removeMember.getTeamId());
+        teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
+        Optional<TeamMember> teamMemberOptional = selectOne(Example.of(teamMember));
+        if (!teamMemberOptional.isPresent()){
+            throw new TeamMemberException(ErrorCodeEnum.TEAMMEMBER_NO_EXIT);
+        }
+        /**
+         * 移除该成员
+         */
+        teamMember.setStatus(TeamMemberStatusEnum.DELETED.getStatus());
+        teamMember.setUpdatedAt(new Date());
+        teamMember.setCreatedAt(teamMemberOptional.get().getCreatedAt());
+        update(teamMember);
     }
 }
