@@ -73,7 +73,7 @@ public class TeamMemberController extends BaseController<UserInfoDTO> {
     }
 
     /**
-     * 将某人移除队伍
+     * 将某人移出队伍
      * @param removeMember
      * @param bindingResult
      * @return

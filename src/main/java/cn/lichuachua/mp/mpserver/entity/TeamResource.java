@@ -24,9 +24,6 @@ public class TeamResource {
     @Column(name = "team_id")
     private String teamId;
 
-    @Column(name = "team_name")
-    private String teamName;
-
     @Column(name = "publisher_id")
     private String publisherId;
 

@@ -106,4 +106,19 @@ public interface ITeamService extends IBaseService<Team, String> {
      * @return
      */
     List<TeamListVO> queryAllList(@Valid TeamListForm teamListForm);
+
+    /**
+     * 根据队伍名查找队伍Id
+     * @param teamName
+     * @return
+     */
+    String queryTeamIdByTeamName(String teamName);
+
+    /**
+     * 根据队伍名查找队伍
+     * @param teamName
+     * @return
+     */
+    TeamListVO queryTeamByTeamName(String teamName);
+
 }

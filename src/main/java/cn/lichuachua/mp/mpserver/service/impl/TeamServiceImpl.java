@@ -83,6 +83,31 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         team.setCreatedAt(new Date());
         team.setUpdatedAt(new Date());
         save(team);
+        /**
+         * 创建队伍完成后，将创建人加入进去
+         *  1，查询出队伍Id
+         *  2，加入
+         */
+        String teamId = queryTeamIdByTeamName(teamPublishForm.getTeamName());
+        teamMemberService.joinTeam(teamId, userId);
+    }
+
+
+    /**
+     * 根据队伍名查找队伍Id
+     * @param teamName
+     * @return
+     */
+    @Override
+    public String queryTeamIdByTeamName(String teamName){
+        Team team = new Team();
+        team.setTeamName(teamName);
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        return teamOptional.get().getTeamId();
     }
 
     /**
@@ -588,5 +613,39 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
             teamListVOList = queryListByVisual(teamListForm.getVisual());
         }
         return teamListVOList;
+    }
+
+
+    /**
+     * 根据队伍名查找队伍
+     * @param teamName
+     * @return
+     */
+    @Override
+    public TeamListVO queryTeamByTeamName(String teamName){
+        /**
+         * 查看队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamName(teamName);
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        TeamListVO teamListVO = new TeamListVO();
+        if (teamOptional.get().getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+            teamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+        }else if (teamOptional.get().getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+            teamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+        }
+        teamListVO.setCreatedAt(teamOptional.get().getCreatedAt());
+        teamListVO.setDescription(teamOptional.get().getDescription());
+        teamListVO.setHeaderAvatar(teamOptional.get().getHeaderAvatar());
+        teamListVO.setHeaderNick(teamOptional.get().getHeaderNick());
+        teamListVO.setTeamId(teamOptional.get().getTeamId());
+        teamListVO.setTeamName(teamOptional.get().getTeamName());
+        teamListVO.setType(teamOptional.get().getType());
+        return teamListVO;
     }
 }

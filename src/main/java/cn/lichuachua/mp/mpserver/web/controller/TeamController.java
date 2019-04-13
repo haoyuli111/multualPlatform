@@ -278,4 +278,20 @@ public class TeamController extends BaseController<UserInfoDTO> {
     }
 
 
+    /**
+     * 根据队伍名查找队伍
+     * @param teamName
+     * @return
+     */
+    @ApiOperation("根据队伍名查找队伍")
+    @GetMapping("/queryTeamByTeamName/{teamName}")
+    public ResultWrapper<TeamListVO> queryTeamByTeamName(
+            @PathVariable(value = "teamName") String teamName ){
+        TeamListVO teamListVO = teamService.queryTeamByTeamName(teamName);
+        return ResultWrapper.successWithData(teamListVO);
+    }
+
+
+
+
 }
