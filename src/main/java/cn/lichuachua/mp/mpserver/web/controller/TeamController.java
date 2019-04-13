@@ -97,7 +97,7 @@ public class TeamController extends BaseController<UserInfoDTO> {
      * 显示队伍列表
      * @return
      */
-    @ApiOperation("显示队伍列表")
+    @ApiOperation("无信息查询队伍列表")
     @GetMapping("/queryList")
     public ResultWrapper<List<TeamListVO>> queryList(){
         List<TeamListVO> teamListVOList = teamService.queryList();
@@ -222,6 +222,58 @@ public class TeamController extends BaseController<UserInfoDTO> {
     public ResultWrapper<List<TeamListVO>> queryListByType(
             @PathVariable(value = "typeId") Integer typeId ){
         List<TeamListVO> teamListVOList = teamService.queryListByType(typeId);
+        return ResultWrapper.successWithData(teamListVOList);
+    }
+
+    /**
+     * 按照队伍类型查找队伍列表
+     * @param visualId
+     * @return
+     */
+    @ApiOperation("按照队伍公私有查找队伍列表")
+    @GetMapping("/queryListByVisual/{visualId}")
+    public ResultWrapper<List<TeamListVO>> queryListByVisual(
+            @PathVariable(value = "visualId") Integer visualId ){
+        List<TeamListVO> teamListVOList = teamService.queryListByVisual(visualId);
+        return ResultWrapper.successWithData(teamListVOList);
+    }
+
+
+    /**
+     * 按照队伍类型和公私有类型共同查找队伍列表
+     * @param teamListForm
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("按照队伍类型和公私有类型共同查找队伍列表")
+    @GetMapping("/queryListByVisualAndType")
+    public ResultWrapper<List<TeamListVO>> queryListByVisualAndType(
+            @Valid TeamListForm teamListForm,
+            BindingResult bindingResult){
+        /**
+         * 参数检验
+         */
+        validateParams(bindingResult);
+        List<TeamListVO> teamListVOList = teamService.queryListByVisualAndType(teamListForm);
+        return ResultWrapper.successWithData(teamListVOList);
+    }
+
+    /**
+     * 查找队伍列表
+     * @param teamListForm
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("查找队伍列表")
+    @GetMapping("/queryAllList")
+    public ResultWrapper<List<TeamListVO>> queryAllList(
+            @Valid TeamListForm teamListForm,
+            BindingResult bindingResult){
+        /**
+         * 参数检验
+         */
+        validateParams(bindingResult);
+        List<TeamListVO> teamListVOList = teamService.queryAllList(teamListForm);
         return ResultWrapper.successWithData(teamListVOList);
     }
 

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -466,7 +467,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
             throw new TeamTypeException(ErrorCodeEnum.TEAM_TYPE_NO_EXIT);
         }
         /**
-         * 队伍存在，查询该类型的队伍
+         * 队伍类型存在，查询该类型的队伍
          */
         List<Team> teamList = selectAll();
         List<TeamListVO> teamListVOList = new ArrayList<>();
@@ -488,6 +489,103 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
                 BeanUtils.copyProperties(team, teamListVO);
                 teamListVOList.add(teamListVO);
             }
+        }
+        return teamListVOList;
+    }
+
+    /**
+     * 按照队伍公私有查找队伍列表
+     * @param visualId
+     * @return
+     */
+    @Override
+    public List<TeamListVO> queryListByVisual(Integer visualId) {
+        List<Team> teamList = selectAll();
+        List<TeamListVO> teamListVOList = new ArrayList<>();
+        for (Team team : teamList){
+            if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())&&team.getVisual().equals(visualId)){
+                TeamListVO teamListVO = new TeamListVO();
+                if (team.getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                }else if (team.getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                }
+                teamListVO.setCreatedAt(team.getCreatedAt());
+                teamListVO.setDescription(team.getDescription());
+                teamListVO.setHeaderAvatar(team.getHeaderAvatar());
+                teamListVO.setHeaderNick(team.getHeaderNick());
+                teamListVO.setTeamId(team.getTeamId());
+                teamListVO.setTeamName(team.getTeamName());
+                teamListVO.setType(team.getType());
+                BeanUtils.copyProperties(team, teamListVO);
+                teamListVOList.add(teamListVO);
+            }
+        }
+        return teamListVOList;
+    }
+
+    /**
+     * 按照队伍类型和公私有类型共同查找队伍列表
+     * @param teamListForm
+     * @return
+     */
+    @Override
+    public List<TeamListVO> queryListByVisualAndType(TeamListForm teamListForm){
+            List<Team> teamList = selectAll();
+            List<TeamListVO> teamListVOList = new ArrayList<>();
+            for (Team team : teamList){
+                /**
+                 * 队伍正常并且visual和type符合
+                 */
+                if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())&&team.getType().equals(teamListForm.getType())&&team.getVisual().equals(teamListForm.getVisual())){
+                    TeamListVO teamListVO = new TeamListVO();
+                    if (team.getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                        teamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                    }else if (team.getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                        teamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                    }
+                    teamListVO.setCreatedAt(team.getCreatedAt());
+                    teamListVO.setDescription(team.getDescription());
+                    teamListVO.setHeaderAvatar(team.getHeaderAvatar());
+                    teamListVO.setHeaderNick(team.getHeaderNick());
+                    teamListVO.setTeamId(team.getTeamId());
+                    teamListVO.setTeamName(team.getTeamName());
+                    teamListVO.setType(team.getType());
+                    BeanUtils.copyProperties(team, teamListVO);
+                    teamListVOList.add(teamListVO);
+                }
+            }
+        return teamListVOList;
+    }
+
+    /**
+     * 查找队伍列表
+     * @param teamListForm
+     * @return
+     */
+    @Override
+    public List<TeamListVO> queryAllList(TeamListForm teamListForm){
+        List<TeamListVO> teamListVOList = new ArrayList<>();
+        if (teamListForm.getType()!=null&&teamListForm.getVisual()!=null){
+            /**
+             * 如果typeId和visualId都不为空
+             */
+            teamListVOList = queryListByVisualAndType(teamListForm);
+        } else if (teamListForm.getVisual() == null && teamListForm.getType() == null) {
+            /**
+             * 如果typeId和visualId都为空
+             */
+            teamListVOList = queryList();
+        } else if (teamListForm.getVisual() == null && teamListForm.getType() != null){
+            /**
+             * 如果typeId不为空，visualId为空
+             */
+            teamListVOList = queryListByType(teamListForm.getType());
+        } else if (teamListForm.getVisual() != null && teamListForm.getType() == null){
+            /**
+             * 如果typeId为空，visualId不为空
+             */
+            teamListVOList = queryListByVisual(teamListForm.getVisual());
         }
         return teamListVOList;
     }

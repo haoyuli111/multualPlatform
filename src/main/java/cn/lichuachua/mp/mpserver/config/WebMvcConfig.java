@@ -52,7 +52,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/article/type/queryArticleTypeList",
                         "/team/queryList",
                         "/team/queryPublic/{teamId}",
-                        "/team/queryListByType/{typeId}"
+                        "/team/queryListByType/{typeId}",
+                        "/team/queryAllList"
                 );
     }
 

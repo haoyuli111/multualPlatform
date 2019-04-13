@@ -85,4 +85,25 @@ public interface ITeamService extends IBaseService<Team, String> {
      * @return
      */
     List<TeamListVO> queryListByType(Integer typeId);
+
+    /**
+     * 按照队伍类型和公私有类型共同查找队伍列表
+     * @param teamListForm
+     * @return
+     */
+    List<TeamListVO> queryListByVisualAndType(@Valid TeamListForm teamListForm);
+
+    /**
+     * 按照队伍公私有查找队伍列表
+     * @param visualId
+     * @return
+     */
+    List<TeamListVO> queryListByVisual(Integer visualId);
+
+    /**
+     * 查找队伍列表
+     * @param teamListForm
+     * @return
+     */
+    List<TeamListVO> queryAllList(@Valid TeamListForm teamListForm);
 }
