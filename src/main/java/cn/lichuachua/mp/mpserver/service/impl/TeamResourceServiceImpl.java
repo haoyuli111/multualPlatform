@@ -184,7 +184,12 @@ public class TeamResourceServiceImpl extends BaseServiceImpl<TeamResource, Strin
     }
 
 
-
+    /**
+     * 获取资料详情
+     * @param resourceId
+     * @param userId
+     * @return
+     */
     @Override
     public TeamResourceVO query(String resourceId, String userId){
         /**

@@ -24,10 +24,10 @@ public interface ITeamService extends IBaseService<Team, String> {
 
     /**
      * 删除队伍
-     * @param teamId
+     * @param teamDeletedForm
      * @param userId
      */
-    void deleted(String teamId, String userId);
+    void deleted(@Valid TeamDeletedForm teamDeletedForm, String userId);
 
     /**
      * 显示队伍列表
@@ -120,5 +120,6 @@ public interface ITeamService extends IBaseService<Team, String> {
      * @return
      */
     TeamListVO queryTeamByTeamName(String teamName);
+
 
 }

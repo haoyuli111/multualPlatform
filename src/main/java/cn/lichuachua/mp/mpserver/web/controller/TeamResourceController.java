@@ -102,6 +102,11 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
         return ResultWrapper.successWithData(resourceListVOList);
     }
 
+    /**
+     * 获取资料详情
+     * @param resourceId
+     * @return
+     */
     @ApiOperation("获取资料详情")
     @GetMapping("/query/{resourceId}")
     public ResultWrapper<TeamResourceVO> query(
@@ -112,7 +117,6 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
         String userId = getCurrentUserInfo().getUserId();
         TeamResourceVO teamResourceVO = teamResourceService.query(resourceId, userId);
         return ResultWrapper.successWithData(teamResourceVO);
-
     }
 
 

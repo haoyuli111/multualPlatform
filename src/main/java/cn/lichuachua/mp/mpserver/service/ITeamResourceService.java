@@ -40,6 +40,12 @@ public interface ITeamResourceService extends IBaseService<TeamResource, String>
      */
     List<TeamResourceListVO> queryList(String teamId, String userId);
 
+    /**
+     * 获取资料详情
+     * @param resourceId
+     * @param userId
+     * @return
+     */
     TeamResourceVO query(String resourceId, String userId);
 
 }

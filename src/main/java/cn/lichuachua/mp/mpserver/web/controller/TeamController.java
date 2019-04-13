@@ -55,18 +55,24 @@ public class TeamController extends BaseController<UserInfoDTO> {
 
     /**
      * 删除队伍
-     * @param teamId
+     * @param teamDeletedForm
+     * @param bindingResult
      * @return
      */
     @ApiOperation("删除队伍")
-    @PutMapping("/deleted/{teamId}")
+    @PutMapping("/deleted")
     public ResultWrapper deleted(
-            @PathVariable(value = "teamId") String teamId ){
+            @Valid TeamDeletedForm teamDeletedForm,
+            BindingResult bindingResult){
+        /**
+         * 参数检验
+         */
+        validateParams(bindingResult);
         /**
          * 获取当前登录的用户ID
          */
         String userId = getCurrentUserInfo().getUserId();
-        teamService.deleted(teamId, userId);
+        teamService.deleted(teamDeletedForm, userId);
         return ResultWrapper.success();
     }
 

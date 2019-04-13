@@ -112,21 +112,34 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
 
     /**
      * 删除队伍
-     * @param teamId
+     * @param teamDeletedForm
      * @param userId
      */
     @Override
-    public void deleted(String teamId, String userId){
+    public void deleted(TeamDeletedForm teamDeletedForm, String userId) {
         /**
-         * 查看登录的用户是否是队长，team是否存在
+         * team是否存在
          */
         Team team = new Team();
-        team.setTeamId(teamId);
-        team.setHeaderId(userId);
+        team.setTeamId(teamDeletedForm.getTeamId());
         team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional1 = selectOne(Example.of(team));
+        if (!teamOptional1.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        /**
+         * 查看登录的用户是否是队长
+         */
+        team.setHeaderId(userId);
         Optional<Team> teamOptional = selectOne(Example.of(team));
         if (!teamOptional.isPresent()){
-            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+            throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
+        }
+        /**
+         * 判断密码是否正确
+         */
+        if (!teamOptional.get().getPassword().equals(teamDeletedForm.getPassword())){
+            throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         team.setDescription(teamOptional.get().getDescription());
         team.setNumber(teamOptional.get().getNumber());
