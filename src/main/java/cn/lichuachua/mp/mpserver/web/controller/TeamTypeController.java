@@ -27,6 +27,7 @@ public class TeamTypeController extends BaseController<UserInfoDTO> {
     @Autowired
     private ITeamTypeService teamTypeService;
 
+
     /**
      * 队伍类型列表
      * @return
