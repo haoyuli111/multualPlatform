@@ -212,4 +212,18 @@ public class TeamController extends BaseController<UserInfoDTO> {
     }
 
 
+    /**
+     * 按照队伍类型查找队伍列表
+     * @param typeId
+     * @return
+     */
+    @ApiOperation("按照队伍类型查找队伍列表")
+    @GetMapping("/queryListByType/{typeId}")
+    public ResultWrapper<List<TeamListVO>> queryListByType(
+            @PathVariable(value = "typeId") Integer typeId ){
+        List<TeamListVO> teamListVOList = teamService.queryListByType(typeId);
+        return ResultWrapper.successWithData(teamListVOList);
+    }
+
+
 }

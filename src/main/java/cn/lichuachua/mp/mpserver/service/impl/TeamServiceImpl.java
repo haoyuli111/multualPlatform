@@ -3,14 +3,17 @@ package cn.lichuachua.mp.mpserver.service.impl;
 import cn.lichuachua.mp.core.support.service.impl.BaseServiceImpl;
 import cn.lichuachua.mp.mpserver.entity.Team;
 import cn.lichuachua.mp.mpserver.entity.TeamMember;
+import cn.lichuachua.mp.mpserver.entity.TeamType;
 import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.enums.*;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
 import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
+import cn.lichuachua.mp.mpserver.exception.TeamTypeException;
 import cn.lichuachua.mp.mpserver.exception.UserException;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
+import cn.lichuachua.mp.mpserver.service.ITeamTypeService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.vo.TeamListVO;
 import cn.lichuachua.mp.mpserver.vo.TeamVO;
@@ -34,6 +37,8 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
     private IUserService userService;
     @Autowired
     private ITeamMemberService teamMemberService;
+    @Autowired
+    private ITeamTypeService teamTypeService;
 
     /**
      * 创建队伍
@@ -42,10 +47,26 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
      */
     @Override
     public void publish(TeamPublishForm teamPublishForm, String userId){
+        /**
+         * 查看该队伍名是否存在
+         */
         Team team = new Team();
         team.setTeamName(teamPublishForm.getTeamName());
+        Optional<Team> teamOptional = selectOne(Example.of(team));
+        if (teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_EXIT);
+        }
         team.setDescription(teamPublishForm.getDescription());
         team.setPassword(teamPublishForm.getPassword());
+        /**
+         * 查看队伍类型是否存在
+         */
+        TeamType teamType = new TeamType();
+        teamType.setTypeId(teamPublishForm.getType());
+        Optional<TeamType> teamTypeOptional = teamTypeService.selectOne(Example.of(teamType));
+        if (!teamTypeOptional.isPresent()){
+            throw new TeamTypeException(ErrorCodeEnum.TEAM_TYPE_NO_EXIT);
+        }
         team.setType(teamPublishForm.getType());
         team.setVisual(teamPublishForm.getVisual());
         team.setNumber(teamPublishForm.getNumber());
@@ -427,4 +448,47 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         return teamVO;
     }
 
+
+    /**
+     * 按照队伍类型查找队伍列表
+     * @param typeId
+     * @return
+     */
+    @Override
+    public List<TeamListVO> queryListByType(Integer typeId) {
+        /**
+         * 判断该类型是否存在
+         */
+        TeamType teamType = new TeamType();
+        teamType.setTypeId(typeId);
+        Optional<TeamType> teamTypeOptional = teamTypeService.selectOne(Example.of(teamType));
+        if (!teamTypeOptional.isPresent()){
+            throw new TeamTypeException(ErrorCodeEnum.TEAM_TYPE_NO_EXIT);
+        }
+        /**
+         * 队伍存在，查询该类型的队伍
+         */
+        List<Team> teamList = selectAll();
+        List<TeamListVO> teamListVOList = new ArrayList<>();
+        for (Team team : teamList){
+            if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())&&team.getType().equals(typeId)){
+                TeamListVO teamListVO = new TeamListVO();
+                if (team.getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                }else if (team.getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                    teamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                }
+                teamListVO.setCreatedAt(team.getCreatedAt());
+                teamListVO.setDescription(team.getDescription());
+                teamListVO.setHeaderAvatar(team.getHeaderAvatar());
+                teamListVO.setHeaderNick(team.getHeaderNick());
+                teamListVO.setTeamId(team.getTeamId());
+                teamListVO.setTeamName(team.getTeamName());
+                teamListVO.setType(team.getType());
+                BeanUtils.copyProperties(team, teamListVO);
+                teamListVOList.add(teamListVO);
+            }
+        }
+        return teamListVOList;
+    }
 }

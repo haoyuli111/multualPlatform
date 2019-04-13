@@ -78,4 +78,11 @@ public interface ITeamService extends IBaseService<Team, String> {
      * @return
      */
     TeamVO queryPrivate(String teamId, String userId);
+
+    /**
+     * 按照队伍类型查找队伍列表
+     * @param typeId
+     * @return
+     */
+    List<TeamListVO> queryListByType(Integer typeId);
 }
