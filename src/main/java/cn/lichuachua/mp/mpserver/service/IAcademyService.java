@@ -22,5 +22,6 @@ public interface IAcademyService extends IBaseService<Academy, Integer> {
      * @param academyId
      * @return
      */
-    String queryAcademyName(Integer academyId);
+    String queryAcademyName(String userId, Integer academyId);
+
 }

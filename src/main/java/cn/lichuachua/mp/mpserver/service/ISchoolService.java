@@ -13,10 +13,14 @@ public interface ISchoolService extends IBaseService<School, Integer> {
      */
     List<SchoolVO> queryList();
 
+
     /**
      * 根据schoolId查询schoolName
      * @param schoolId
      * @return
      */
-    String querySchoolName(Integer schoolId);
+    String querySchoolName(String userId, Integer schoolId);
+
+
+
 }

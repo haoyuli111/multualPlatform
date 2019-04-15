@@ -283,8 +283,8 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
                 UserVO userVO = new UserVO();
                 userVO.setUserId(userOptional.get().getUserId());
                 userVO.setMobile(userOptional.get().getMobile());
-                userVO.setAcademyName(academyService.queryAcademyName(userOptional.get().getAcademyId()));
-                userVO.setSchoolName(schoolService.querySchoolName(userOptional.get().getSchoolId()));
+                userVO.setAcademyName(academyService.queryAcademyName(userOptional.get().getUserId(),userOptional.get().getAcademyId()));
+                userVO.setSchoolName(schoolService.querySchoolName(userOptional.get().getUserId(),userOptional.get().getSchoolId()));
                 userVO.setUserAvatar(userOptional.get().getUserAvatar());
                 userVO.setUserName(userOptional.get().getUserName());
                 userVO.setUserEmail(userOptional.get().getUserEmail());
@@ -393,8 +393,8 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         userVO.setUserAvatar(userOptional.get().getUserAvatar());
         userVO.setMobile(userOptional.get().getMobile());
         userVO.setUserId(userOptional.get().getUserId());
-        userVO.setAcademyName(academyService.queryAcademyName(userOptional.get().getAcademyId()));
-        userVO.setSchoolName(schoolService.querySchoolName(userOptional.get().getSchoolId()));
+        userVO.setAcademyName(academyService.queryAcademyName(userId,userOptional.get().getAcademyId()));
+        userVO.setSchoolName(schoolService.querySchoolName(userId,userOptional.get().getSchoolId()));
         return userVO;
 
     }
