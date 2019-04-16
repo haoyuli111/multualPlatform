@@ -29,7 +29,4 @@ public class ArticlePublishForm {
     @NotNull(message = "请选择文章的可视范围")
     private Integer visual;
 
-    private String accessory;
-
-
 }

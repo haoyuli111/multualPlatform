@@ -47,7 +47,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
      * @param userId
      */
     @Override
-    public void publish(ArticlePublishForm articlePublishForm, String userId) {
+    public void publish(ArticlePublishForm articlePublishForm, String userId, String fileName) {
 
         /**
          * 根据userId求出avatar和nick
@@ -60,7 +60,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
             article.setPublisherId(userId);
             article.setPublisherAvatar(userOptional.get().getUserAvatar());
             article.setPublisherNick(userOptional.get().getUserNick());
-            article.setAccessory(articlePublishForm.getAccessory());
+            article.setAccessory(fileName);
             article.setArticleType(articlePublishForm.getArticleType());
             article.setContent(articlePublishForm.getContent());
             article.setTitle(articlePublishForm.getTitle());

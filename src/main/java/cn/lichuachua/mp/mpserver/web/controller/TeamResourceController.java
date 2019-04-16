@@ -48,18 +48,30 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
          * 参数检验
          */
         validateParams(bindingResult);
-        String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/resource/";
-        String fileName = file.getOriginalFilename();
-        try {
-            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         /**
          * 获取当前登录的用户Id
          */
         String userId = getCurrentUserInfo().getUserId();
-        teamResourceService.publish(teamResourcePublishForm,fileName, userId);
+        /**
+         * 上传文件
+         */
+        if (file!=(null)){
+            //文件路径
+            String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/resource/";
+            //文件名
+            String fileName = file.getOriginalFilename();
+            /**
+             * 调用上传文件方法
+             */
+            try {
+                FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            teamResourceService.publish(teamResourcePublishForm,fileName, userId);
+        }else {
+            teamResourceService.publish(teamResourcePublishForm,null, userId);
+        }
         return ResultWrapper.success();
     }
 

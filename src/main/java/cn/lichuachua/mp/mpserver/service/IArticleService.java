@@ -22,7 +22,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @param articlePublishForm
      * @param userId
      */
-    void publish(@Valid ArticlePublishForm articlePublishForm, String userId);
+    void publish(@Valid ArticlePublishForm articlePublishForm, String userId, String fileName);
 
     /**
      * 更改文章
@@ -70,6 +70,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @return
      */
     List<ArticleListVO> queryMyArticleList(String userId);
+
 }
 
 

@@ -6,6 +6,7 @@ import cn.lichuachua.mp.mpserver.form.ArticleChangeForm;
 import cn.lichuachua.mp.mpserver.form.ArticlePublishForm;
 import cn.lichuachua.mp.mpserver.service.IArticleLikeService;
 import cn.lichuachua.mp.mpserver.service.IArticleService;
+import cn.lichuachua.mp.mpserver.util.FileUtil;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleVO;
 import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,6 +37,7 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     /**
      * 发布文章
      * @param articlePublishForm
+     * @param file
      * @param bindingResult
      * @return
      */
@@ -42,20 +45,39 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     @PostMapping("/publish")
     public ResultWrapper publish(
             @Valid ArticlePublishForm articlePublishForm,
+            MultipartFile file,
             BindingResult bindingResult) {
         /**
          * 验证参数
          */
         validateParams(bindingResult);
-
         /**
          * 获取当前登录的用户
          */
         String userId = getCurrentUserInfo().getUserId();
         /**
+         * 上传文件
+         */
+        if (file!=(null)){
+            //文件路径
+            String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/accessory/";
+            //文件名
+            String fileName = file.getOriginalFilename();
+            /**
+             * 调用上传文件方法
+             */
+            try {
+                FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            articleService.publish(articlePublishForm, userId, fileName);
+        }else {
+            articleService.publish(articlePublishForm, userId, null);
+        }
+        /**
          * 发布文章
          */
-        articleService.publish(articlePublishForm, userId);
 
         return ResultWrapper.success();
 
