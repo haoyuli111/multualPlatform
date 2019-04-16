@@ -194,14 +194,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
             articleVO.setTitle(articleOptional.get().getTitle());
             articleVO.setAccessory(articleOptional.get().getAccessory());
             /**
-             * 根据typeId取出对应的类型名
+             * 调用根据typeId查询typeName
              */
-            ArticleType articleType = new ArticleType();
-            articleType.setTypeId(articleOptional.get().getArticleType());
-            Optional<ArticleType> articleTypeOptional = articleTypeService.selectOne(Example.of(articleType));
-            if (articleTypeOptional.isPresent()){
-                articleVO.setArticleType(articleTypeOptional.get().getTypeName());
-            }
+            articleVO.setArticleType(articleTypeService.queryTypeName(articleOptional.get().getArticleType()));
             articleVO.setPublisherAvatar(articleOptional.get().getPublisherAvatar());
             articleVO.setPublisherNick(articleOptional.get().getPublisherNick());
             articleVO.setUpdatedAt(articleOptional.get().getUpdatedAt());
@@ -230,14 +225,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                 articleVO.setPublisherNick(article.getPublisherNick());
                 articleVO.setPublisherAvatar(article.getPublisherAvatar());
                 /**
-                 * 根据typeId取出对应的类型名
+                 * 调用根据typeId查询typeName
                  */
-                ArticleType articleType = new ArticleType();
-                articleType.setTypeId(article.getArticleType());
-                Optional<ArticleType> articleTypeOptional = articleTypeService.selectOne(Example.of(articleType));
-                if (articleTypeOptional.isPresent()){
-                    articleVO.setArticleType(articleTypeOptional.get().getTypeName());
-                }
+                articleVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
                 articleVO.setAccessory(article.getAccessory());
                 articleVO.setTitle(article.getTitle());
                 articleVO.setContent(article.getContent());
@@ -281,14 +271,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                 articleVO.setPublisherNick(article.getPublisherNick());
                 articleVO.setPublisherAvatar(article.getPublisherAvatar());
                 /**
-                 * 根据typeId取出对应的类型名
+                 * 调用根据typeId查询typeName
                  */
-                ArticleType articleType = new ArticleType();
-                articleType.setTypeId(article.getArticleType());
-                Optional<ArticleType> articleTypeOptional = articleTypeService.selectOne(Example.of(articleType));
-                if (articleTypeOptional.isPresent()){
-                    articleVO.setArticleType(articleTypeOptional.get().getTypeName());
-                }
+                articleVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
                 articleVO.setAccessory(article.getAccessory());
                 articleVO.setTitle(article.getTitle());
                 articleVO.setContent(article.getContent());
@@ -332,14 +317,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                 articleVO.setPublisherNick(article.getPublisherNick());
                 articleVO.setPublisherAvatar(article.getPublisherAvatar());
                 /**
-                 * 根据typeId取出对应的类型名
+                 * 调用根据typeId查询typeName
                  */
-                ArticleType articleType = new ArticleType();
-                articleType.setTypeId(article.getArticleType());
-                Optional<ArticleType> articleTypeOptional = articleTypeService.selectOne(Example.of(articleType));
-                if (articleTypeOptional.isPresent()){
-                    articleVO.setArticleType(articleTypeOptional.get().getTypeName());
-                }
+                articleVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
                 articleVO.setAccessory(article.getAccessory());
                 articleVO.setTitle(article.getTitle());
                 articleVO.setContent(article.getContent());

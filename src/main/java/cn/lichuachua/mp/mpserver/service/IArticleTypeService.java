@@ -14,4 +14,9 @@ public interface IArticleTypeService extends IBaseService<ArticleType, Integer> 
      */
     List<ArticleTypeVO> queryArticleTypeList();
 
+    /**
+     * 根据typeId和articelTypeId或者announcementTypeId查询出typeName;
+     */
+    String queryTypeName(Integer typeId);
+
 }
