@@ -115,7 +115,7 @@ public class UserController extends BaseController<UserInfoDTO> {
      * @return
      */
     @ApiOperation("/修改个人信息")
-    @PostMapping("/infor")
+    @PutMapping("/infor")
     public ResultWrapper infor(
             @Valid UserInforForm userInforForm,
             BindingResult bindingResult) {
