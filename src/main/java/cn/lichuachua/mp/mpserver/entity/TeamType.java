@@ -16,6 +16,9 @@ public class TeamType {
     @Column(name = "type_name")
     private String typeName;
 
+    @Column(name = "status")
+    private Integer status;
+
     @Column(name = "created_at")
     private Date createdAt;
 

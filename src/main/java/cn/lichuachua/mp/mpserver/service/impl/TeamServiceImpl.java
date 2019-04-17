@@ -64,6 +64,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
          */
         TeamType teamType = new TeamType();
         teamType.setTypeId(teamPublishForm.getType());
+        teamType.setStatus(TeamTypeEnum.NORMAL.getStatus());
         Optional<TeamType> teamTypeOptional = teamTypeService.selectOne(Example.of(teamType));
         if (!teamTypeOptional.isPresent()){
             throw new TeamTypeException(ErrorCodeEnum.TEAM_TYPE_NO_EXIT);
@@ -500,6 +501,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
          */
         TeamType teamType = new TeamType();
         teamType.setTypeId(typeId);
+        teamType.setStatus(TeamTypeEnum.NORMAL.getStatus());
         Optional<TeamType> teamTypeOptional = teamTypeService.selectOne(Example.of(teamType));
         if (!teamTypeOptional.isPresent()){
             throw new TeamTypeException(ErrorCodeEnum.TEAM_TYPE_NO_EXIT);

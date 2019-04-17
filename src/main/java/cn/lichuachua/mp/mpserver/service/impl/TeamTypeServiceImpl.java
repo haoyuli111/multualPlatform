@@ -2,6 +2,7 @@ package cn.lichuachua.mp.mpserver.service.impl;
 
 import cn.lichuachua.mp.core.support.service.impl.BaseServiceImpl;
 import cn.lichuachua.mp.mpserver.entity.TeamType;
+import cn.lichuachua.mp.mpserver.enums.TeamTypeEnum;
 import cn.lichuachua.mp.mpserver.service.ITeamTypeService;
 import cn.lichuachua.mp.mpserver.vo.TeamTypeVO;
 import org.springframework.beans.BeanUtils;
@@ -25,11 +26,13 @@ public class TeamTypeServiceImpl extends BaseServiceImpl<TeamType, String> imple
         List<TeamType> teamTypeList = selectAll();
         List<TeamTypeVO> teamTypeVOList = new ArrayList<>();
         for (TeamType teamType : teamTypeList){
-            TeamTypeVO teamTypeVO = new TeamTypeVO();
-            teamTypeVO.setTypeId(teamType.getTypeId());
-            teamTypeVO.setTypeName(teamType.getTypeName());
-            BeanUtils.copyProperties(teamType, teamTypeVO);
-            teamTypeVOList.add(teamTypeVO);
+            if (teamType.getStatus().equals(TeamTypeEnum.NORMAL.getStatus())){
+                TeamTypeVO teamTypeVO = new TeamTypeVO();
+                teamTypeVO.setTypeId(teamType.getTypeId());
+                teamTypeVO.setTypeName(teamType.getTypeName());
+                BeanUtils.copyProperties(teamType, teamTypeVO);
+                teamTypeVOList.add(teamTypeVO);
+            }
         }
         return teamTypeVOList;
     }
