@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class ArticleVO {
 
+    private String publisherId;
+
     private String publisherNick;
 
     private String publisherAvatar;

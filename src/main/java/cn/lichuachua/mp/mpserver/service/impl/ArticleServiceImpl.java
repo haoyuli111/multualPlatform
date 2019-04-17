@@ -202,6 +202,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
             articleVO.setUpdatedAt(articleOptional.get().getUpdatedAt());
             articleVO.setArticleCommentVOList(articleCommentService.queryComment(articleId));
             articleVO.setArticleLikeVOList(articleLikeService.likesList(articleId));
+            articleVO.setPublisherId(articleOptional.get().getPublisherId());
             return articleVO;
         }
     }

@@ -8,10 +8,7 @@ import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.*;
 import cn.lichuachua.mp.mpserver.util.FileUtil;
-import cn.lichuachua.mp.mpserver.vo.ArticleCollectVO;
-import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
-import cn.lichuachua.mp.mpserver.vo.FollowVO;
-import cn.lichuachua.mp.mpserver.vo.UserVO;
+import cn.lichuachua.mp.mpserver.vo.*;
 import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
@@ -322,13 +319,13 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("获取当前登录用户的信息")
     @GetMapping("/queryMyInformation")
-    public ResultWrapper<UserVO> queryMyInformation(){
+    public ResultWrapper<UserInforVO> queryMyInformation(){
         /**
          * 获取当前登录用户Id
          */
         String userId = getCurrentUserInfo().getUserId();
-        UserVO userVO = userService.queryMyInformation(userId);
-        return ResultWrapper.successWithData(userVO);
+        UserInforVO userInforVO = userService.queryMyInformation(userId);
+        return ResultWrapper.successWithData(userInforVO);
     }
 
     /**

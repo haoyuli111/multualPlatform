@@ -16,6 +16,7 @@ import cn.lichuachua.mp.mpserver.service.ISchoolService;
 import cn.lichuachua.mp.mpserver.service.IUserService;
 import cn.lichuachua.mp.mpserver.util.SendCodeUtil;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
+import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
 import com.aliyuncs.exceptions.ClientException;
 import org.springframework.beans.BeanUtils;
@@ -377,7 +378,7 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
      * @return
      */
     @Override
-    public UserVO queryMyInformation(String userId){
+    public UserInforVO queryMyInformation(String userId){
         User user = new User();
         user.setUserId(userId);
         user.setStatus(UserStatusEnum.NORMAL.getStatus());
@@ -385,17 +386,19 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         if (!userOptional.isPresent()){
             throw new UserException(ErrorCodeEnum.ERROR_USER);
         }
-        UserVO userVO = new UserVO();
-        userVO.setUserNick(userOptional.get().getUserNick());
-        userVO.setUserNumber(userOptional.get().getUserNumber());
-        userVO.setUserEmail(userOptional.get().getUserEmail());
-        userVO.setUserName(userOptional.get().getUserName());
-        userVO.setUserAvatar(userOptional.get().getUserAvatar());
-        userVO.setMobile(userOptional.get().getMobile());
-        userVO.setUserId(userOptional.get().getUserId());
-        userVO.setAcademyName(academyService.queryAcademyName(userId,userOptional.get().getAcademyId()));
-        userVO.setSchoolName(schoolService.querySchoolName(userId,userOptional.get().getSchoolId()));
-        return userVO;
+        UserInforVO userInforVO = new UserInforVO();
+        userInforVO.setUserNick(userOptional.get().getUserNick());
+        userInforVO.setUserNumber(userOptional.get().getUserNumber());
+        userInforVO.setUserEmail(userOptional.get().getUserEmail());
+        userInforVO.setUserName(userOptional.get().getUserName());
+        userInforVO.setUserAvatar(userOptional.get().getUserAvatar());
+        userInforVO.setMobile(userOptional.get().getMobile());
+        userInforVO.setUserId(userOptional.get().getUserId());
+        userInforVO.setSchoolId(userOptional.get().getSchoolId());
+        userInforVO.setAcademyId(userOptional.get().getAcademyId());
+        userInforVO.setAcademyName(academyService.queryAcademyName(userId,userOptional.get().getAcademyId()));
+        userInforVO.setSchoolName(schoolService.querySchoolName(userId,userOptional.get().getSchoolId()));
+        return userInforVO;
 
     }
 

@@ -5,6 +5,7 @@ import cn.lichuachua.mp.mpserver.dto.TokenInfo;
 import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
+import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
 import com.aliyuncs.exceptions.ClientException;
 
@@ -83,7 +84,6 @@ public interface IUserService extends IBaseService<User, String> {
      * @param userId
      * @return
      */
-    UserVO queryMyInformation(String userId);
 
     /**
      * 更换头像
@@ -91,4 +91,7 @@ public interface IUserService extends IBaseService<User, String> {
      * @param userId
      */
     void updateAvatar(String fileName, String userId);
+
+    UserInforVO queryMyInformation(String userId);
+
 }
