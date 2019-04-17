@@ -222,4 +222,50 @@ public class TeamResourceServiceImpl extends BaseServiceImpl<TeamResource, Strin
         return teamResourceVO;
     }
 
+
+    /**
+     * 根据资料的Id查询出文件名字
+     * @param resourceId
+     * @param userId
+     * @return
+     */
+    @Override
+    public String download(String resourceId, String userId){
+
+        /**
+         * 查看resource是否存在
+         */
+        TeamResource teamResource = new TeamResource();
+        teamResource.setResourceId(resourceId);
+        teamResource.setStatus(TeamResourceStatusEnum.NORMAL.getStatus());
+        Optional<TeamResource> teamResourceOptional = selectOne(Example.of(teamResource));
+        if (!teamResourceOptional.isPresent()){
+            throw new TeamResourceException(ErrorCodeEnum.TEAM_RESOURCE_NO_EXIT);
+        }
+        /**
+         * 查询队伍是否存在
+         */
+        Team team = new Team();
+        team.setTeamId(teamResourceOptional.get().getTeamId());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        Optional<Team> teamOptional = teamService.selectOne(Example.of(team));
+        if (!teamOptional.isPresent()){
+            throw new TeamException(ErrorCodeEnum.TEAM_NO_EXIT);
+        }
+        /**据userId和teamId查询是用户否在该队伍中
+         * 根
+         */
+        TeamMember teamMember = new TeamMember();
+        teamMember.setUserId(userId);
+        teamMember.setTeamId(teamResourceOptional.get().getTeamId());
+        teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
+        Optional<TeamMember> teamMemberOptional = teamMemberService.selectOne(Example.of(teamMember));
+        if (!teamMemberOptional.isPresent()){
+            throw new TeamResourceException(ErrorCodeEnum.TEAMMEMBER_NO_EXIT);
+        }
+        if (teamResourceOptional.get().getResourceName()==null){
+            throw new TeamResourceException(ErrorCodeEnum.TEAM_RESOURCE_NULL);
+        }
+        return teamResourceOptional.get().getResource();
+    }
 }

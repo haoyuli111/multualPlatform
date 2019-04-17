@@ -48,4 +48,12 @@ public interface ITeamResourceService extends IBaseService<TeamResource, String>
      */
     TeamResourceVO query(String resourceId, String userId);
 
+    /**
+     * 根据资料的Id查询出文件名字
+     * @param resourceId
+     * @param userId
+     * @return
+     */
+    String download(String resourceId, String userId);
+
 }
