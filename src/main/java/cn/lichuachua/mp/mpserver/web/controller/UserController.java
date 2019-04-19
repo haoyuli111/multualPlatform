@@ -337,7 +337,7 @@ public class UserController extends BaseController<UserInfoDTO> {
     @PutMapping("/updateAvatar/{file}")
     public ResultWrapper updateAvatar(
             @PathVariable(value = "file") MultipartFile file) {
-        String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/avatar/";
+        String filePath = "C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources/static/avatar/";
         String fileName = file.getOriginalFilename();
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
@@ -352,5 +352,39 @@ public class UserController extends BaseController<UserInfoDTO> {
         userService.updateAvatar(fileName, userId);
         return ResultWrapper.success();
     }
+
+
+    /**
+     * 显示我创建的队伍列表
+     * @return
+     */
+    @ApiOperation("显示我创建的队伍列表")
+    @GetMapping("queryMyTeamList")
+    public ResultWrapper<List<MyTeamListVO>> queryMyTeamList(){
+        /**
+         * 获取当前登录的用户Id
+         */
+        String uesId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyTeamList(uesId);
+        return ResultWrapper.successWithData(myTeamListVOList);
+    }
+
+    /**
+     * 显示我加入的队伍列表
+     * @return
+     */
+    @ApiOperation("显示我加入的队伍列表")
+    @GetMapping("queryMyJoinTeamList")
+    public ResultWrapper<List<MyTeamListVO>> queryMyJoinTeamList(){
+        /**
+         * 获取当前登录的用户Id
+         */
+        String uesId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyJoinTeamList(uesId);
+        return ResultWrapper.successWithData(myTeamListVOList);
+    }
+
+
+
 
 }

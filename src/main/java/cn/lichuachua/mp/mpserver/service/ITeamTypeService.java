@@ -16,4 +16,12 @@ public interface ITeamTypeService extends IBaseService<TeamType, String> {
      * @return
      */
     List<TeamTypeVO> queryList();
+
+    /**
+     * 根据typeId查询typeName
+     * @param typeId
+     * @return
+     */
+    String queryTypeName(Integer typeId);
+
 }

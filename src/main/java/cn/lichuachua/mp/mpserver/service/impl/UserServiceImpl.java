@@ -11,11 +11,10 @@ import cn.lichuachua.mp.mpserver.enums.*;
 import cn.lichuachua.mp.mpserver.exception.UserException;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.repository.redis.IRedisRepository;
-import cn.lichuachua.mp.mpserver.service.IAcademyService;
-import cn.lichuachua.mp.mpserver.service.ISchoolService;
-import cn.lichuachua.mp.mpserver.service.IUserService;
+import cn.lichuachua.mp.mpserver.service.*;
 import cn.lichuachua.mp.mpserver.util.SendCodeUtil;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
+import cn.lichuachua.mp.mpserver.vo.MyTeamListVO;
 import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
 import com.aliyuncs.exceptions.ClientException;
@@ -44,6 +43,16 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
 
     @Autowired
     private IAcademyService academyService;
+
+    @Autowired
+    private ITeamService teamService;
+
+    @Autowired
+    private ITeamTypeService teamTypeService;
+
+    @Autowired
+    private ITeamMemberService teamMemberService;
+
 
     /**
      * 用户注册
@@ -429,6 +438,91 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         user.setUserNick(userOptional.get().getUserNick());
         user.setStatus(UserStatusEnum.NORMAL.getStatus());
         update(user);
+    }
+
+
+    /**
+     * 显示我创建的队伍列表
+     * @param uesId
+     * @return
+     */
+    @Override
+    public List<MyTeamListVO> queryMyTeamList(String uesId){
+        List<Team> teamList = teamService.selectAll();
+        List<MyTeamListVO> myTeamListVOList = new ArrayList<>();
+        for (Team team : teamList){
+            /**
+             * 如果队伍存在并且是自己所创建
+             */
+            if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())&&team.getHeaderId().equals(uesId)){
+                MyTeamListVO myTeamListVO = new MyTeamListVO();
+                myTeamListVO.setTeamId(team.getTeamId());
+                myTeamListVO.setTeamName(team.getTeamName());
+                myTeamListVO.setDescription(team.getDescription());
+                if (team.getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                    myTeamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                }else if (team.getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                    myTeamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                }
+                myTeamListVO.setCreatedAt(team.getCreatedAt());
+                myTeamListVO.setType(teamTypeService.queryTypeName(team.getType()));
+                BeanUtils.copyProperties(team, myTeamListVO);
+                myTeamListVOList.add(myTeamListVO);
+            }
+        }
+        return myTeamListVOList;
+    }
+
+
+    /**
+     *显示我加入的队伍列表
+     * @param uesId
+     * @return
+     */
+    @Override
+    public List<MyTeamListVO> queryMyJoinTeamList(String uesId){
+        /**
+         * 查询出队伍成员
+         */
+        List<TeamMember> teamMemberList = teamMemberService.selectAll();
+        List<MyTeamListVO> myTeamListVOList = new ArrayList<>();
+        for (TeamMember teamMember : teamMemberList){
+            /**
+             * 获取队伍成员所在的队伍
+             */
+            Team team = new Team();
+            team.setTeamId(teamMember.getTeamId());
+            team.setStatus(TeamStatusEnum.NORMAL.getStatus());
+            Optional<Team> teamOptional = teamService.selectOne(Example.of(team));
+            /**
+             * 队伍存在则输出队伍信息
+             */
+            if (teamOptional.isPresent()){
+                /**
+                 * 判断是否是自己创建的队伍
+                 */
+                if (!teamMember.getUserId().equals(teamOptional.get().getHeaderId())){
+                /**
+                 * 判断member是正常
+                 */
+                if (teamMember.getUserId().equals(uesId)&&teamMember.getStatus().equals(TeamMemberStatusEnum.NORMAL.getStatus())){
+                    MyTeamListVO myTeamListVO = new MyTeamListVO();
+                    myTeamListVO.setTeamId(teamMember.getTeamId());
+                    myTeamListVO.setTeamName(teamOptional.get().getTeamName());
+                    myTeamListVO.setCreatedAt(teamOptional.get().getCreatedAt());
+                    myTeamListVO.setDescription(teamOptional.get().getDescription());
+                    myTeamListVO.setType(teamTypeService.queryTypeName(teamOptional.get().getType()));
+                    if (teamOptional.get().getVisual().equals(TeamVisualEnum.VISUAL.getStatus())){
+                        myTeamListVO.setVisual(TeamVisualEnum.VISUAL.getDesc());
+                    }else if (teamOptional.get().getVisual().equals(TeamVisualEnum.NO_VISUAL.getStatus())){
+                        myTeamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
+                    }
+                    myTeamListVOList.add(myTeamListVO);
+                     }
+                }
+            }
+        }
+        return myTeamListVOList;
     }
 
 }

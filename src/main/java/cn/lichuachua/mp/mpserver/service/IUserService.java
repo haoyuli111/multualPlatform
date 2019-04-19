@@ -5,6 +5,7 @@ import cn.lichuachua.mp.mpserver.dto.TokenInfo;
 import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
+import cn.lichuachua.mp.mpserver.vo.MyTeamListVO;
 import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
 import com.aliyuncs.exceptions.ClientException;
@@ -92,6 +93,26 @@ public interface IUserService extends IBaseService<User, String> {
      */
     void updateAvatar(String fileName, String userId);
 
+    /**
+     * 查询当前登录的用户
+     * @param userId
+     * @return
+     */
     UserInforVO queryMyInformation(String userId);
+
+    /**
+     * 显示我创建的队伍列表
+     * @param uesId
+     * @return
+     */
+    List<MyTeamListVO> queryMyTeamList(String uesId);
+
+    /**
+     * 显示我加入的队伍列表
+     * @param uesId
+     * @return
+     */
+    List<MyTeamListVO> queryMyJoinTeamList(String uesId);
+
 
 }
