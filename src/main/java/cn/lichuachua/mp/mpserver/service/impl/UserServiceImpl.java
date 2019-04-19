@@ -53,6 +53,12 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
     @Autowired
     private ITeamMemberService teamMemberService;
 
+    @Autowired
+    private IArticleService articleService;
+
+    @Autowired
+    private IFollowService followService;
+
 
     /**
      * 用户注册
@@ -438,6 +444,13 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         user.setUserNick(userOptional.get().getUserNick());
         user.setStatus(UserStatusEnum.NORMAL.getStatus());
         update(user);
+        /**
+         * 同步更新用户头像到article
+         */
+        articleService.updateAvatar(userId,fileName);
+        followService.updateAvatar(userId,fileName);
+        teamService.updateAvatar(userId,fileName);
+
     }
 
 

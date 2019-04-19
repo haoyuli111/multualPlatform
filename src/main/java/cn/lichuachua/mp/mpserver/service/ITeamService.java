@@ -122,4 +122,11 @@ public interface ITeamService extends IBaseService<Team, String> {
     TeamListVO queryTeamByTeamName(String teamName);
 
 
+    /**
+     * 更新头像
+     * @param userId
+     * @param fileName
+     */
+    void updateAvatar(String userId, String fileName);
+
 }

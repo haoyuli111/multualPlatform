@@ -73,6 +73,13 @@ public interface IArticleService extends IBaseService<Article, String> {
      */
     List<MyArticleListVO> queryMyArticleList(String userId);
 
+
+    /**
+     * 更新头像
+     * @param userId
+     * @param fileName
+     */
+    void updateAvatar(String userId, String fileName);
 }
 
 

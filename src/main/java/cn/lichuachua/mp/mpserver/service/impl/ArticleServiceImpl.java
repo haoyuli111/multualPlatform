@@ -339,5 +339,35 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
     }
 
 
+    /**
+     * 更新头像
+     * @param userId
+     * @param fileName
+     */
+    @Override
+    public void updateAvatar(String userId, String fileName){
+        List<Article> articleList = selectAll();
+        for (Article article : articleList){
+            if (article.getPublisherId().equals(userId)){
+                Article article1 = new Article();
+                article1.setArticleId(article.getArticleId());
+                article1.setPublisherId(userId);
+                article1.setPublisherNick(article.getPublisherNick());
+                article1.setRank(article.getRank());
+                article1.setPublisherAvatar(fileName);
+                article1.setAccessory(article.getAccessory());
+                article1.setArticleType(article.getArticleType());
+                article1.setContent(article.getContent());
+                article1.setTitle(article.getTitle());
+                article1.setVisual(article.getVisual());
+                article1.setStatus(article.getStatus());
+                article1.setUpdatedAt(article.getUpdatedAt());
+                article1.setCreatedAt(article.getCreatedAt());
+                update(article1);
+            }
+        }
+    }
+
+
 
 }

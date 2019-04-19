@@ -165,4 +165,33 @@ public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> impleme
         }
         return followVOList;
     }
+
+
+    /**
+     * 更新头像
+     * @param userId
+     * @param fileName
+     */
+    @Override
+    public void updateAvatar(String userId, String fileName){
+        List<Follow> followList = selectAll();
+        for (Follow follow : followList){
+            Follow follow1 = new Follow();
+            if (follow.getAttentionId().equals(userId)){
+                follow1.setAttentionAvatar(fileName);
+                follow1.setUserAvatar(follow.getUserAvatar());
+            }else if (follow.getUserId().equals(userId)){
+                follow1.setAttentionAvatar(follow.getAttentionAvatar());
+                follow1.setUserAvatar(fileName);
+            }
+            follow1.setAttentionId(follow.getAttentionId());
+            follow1.setStatus(follow.getStatus());
+            follow1.setUpdatedAt(follow.getUpdatedAt());
+            follow1.setCreatedAt(follow.getCreatedAt());
+            follow1.setUserNick(follow.getUserNick());
+            follow1.setAttentionNick(follow.getAttentionNick());
+            follow1.setUserId(follow.getUserId());
+            update(follow1);
+        }
+    }
 }

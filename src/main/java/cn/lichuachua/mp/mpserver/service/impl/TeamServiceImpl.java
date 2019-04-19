@@ -663,4 +663,36 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamListVO.setType(teamOptional.get().getType());
         return teamListVO;
     }
+
+
+    /**
+     * 更换头像
+     * @param userId
+     * @param fileName
+     */
+    @Override
+    public void updateAvatar(String userId, String fileName){
+        List<Team> teamList = selectAll();
+        for (Team team : teamList){
+            if (team.getHeaderId().equals(userId)){
+                Team team1 = new Team();
+                team1.setDescription(team.getDescription());
+                team1.setNumber(team.getNumber());
+                team1.setUpdatedAt(team.getUpdatedAt());
+                team1.setCreatedAt(team.getCreatedAt());
+                team1.setHeaderNick(team.getHeaderNick());
+                team1.setHeaderMobile(team.getHeaderMobile());
+                team1.setHeaderAvatar(fileName);
+                team1.setVisual(team.getVisual());
+                team1.setType(team.getType());
+                team1.setPassword(team.getPassword());
+                team1.setTeamName(team.getTeamName());
+                team1.setTeamId(team.getTeamId());
+                team1.setStatus(team.getStatus());
+                team1.setHeaderId(team.getHeaderId());
+                update(team1);
+            }
+        }
+    }
+
 }

@@ -29,4 +29,11 @@ public interface IFollowService extends IBaseService<Follow, FollowPK> {
      * @return
      */
     List<FollowVO> queryFollowedMeList(String userId);
+
+    /**
+     * 更新头像
+     * @param userId
+     * @param fileName
+     */
+    void updateAvatar(String userId, String fileName);
 }
