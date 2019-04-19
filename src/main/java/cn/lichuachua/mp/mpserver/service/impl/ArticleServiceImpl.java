@@ -16,6 +16,7 @@ import cn.lichuachua.mp.mpserver.service.*;
 import cn.lichuachua.mp.mpserver.vo.ArticleCommentVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleVO;
+import cn.lichuachua.mp.mpserver.vo.MyArticleListVO;
 import javafx.scene.shape.Circle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,9 +301,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
      * @return
      */
     @Override
-    public List<ArticleListVO> queryMyArticleList(String userId){
+    public List<MyArticleListVO> queryMyArticleList(String userId){
         List<Article> articleList = selectAll();
-        List<ArticleListVO> articleVOList = new ArrayList<>();
+        List<MyArticleListVO> articleVOList = new ArrayList<>();
         /**
          * 遍历所有文章
          */
@@ -313,27 +314,25 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
              *  直接选出文章存在并且符合查询的用户ID并且可见的文章
              */
             if (article.getStatus().equals(ArticleStatusEnum.NORMAL.getStatus())&&article.getPublisherId().equals(userId)){
-                ArticleListVO articleVO = new ArticleListVO();
-                articleVO.setArticleId(article.getArticleId());
-                articleVO.setPublisherNick(article.getPublisherNick());
-                articleVO.setPublisherAvatar(article.getPublisherAvatar());
+                MyArticleListVO myArticleListVO = new MyArticleListVO();
+                myArticleListVO.setArticleId(article.getArticleId());
                 /**
                  * 调用根据typeId查询typeName
                  */
-                articleVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
-                articleVO.setAccessory(article.getAccessory());
-                articleVO.setTitle(article.getTitle());
-                articleVO.setContent(article.getContent());
-                articleVO.setUpdatedAt(article.getUpdatedAt());
-                articleVO.setUpdatedAt(article.getUpdatedAt());
+                myArticleListVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
+                myArticleListVO.setAccessory(article.getAccessory());
+                myArticleListVO.setTitle(article.getTitle());
+                myArticleListVO.setContent(article.getContent());
+                myArticleListVO.setUpdatedAt(article.getUpdatedAt());
+                myArticleListVO.setUpdatedAt(article.getUpdatedAt());
                 /**
                  * 将articleList转换为articleVo
                  */
-                BeanUtils.copyProperties(article,articleVO);
+                BeanUtils.copyProperties(article,myArticleListVO);
                 /**
                  * 将articleVo添加进去articleVOList
                  */
-                articleVOList.add(articleVO);
+                articleVOList.add(myArticleListVO);
             }
         }
         return articleVOList;

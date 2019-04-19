@@ -81,12 +81,6 @@ public interface IUserService extends IBaseService<User, String> {
     void changePassword(@Valid ChangePasswordForm changePasswordForm, String userId);
 
     /**
-     * 获取当前登录用户的信息
-     * @param userId
-     * @return
-     */
-
-    /**
      * 更换头像
      * @param fileName
      * @param userId

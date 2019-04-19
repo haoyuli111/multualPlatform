@@ -262,7 +262,7 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("查询我的文章列表")
     @GetMapping("/queryMyArticleList")
-    public ResultWrapper<List<ArticleListVO>> queryMyArticleList(){
+    public ResultWrapper<List<MyArticleListVO>> queryMyArticleList(){
         /**
          * 获取当前登录的用户
          */
@@ -270,9 +270,9 @@ public class UserController extends BaseController<UserInfoDTO> {
         /**
          * 查看我的文章列表
          */
-        List<ArticleListVO> articleVOList = articleService.queryMyArticleList(userId);
+        List<MyArticleListVO> myArticleListVOList = articleService.queryMyArticleList(userId);
 
-        return ResultWrapper.successWithData(articleVOList);
+        return ResultWrapper.successWithData(myArticleListVOList);
 
     }
 

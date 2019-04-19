@@ -7,6 +7,7 @@ import cn.lichuachua.mp.mpserver.form.ArticlePublishForm;
 import cn.lichuachua.mp.mpserver.vo.ArticleCommentVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleVO;
+import cn.lichuachua.mp.mpserver.vo.MyArticleListVO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -64,12 +65,13 @@ public interface IArticleService extends IBaseService<Article, String> {
      */
     List<ArticleListVO> queryUserArticleList(String userId);
 
+
     /**
      * 查询我的文章列表
      * @param userId
      * @return
      */
-    List<ArticleListVO> queryMyArticleList(String userId);
+    List<MyArticleListVO> queryMyArticleList(String userId);
 
 }
 
