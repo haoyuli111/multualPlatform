@@ -38,16 +38,28 @@ $(function () {
 
 //设置token
 var token = document.cookie.split(";")[0];
-
+console.log(token);
+document.querySelector('#token').setAttribute('value', token);
 //vue-resource加载文章
 var app=new Vue({
     el:'#vue_item',
     data:{
         items:[],
         resource:[],
+        user:{
+            data:{
+                academyName:{},
+                schoolName:{},
+                userNick:{}
+            }
+
+        }
     },
     mounted:function(){
         this.get();
+    },
+    created(){
+        this.loadData();
     },
     methods: {
         get:function(){
@@ -73,7 +85,7 @@ var app=new Vue({
                             placement: 'center',
                             icon: 'icon-exclamation-sign'
                         }).show();
-                        window.location.href='login.html'
+                        //window.location.href='login.html'
                     }else{
                         new $.zui.Messager('网络错误或找不到服务器,请确认网站状态后重新刷新',{
                             type:'danger',
@@ -86,6 +98,26 @@ var app=new Vue({
                 console.log(reason);
             })
         },
+        //当前用户信息
+        loadData:function(){
+            let self=this;
+            let token=document.querySelector('#token').value;
+            this.$http.get("http://127.0.0.1:8080/user/queryMyInformation", {
+                params: {
+                    accessToken: token
+                }
+            }).then(
+                function(res){
+                    self.user=res.body;
+                    console.log(res);
+                },function(res){
+                    console.log(res);
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
+        },
+        //资源列表
         checktab:function(){
             //alert("success")
             this.$http.get('data.json').then(
@@ -100,6 +132,48 @@ var app=new Vue({
                     }).show();
                 }
             )
+        },
+        //删除文章
+        delete_article:function(event) {
+            let articlrId = event.target.nextElementSibling.innerHTML
+            //console.log(articlrId);
+            let token=document.querySelector('#token').value;
+            let commentForm=new FormData();
+            commentForm.append('accessToken',token);
+            commentForm.append('commentId',articlrId)
+            this.$http.put('http://127.0.0.1:8080/article/delete/'+articlrId,commentForm, {
+                'Content-Type': 'Multipart/form-data'
+            }).then(
+                function (res) {
+                    if(res.body.code==0){
+                        new $.zui.Messager('删除文章成功',{
+                            type:'success',
+                            placement:'center',
+                            icon:'icon-ok-sign'
+                        }).show();
+                        window.location.reload();
+                    }
+                    console.log(res)
+                },function(res){
+                    if(res.body.code==1201){
+                        new $.zui.Messager('未登陆账户，正在跳转',{
+                            type:'danger',
+                            placement:'center',
+                            icon:'icon-exclamation-sign'
+                        }).show();
+                        window.location.href='login.html'
+                    }else{
+                        new $.zui.Messager('网络错误或找不到服务器',{
+                            type:'danger',
+                            placement:'center',
+                            icon:'icon-exclamation-sign'
+                        }).show();
+                    }
+                     console.log(res)
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
         }
     },
     filters:{

@@ -103,8 +103,8 @@
             <section class="main_header">
                 <div class="share_exp">
                     <a class="card" href="#">
-                        <img src="image/index/man1.webp" alt="圆形图片">
-                        <div class="card-heading" style="color:#494c51"><strong>张无忌</strong></div>
+                        <img :src="'avatar/'+user.data.userAvatar" alt="圆形图片"/>
+                        <div class="card-heading" style="color:#494c51"><strong>{{user.data.userNick}}</strong></div>
                         <div class="card-content text-muted">分享《九阳真经》，一起研究"乾坤大挪移",加入明教团队</div>
                         <div class="card-actions">
                             <div class="pull-left text-danger" style="margin-right:30px"><i
@@ -116,8 +116,8 @@
                 </div>
                 <div class="header_other">
                     <a class="card" href="###" style="padding-top:10px">
-                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学校:太原理工大学</div>
-                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学院:软件学院</div>
+                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学校:{{user.data.schoolName}}</div>
+                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学院:{{user.data.academyName}}</div>
                     </a>
                 </div>
                 <div class="persionbox boxicon">
@@ -144,6 +144,9 @@
                                 <div class="item-content">
                                     <div class="text">{{item.content}}</div>
                                 </div>
+                                <a href="#" class="pull-right" @click="delete_article($event)">删除</a>
+                                <div style="display:none">{{item.articleId}}</div>
+                                <input type="hidden" name="accessToken" id="token"/>
                             </div>
                         </div>
                     </div>

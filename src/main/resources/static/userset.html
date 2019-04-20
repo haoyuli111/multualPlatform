@@ -119,15 +119,13 @@
                                         <tr>
                                             <td class="name">昵称：</td>
                                             <td class="has-success">
-                                                <input class="form-control" type="text" value="tyutjohn" name="userNick"
+                                                <input class="form-control" type="text" :value="user.userNick" name="userNick"
                                                     id="userNick">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="name">学院:</td>
                                             <td class="has-success">
-                                                <!--<input class="form-control" type="text" value="软件学院" name="academyId"-->
-                                                    <!--id="academyId">-->
                                                 <select style="width:100%;height:30px;border-radius:4px;border:1px solid #38b03f;" id="academyId" @change="changeCollage()" value="1">
                                                     <option v-for="colleges in college.data" :value="colleges.academyId">{{colleges.academyName}}</option>
                                                 </select>
@@ -144,21 +142,21 @@
                                         <tr>
                                             <td class="name">邮箱:</td>
                                             <td class="has-success">
-                                                <input class="form-control" type="email" value="tyutjohnwang@163.com"
+                                                <input class="form-control" type="email" :value="user.userEmail"
                                                     name="userEmail" id="userEmail">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="name">真实姓名</td>
                                             <td class="has-success">
-                                                <input class="form-control" type="text" value="王浩宇" name="userName"
+                                                <input class="form-control" type="text" :value="user.userName" name="userName"
                                                     id="userName">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="name">手机号:</td>
                                             <td class="has-success">
-                                                <input class="form-control" type="number" value="15503676579"
+                                                <input class="form-control" type="number" :value="user.userNumber"
                                                     name="userNumber" id="userNumber">
                                             </td>
                                         </tr>
@@ -189,7 +187,7 @@
                         </div>
                         <div class="title" style="position:relative">
                             <h3 class="inline">个人头像</h3>
-                            <img src="image/index/man3.webp" width="50" height="50" style="margin-left:50px"
+                            <img :src="'avatar/'+user.userAvatar" width="50" height="50" style="margin-left:50px"
                                 id="sm-img">
                             <a class="edit-label inline" style="position:absolute;right:60px;top:20px;"
                                 id="second-edit-lable" @click="clickfoll2">编辑<span

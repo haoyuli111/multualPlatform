@@ -28,6 +28,8 @@ import java.util.List;
 public class TeamController extends BaseController<UserInfoDTO> {
     @Autowired
     private ITeamService teamService;
+    @Autowired
+    private IUserService userService;
 
 
     /**
@@ -176,6 +178,10 @@ public class TeamController extends BaseController<UserInfoDTO> {
          * 回去当前登录的用户Id
          */
         String userId = getCurrentUserInfo().getUserId();
+        /**
+         * 检测手机号和验证码
+         */
+        userService.verification(teamForgetPasswordForm.getMobile(),teamForgetPasswordForm.getCode());
         /**
          * 在serviceImpl里面进行验证code和mobile
          */

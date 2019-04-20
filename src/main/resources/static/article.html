@@ -114,11 +114,10 @@
                         <dl class="dl-inline">
                             <dt>来源：</dt>
                             <dd>{{article.data.articleType}}</dd>
-                            <dt>最后修订：</dt>
+                            <dt>发布时间：</dt>
                             <dd><span class="icon icon-time" id="article_uptime">{{article.data.updatedAt | capitalize}}</span></dd>
                             <dt></dt>
-                            <dd class="pull-right"><span class="label label-success">HTML</span> <span
-                                    class="label label-warning">网页设计</span> <span class="label label-info">W3C</span>
+                            <dd class="pull-right"><span class="label label-success">{{article.data.articleType}}</span>
                                 <span class="label label-danger"><i class="icon-eye-open"></i> 235</span></dd>
                         </dl>
                     </header>
@@ -129,9 +128,9 @@
                     </section>
                     <footer>
                         <p class="text-important">
-                            版权声明：本文内容由互联网用户自发贡献，版权归作者所有，本平台不拥有所有权，也不承担相关法律责任。如果您发现本社区中有涉嫌抄袭的内容，欢迎发送邮件至：tyut@163.com
+                            版权声明：本文内容由互联网用户自发贡献，版权归作者所有，本平台不拥有所有权，也不承担相关法律责任。如果您发现本社区中有涉嫌抄袭的内容，欢迎发送邮件至：tyutjohnwang@163.com
                             进行举报，并提供相关证据，一经查实，本平台将立刻删除涉嫌侵权内容。 </p>
-                        <a :href="article.data.accessory+'.txt'" :download="article.data.accessory+'.txt'">点击下载资源</a>
+                        <a :href="article.data.accessory" :download="article.data.accessory">点击下载资源</a>
                         <span class="icon icon-thumbs-o-up footer-love" id="article-love" @click="article_love">
                             点赞{{article.data.articleLikeVOList.userNick}}</span>
                         <a href="##" class="pull-right" @click="report_article">举报</a>
@@ -143,7 +142,7 @@
                     <a class="card" href="###">
                         <div class="card-head">达人介绍</div>
                         <hr />
-                        <img src="image/index/man1.webp" class="img-circle" alt="圆形图片">
+                        <img :src="'avatar/'+article.data.publisherAvatar" class="img-circle" alt="圆形图片">
                         <div class="card-heading" style="color:#494c51"><strong>{{article.data.publisherNick}}</strong>
                         </div>
                         <div class="card-content text-muted">分享《九阳真经》，一起研究"乾坤大挪移",加入明教团队</div>

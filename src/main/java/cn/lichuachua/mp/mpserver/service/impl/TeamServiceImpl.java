@@ -371,14 +371,6 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
             throw new TeamException(ErrorCodeEnum.NO_JURISDICTION);
         }
         /**
-         * 根据userId查出手机号
-         */
-        Optional<User> userOptional = userService.selectByKey(userId);
-        /**
-         * 检验手机和验证码
-         */
-        userService.verification(userOptional.get().getMobile(),teamForgetPasswordForm.getCode());
-        /**
          * 判断新密码和确认密码是否一致
          */
         if (!teamForgetPasswordForm.getPassword().equals(teamForgetPasswordForm.getConfirmPassword())){

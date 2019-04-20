@@ -35,18 +35,6 @@ $(function () {
 
 })
 
-//富文本编辑器设置
-// let E = window.wangEditor
-// let editor = new E('#Editor')
-// editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
-// editor.create()
-// editor.txt.html('<p>开始编辑你的文章</p>')
-// editor.customConfig.linkImgCallback = function (url) {
-//     console.log(url) // url 即插入图片的地址
-// }
-// document.querySelector("#set").addEventListener('click', function () {
-//     alert(editor.txt.text())
-// }, false)
 $(function () {
     md_edit = editormd("content-editormd", {
         placeholder: '此处开始编写您要发布的内容',
@@ -89,7 +77,7 @@ console.log(Uploader);
 //设置token
 var token = document.cookie.split(";")[0];
 document.querySelector('#token').setAttribute('value', token);
-//console.log(token);
+console.log(token);
 
 //设置文章是否可见的开关
 let count = 0;
@@ -158,4 +146,39 @@ document.querySelector('#set').addEventListener('click', function () {
         }
     })
     return false;
+})
+
+//加载文章类型
+let label=new Vue({
+    el:'#label',
+    data:{
+        label:{}
+    },
+    mounted:function(){
+        this.get();
+    },
+    methods:{
+        get:function(){
+            let self=this;
+            let token=document.querySelector('#token').value;
+            this.$http.get("http://127.0.0.1:8080/article/type/queryArticleTypeList", {
+                params: {
+                    accessToken: token
+                }
+            }).then(
+                function(res){
+                    self.label=res.body;
+                   // console.log(JSON.stringify(res));
+                },function(res){
+                    console.log(res);
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
+        },
+        changeLable:function(){
+            let lable=document.querySelector('#exampleInputType').value;
+           // console.log(lable);
+        },
+    }
 })
