@@ -2,6 +2,7 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
+import cn.lichuachua.mp.mpserver.entity.Article;
 import cn.lichuachua.mp.mpserver.form.ArticleChangeForm;
 import cn.lichuachua.mp.mpserver.form.ArticlePublishForm;
 import cn.lichuachua.mp.mpserver.service.IArticleLikeService;
@@ -13,6 +14,10 @@ import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -152,7 +157,6 @@ public class ArticleController extends BaseController<UserInfoDTO> {
          */
         ArticleVO articleVO = articleService.queryArticle(articleId);
         return ResultWrapper.successWithData(articleVO);
-
     }
 
     /**
@@ -168,6 +172,22 @@ public class ArticleController extends BaseController<UserInfoDTO> {
          */
         List<ArticleListVO> articleVOList = articleService.queryList();
         return ResultWrapper.successWithData(articleVOList);
+    }
+
+    /**
+     * 分页获取文章列表
+     * @param pageable
+     * @return
+     */
+    @ApiOperation("分页获取文章列表")
+    @GetMapping("/queryListByPage/{pageable}")
+    public ResultWrapper<List<ArticleListVO>> queryListByPage(
+            @PageableDefault(page = 0,value = 5, sort = {"articleId"},direction = Sort.Direction.DESC) Pageable pageable){
+        /**
+         * 获取文章列表
+         */
+        List<ArticleListVO> articleListVOList = articleService.queryListByPage(pageable);
+        return ResultWrapper.successWithData(articleListVOList);
     }
 
     /**

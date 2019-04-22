@@ -21,6 +21,8 @@ import javafx.scene.shape.Circle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -247,6 +249,46 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
         }
         return articleVOList;
     }
+
+
+    /**
+     * 分页获取文章列表
+     * @param pageable
+     * @return
+     */
+    @Override
+    public List<ArticleListVO> queryListByPage(Pageable pageable){
+        Article article = new Article();
+        article.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        Page<Article> articleList = selectPage(Example.of(article),pageable);
+        List<ArticleListVO> articleListVOList= new ArrayList<>();
+        for (Article article1 : articleList){
+            ArticleListVO articleVO = new ArticleListVO();
+            articleVO.setArticleId(article1.getArticleId());
+            articleVO.setPublisherNick(article1.getPublisherNick());
+            articleVO.setPublisherAvatar(article1.getPublisherAvatar());
+            /**
+             * 调用根据typeId查询typeName
+             */
+            articleVO.setArticleType(articleTypeService.queryTypeName(article1.getArticleType()));
+            articleVO.setAccessory(article1.getAccessory());
+            articleVO.setTitle(article1.getTitle());
+            articleVO.setContent(article1.getContent());
+            articleVO.setUpdatedAt(article1.getUpdatedAt());
+            articleVO.setUpdatedAt(article1.getUpdatedAt());
+            /**
+             * 将articleList转换为articleVo
+             */
+            BeanUtils.copyProperties(article1,articleVO);
+            /**
+             * 将articleVo添加进去articleVOList
+             */
+            articleListVOList.add(articleVO);
+        }
+        return articleListVOList;
+    }
+
+
 
     /**
      * 根据用户Id查询文章用户文章列表

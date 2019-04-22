@@ -8,6 +8,8 @@ import cn.lichuachua.mp.mpserver.vo.ArticleCommentVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleVO;
 import cn.lichuachua.mp.mpserver.vo.MyArticleListVO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -87,6 +89,13 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @return
      */
     List<ArticleListVO> queryArticleListByArticleId(String articleId);
+
+    /**
+     * 分页获取文章列表
+     * @param pageable
+     * @return
+     */
+    List<ArticleListVO> queryListByPage(Pageable pageable);
 }
 
 
