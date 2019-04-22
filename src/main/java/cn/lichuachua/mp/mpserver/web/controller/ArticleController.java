@@ -189,4 +189,18 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     }
 
 
+    /**
+     * 根据文章Id查询当前作者的其他文章
+     * @param articleId
+     * @return
+     */
+    @ApiOperation("根据文章Id查询当前作者的其他文章")
+    @GetMapping("/queryArticleListByArticleId/{articleId}")
+    public ResultWrapper<List<ArticleListVO>> queryArticleListByArticleId(
+            @PathVariable(value = "articleId") String articleId ){
+            List<ArticleListVO> articleListVOList = articleService.queryArticleListByArticleId(articleId);
+            return ResultWrapper.successWithData(articleListVOList);
+    }
+
+
 }

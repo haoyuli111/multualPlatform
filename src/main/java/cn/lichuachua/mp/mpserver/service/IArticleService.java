@@ -80,6 +80,13 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @param fileName
      */
     void updateAvatar(String userId, String fileName);
+
+    /**
+     * 根据文章Id查询当前作者的其他文章
+     * @param articleId
+     * @return
+     */
+    List<ArticleListVO> queryArticleListByArticleId(String articleId);
 }
 
 

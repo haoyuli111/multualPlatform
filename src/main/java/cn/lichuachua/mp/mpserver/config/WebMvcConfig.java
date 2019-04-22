@@ -48,6 +48,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/user/search/{mobile}",
                         "/article/queryList",
                         "/article/queryUserArticleList/{userId}",
+                        "/article/queryArticleListByArticleId/{articleId}",
                         "/article/query/{articleId}",
                         "/article/comment/query/{articleId}",
                         "/article/likes/likesList/{articleId}",

@@ -369,5 +369,54 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
     }
 
 
+    /**
+     * 根据文章Id查询当前作者的其他文章
+     * @param articleId
+     * @return
+     */
+    @Override
+    public  List<ArticleListVO> queryArticleListByArticleId(String articleId){
+        /**
+         * 根据文章Id取出发布人Id
+         */
+        Optional<Article> articleOptional = selectByKey(articleId);
+
+        List<Article> articleList = selectAll();
+        List<ArticleListVO> articleVOList = new ArrayList<>();
+        /**
+         * 遍历所有文章
+         */
+        for (Article article : articleList){
+            /**
+             * 如果发布人相同,且不是该文章
+             */
+            if (article.getPublisherId().equals(articleOptional.get().getPublisherId())&&(!article.getArticleId().equals(articleId))) {
+                if (article.getStatus().equals(ArticleStatusEnum.NORMAL.getStatus()) && article.getVisual().equals(ArticleVisualEnum.VISUAL.getStatus())) {
+                    ArticleListVO articleVO = new ArticleListVO();
+                    articleVO.setArticleId(article.getArticleId());
+                    articleVO.setPublisherNick(article.getPublisherNick());
+                    articleVO.setPublisherAvatar(article.getPublisherAvatar());
+                    /**
+                     * 调用根据typeId查询typeName
+                     */
+                    articleVO.setArticleType(articleTypeService.queryTypeName(article.getArticleType()));
+                    articleVO.setAccessory(article.getAccessory());
+                    articleVO.setTitle(article.getTitle());
+                    articleVO.setContent(article.getContent());
+                    articleVO.setUpdatedAt(article.getUpdatedAt());
+                    articleVO.setUpdatedAt(article.getUpdatedAt());
+                    /**
+                     * 将articleList转换为articleVo
+                     */
+                    BeanUtils.copyProperties(article, articleVO);
+                    /**
+                     * 将articleVo添加进去articleVOList
+                     */
+                    articleVOList.add(articleVO);
+                }
+            }
+        }
+        return articleVOList;
+    }
 
 }
