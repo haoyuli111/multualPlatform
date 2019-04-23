@@ -1,0 +1,189 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-04-10 10:24:35
+ * @lastTime: 2019-04-10 17:41:16
+ */
+ .banner {
+    height: 400px;
+}
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main .team-header{
+    background: #f0f5fb;
+    height: 200px;
+    color:#4b4b58;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.main .team-header .flex{
+    flex-direction: column;
+}
+
+.main .team-header .flex-left .line{
+    width:40px;
+    height: 5px;
+    background: #e1b9c1;
+    display: inline-block;
+}
+
+.main .team-header .flex-left .line-p{
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-left: 10px;
+}
+
+.main .team-header .line-position{
+    margin-top: 100px;
+    padding-left: 100px;
+}
+
+.main .team-header .flex-right{
+    margin-top: 50px;
+    padding-right: 46px;
+    color: #a4a9af;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.main .introduction{
+    background: #fafafa;
+}
+
+.main .introduction .container{
+    width:80%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.main .introduction .container .intro-left,.intro-right{
+    display: inline-block;
+    margin: 10px auto;
+}
+
+.main .introduction .container .intro-right{
+    width:300px;
+    margin-left: 50px
+}
+
+
+.main .introduction .container .intro-right p{
+    font-size: 18px;
+    font-weight: 700;
+    color:#2f3044;
+    letter-spacing: 4px;
+    margin-bottom: 30px
+}
+
+.main .team .user{
+    text-align: center;
+    background: #f0f5fb;
+}
+
+.main .team .share_exp{
+    width:60%;
+    height: 350px;
+    margin:10px auto;
+}
+
+.main .team .share_exp .img-circle{
+    width:200px;
+    height: 200px;
+}
+
+.main .team .user .share_exp .card-inline{
+    display: inline-block;
+    width:200px;
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 10px
+}
+
+.main .team .user .share_exp .card-content .icon {
+    color: rgba(243, 228, 14, 0.863);
+}
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+    .main .team-header .flex-right {
+        width:100%;
+        text-align: center;
+        margin-left: 0 !important;
+    }
+
+    .main .team-header .flex-right h1{
+        font-size: 30px !important;
+        padding-bottom: 30px;
+    }
+
+    .main .introduction .container .intro-left {
+        margin-left: 0 !important;
+    }
+
+    .main .introduction .container .intro-right {
+        width: 280px;
+        margin-left:0 !important;
+    }
+
+    .main .introduction .container {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 10px;
+    }
+
+    .main .team .share_exp {
+        width: 90%;
+        height: 300px;
+        margin: 10px auto;
+    }
+
+    .main .team .share_exp .img-circle {
+        width: 150px;
+        height: 150px;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    .main .team-header .flex-left .line-p {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .main .team-header .line-position {
+        margin-top: 50px;
+        padding-left: 30%;
+    }
+
+    .main .team-header .flex-right {
+        margin-top: 0;
+        color: #a4a9af;
+        letter-spacing: 2px;
+        margin-left: 16%;
+    }
+
+    .main .introduction .container .intro-left {
+        margin-left: 10%;
+    }
+
+    .main .introduction .container .intro-right {
+        margin-left: 20%;
+        margin-bottom: 20px;
+    }
+
+}

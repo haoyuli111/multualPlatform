@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/common.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/zui.css" rel="stylesheet">
+    <link href="css/index/teammake.css" rel="stylesheet">
+    <title>OpenMutualPlatform--TeamMake</title>
+</head>
+
+<body>
+    <!-- 导航 -->
+    <header class="header">
+        <div class="container clearfix">
+            <div class="left">
+                <a href="index.html"><img src="image/logo.png" alt="" class="img1" /></a>
+            </div>
+            <p class="header-p">Open Mutual Platform</p>
+            <div class="nav">
+                <ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="active">
+                        <a href="index.html">首页</a>
+                    </li>
+                    <li>
+                        <a href="study.html">study</a>
+                    </li>
+                    <li>
+                        <a href="share.html">share</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">team</a>
+                    </li>
+                    <li>
+                        <a href="user.html">个人主页</a>
+                    </li>
+                    <li>
+                        <a href="login.html">登陆</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="javascript:void(0)" id="navToggle">
+                <span></span>
+            </a>
+        </div>
+    </header>
+    <!--移动端的导航-->
+    <div class="m_nav">
+        <div class="top clearfix">
+            <img src="image/closed.png" alt="" class="closed" />
+        </div>
+        <div class="logo">
+            <img src="image/logo.png" alt="" />
+            <p>Open Mutual Playform</p>
+        </div>
+        <ul class="ul" data-in="fadeInDown" data-out="fadeOutUp">
+            <li class="active">
+                <a href="index.html">首页</a>
+            </li>
+            <li class="dropdown">
+                <a href="study.html)">study</a>
+            </li>
+            <li>
+                <a href="share.html">share</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">team</a>
+            </li>
+            <li>
+                <a href="user.html">个人主页</a>
+            </li>
+            <li>
+                <a href="login.html">登录</a>
+            </li>
+        </ul>
+    </div>
+    <!--banner-->
+    <div class="banner">
+        <img src="image/banner/05.jpg">
+    </div>
+    <!--main-->
+    <div class="main" id="teammake">
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="header-h">
+                    <h1>团队创建</h1>
+                </div>
+                <div class="form-group">
+                    <label for="teamName" class="col-sm-2 required">团队名称</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" id="teamName" name="teamName" placeholder="请输入团队名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 required">密码</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="password" class="form-control" id="password" placeholder="密码" name="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 required">团队简介</label>
+                    <div class="col-md-6 col-sm-10">
+                        <textarea class="form-control" rows="3" placeholder="这里输入队伍简介" id="description" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="number" class="col-sm-2 required">团队人数</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="number" class="form-control" id="number" placeholder="这里限制团队人数" name="number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 required">团队类型</label>
+                    <div class="col-md-6 col-sm-10">
+                        <select style="width:100%;height:30px;border-radius:4px;border:1px solid #38b03f;" id="type"
+                            class="form-control" @change="changeType()" value="1">
+                            <option v-for="teamTypes in teamType.data" :value="teamTypes.typeId">{{teamTypes.typeName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="switch" style="margin-left:170px;">
+                            <input type="checkbox" class="col-md-1" name="visual" checked
+                            value="0" id="visual" @click="Switch"/>
+                        <label>设置团队是否可见</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-info" @click="formset">立即创建</button>
+                    </div>
+                </div>
+                <input type="hidden" name="accessToken" id="token"/>
+            </form>
+        </div>
+    </div>
+    <!-- 尾部-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-p">
+                <p>©2018-2019 Powered By open-mutual-platform team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--js-->
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <script src="js/vue/vue-resource.min.js"></script>
+    <script src="js/index/teammake.js"></script>
+</body>
+
+</html>

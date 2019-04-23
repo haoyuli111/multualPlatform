@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/zui.css" />
+    <link rel="stylesheet" href="css/index/team.css" />
+    <title>OpenMutualPlatform--Team</title>
+</head>
+
+<body>
+    <!-- 导航 -->
+    <header class="header">
+        <div class="container clearfix">
+            <div class="left">
+                <a href="index.html"><img src="image/logo.png" alt="" class="img1" /></a>
+            </div>
+            <p class="header-p">Open Mutual Platform</p>
+            <div class="nav">
+                <ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="active">
+                        <a href="index.html">首页</a>
+                    </li>
+                    <li>
+                        <a href="study.html">study</a>
+                    </li>
+                    <li>
+                        <a href="share.html">share</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">team</a>
+                    </li>
+                    <li>
+                        <a href="user.html">个人主页</a>
+                    </li>
+                    <li>
+                        <a href="login.html">登陆</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="javascript:void(0)" id="navToggle">
+                <span></span>
+            </a>
+        </div>
+    </header>
+    <!--移动端的导航-->
+    <div class="m_nav">
+        <div class="top clearfix">
+            <img src="image/closed.png" alt="" class="closed" />
+        </div>
+        <div class="logo">
+            <img src="image/logo.png" alt="" />
+            <p>Open Mutual Playform</p>
+        </div>
+        <ul class="ul" data-in="fadeInDown" data-out="fadeOutUp">
+            <li class="active">
+                <a href="index.html">首页</a>
+            </li>
+            <li class="dropdown">
+                <a href="study.html)">study</a>
+            </li>
+            <li>
+                <a href="share.html">share</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">team</a>
+            </li>
+            <li>
+                <a href="user.html">个人主页</a>
+            </li>
+            <li>
+                <a href="login.html">登录</a>
+            </li>
+        </ul>
+    </div>
+    <!--banner-->
+    <div class="banner">
+        <img src="image/banner/05.jpg">
+    </div>
+    <!--main-->
+    <div class="main" id="team">
+        <div class="container">
+            <!--描述-->
+            <section class="describe">
+                <div class="describe-left flex">
+                    <p>寻找志同道合的伙伴</p>
+                    <h4>希望你可以找到属于自己的团队，团队的力量更加强大哦！</h4>
+                </div>
+                <div class="describe-right flex">
+                    <a href="teammake.html"><button class="btn btn-lg btn-info" type="button">创建团队</button></a>
+                </div>
+            </section>
+            <!--类型导航-->
+            <section class="main-nav">
+                <nav class="navbar" role="navigation">
+                    <div class="container-fluid">
+                        <!-- 导航头部 -->
+                        <div class="navbar-header">
+                            <!-- 移动设备上的导航切换按钮 -->
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse-example">
+                                <span class="sr-only">切换导航</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <!-- 品牌名称或logo -->
+                            <a class="navbar-brand" href="#">OPEN MUTUAL PLATFORM</a>
+                        </div>
+                        <!-- 导航项目 -->
+                        <div class="collapse navbar-collapse navbar-collapse-example">
+                            <!-- 一般导航项目 -->
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#">寻找团队</a></li>
+                                <li><a href="#">我的团队</a></li>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="搜索">
+                                    </div>
+                                    <button type="submit" class="btn btn-info">搜索</button>
+                                </form>
+                            </ul>
+                        </div><!-- END .navbar-collapse -->
+                    </div>
+                </nav>
+            </section>
+            <!--队伍列表-->
+            <h1>团队列表</h1>
+            <hr>
+            <section class="main-team">
+                <div class="share_exp" v-for="teamlists in teamlist">
+                    <a class="card" :href="'teamhome.html?'+teamlists.teamId">
+                        <div class="card-heading"><strong class="card-title">{{teamlists.teamName}}</strong>
+                            <dd class="pull-right" style="top:40px">
+                                <span class="label label-success"><i class="icon-tag"
+                                        style="margin-right:4px"></i>类型:{{teamlists.type}}</span>
+                            </dd>
+                        </div>
+                        <div class="card-content text-muted">{{teamlists.description}}
+                        </div>
+                        <hr>
+                        <div class="card-actions">
+                            <span class="label label-success pull-right"><i class="icon-flag"
+                                    style="margin-right:4px"></i>队长</span>
+                            <div class="flex"><img :src="'avatar/'+teamlists.headerAvatar" class="img-circle" alt="圆形图片"></div>
+                            <div class="flex card-teamname">
+                                <div><i class="icon-venus"></i>队长:{{teamlists.headerNick}}</div>
+                                <div class="icon-teamid"><i class="icon-lightbulb"></i>团队属性:{{teamlists.visual}}</div>
+                            </div>
+                            <span class="label label-info pull-right" style="bottom:10px"><i class="icon-time" style="margin-right:4px"></i>创建时间:{{teamlists.createdAt | capitalize}}</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- 尾部-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-p">
+                <p>©2018-2019 Powered By open-mutual-platform team</p>
+            </div>
+        </div>
+    </footer>
+    <!--js-->
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <script src="js/vue/vue-resource.min.js"></script>
+    <script src="js/index/team.js"></script>
+</body>
+
+</html>

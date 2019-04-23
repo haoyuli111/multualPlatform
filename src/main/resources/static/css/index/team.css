@@ -1,0 +1,136 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-04-10 08:52:16
+ * @lastTime: 2019-04-18 13:17:18
+ */
+ .banner {
+    height: 400px;
+}
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main {
+    width: 100%;
+    background: #f3e1e170;
+}
+
+.main .describe {
+    margin-top: 30px;
+    margin-left: 14px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.main .describe p {
+    font-size: 30px;
+    font-weight: 700;
+    color: #748693;
+}
+
+.main .describe .flex{
+    flex-direction: column;
+}
+
+.main .describe-right{
+    margin-top: 10px;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.main .main-team{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 50px auto;
+}
+
+.main .main-team .share_exp{
+    flex-direction: column;
+    text-align: center;
+    margin-left: 10%;
+    width: 350px;
+    text-overflow: ellipsis;
+    margin-top: 40px;
+    background: rgba(236, 226, 226, 0.5);
+}
+
+.main .main-team .share_exp .share_button{
+    left: 10px;
+    position: absolute;
+    bottom: 10px
+}
+
+.main .main-team .share_exp .pull-right{
+    position: absolute;
+    right: 4px;
+}
+
+.main .main-team .share_exp .card{
+    border:none;
+    height: 340px;
+    margin-bottom: 0;
+}
+
+.main .main-team .share_exp img{
+    margin:30px 30%;
+    width:100px;
+    height: 100px;
+}
+
+.main .main-team .share_exp .card-heading .card-title{
+    font-size: 24px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.main .main-team .share_exp .card-heading{
+    color: rgb(6, 35, 81);
+    margin-top:10px;
+}
+
+.main .main-team .share_exp .card-actions{
+   display:flex;
+   justify-content:space-between;
+}
+
+.main .main-team .share_exp .card-actions .flex{
+    flex-direction: column;
+ }
+
+ .main .main-team .share_exp .card-actions .card-teamname{
+    font-size: 16px;
+    margin-top: 10%;
+    font-weight: 600;
+    color: #4e3f04;
+    margin-right: 60px;
+ }
+
+ .main .main-team .share_exp .card-actions .card-teamname .icon-teamid{
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: left;
+    display: block;
+    font-weight: 600;
+ }
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+    .main .main-team .share_exp{
+        margin-left:0;
+    }
+
+}
+
+@media screen and (max-width: 992px) {}

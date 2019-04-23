@@ -1,0 +1,43 @@
+/*
+ * @Author: johnwang
+ * @LastAuthor: Do not edit
+ * @Github: https://github.com/tyutjohn
+ * @since: 2019-04-18 08:11:22
+ * @lastTime: 2019-04-18 08:28:05
+ */
+ .banner {
+    height: 400px;
+}
+
+.banner img {
+    height: 100%;
+    width: 100%;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-horizontal{
+    margin-top: 30px;
+}
+
+.form-horizontal .header-h{
+    font-size: 20px;
+    color: #0b7b96;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+}
+
+@media screen and (max-width:580px) {
+    .banner {
+        height: 100px;
+    }
+
+    .form-horizontal .header-h{
+        margin-bottom: 20px;
+    }
+
+}
+
+@media screen and (max-width: 992px) {}
