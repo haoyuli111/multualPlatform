@@ -12,6 +12,7 @@ import cn.lichuachua.mp.mpserver.exception.UserException;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.repository.redis.IRedisRepository;
 import cn.lichuachua.mp.mpserver.service.*;
+import cn.lichuachua.mp.mpserver.util.MD5Util;
 import cn.lichuachua.mp.mpserver.util.SendCodeUtil;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.MyTeamListVO;
@@ -192,9 +193,11 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         /**
          * 判断密码是否正确
          */
-        if (!user.getPassword().equals(userLoginForm.getPassword())){
+        //加密
+        if (!MD5Util.getMd5Simple(user.getPassword()).equals(MD5Util.getMd5Simple(userLoginForm.getPassword()))){
             throw new UserException(ErrorCodeEnum.PASSWORD_ERROR);
         }
+
         /**
          * 生成accessToken
          */
