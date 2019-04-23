@@ -14,6 +14,9 @@ import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -246,12 +249,13 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("获取我的收藏列表")
     @PostMapping("/queryMyCollectList")
-    public ResultWrapper<List<ArticleCollectVO>> queryMyCollectList(){
+    public ResultWrapper<List<ArticleCollectVO>> queryMyCollectList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户
          */
         String userId = getCurrentUserInfo().getUserId();
-        List<ArticleCollectVO> articleCollectVOList = articleCollectService.queryMyCollectList(userId);
+        List<ArticleCollectVO> articleCollectVOList = articleCollectService.queryMyCollectList(userId,pageable);
         return ResultWrapper.successWithData(articleCollectVOList);
     }
 
@@ -262,7 +266,8 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("查询我的文章列表")
     @GetMapping("/queryMyArticleList")
-    public ResultWrapper<List<MyArticleListVO>> queryMyArticleList(){
+    public ResultWrapper<List<MyArticleListVO>> queryMyArticleList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户
          */
@@ -270,7 +275,7 @@ public class UserController extends BaseController<UserInfoDTO> {
         /**
          * 查看我的文章列表
          */
-        List<MyArticleListVO> myArticleListVOList = articleService.queryMyArticleList(userId);
+        List<MyArticleListVO> myArticleListVOList = articleService.queryMyArticleList(userId,pageable);
 
         return ResultWrapper.successWithData(myArticleListVOList);
 
@@ -282,7 +287,8 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("获取我关注的人的列表")
     @GetMapping("/queryMyFollowList")
-    public ResultWrapper<List<FollowVO>> queryMyFollowList(){
+    public ResultWrapper<List<FollowVO>> queryMyFollowList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户
          */
@@ -290,7 +296,7 @@ public class UserController extends BaseController<UserInfoDTO> {
         /**
          * 获取我关注的人的列表
          */
-        List<FollowVO> followVOList = followService.queryMyFollowList(userId);
+        List<FollowVO> followVOList = followService.queryMyFollowList(userId,pageable);
         return ResultWrapper.successWithData(followVOList);
     }
 
@@ -300,7 +306,8 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("获取关注我的人的列表")
     @GetMapping("/queryFollowedMeList")
-    public ResultWrapper<List<FollowVO>> queryFollowedMeList(){
+    public ResultWrapper<List<FollowVO>> queryFollowedMeList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户
          */
@@ -308,7 +315,7 @@ public class UserController extends BaseController<UserInfoDTO> {
         /**
          * 获取我关注的人的列表
          */
-        List<FollowVO> followVOList = followService.queryFollowedMeList(userId);
+        List<FollowVO> followVOList = followService.queryFollowedMeList(userId, pageable);
         return ResultWrapper.successWithData(followVOList);
     }
 
@@ -360,12 +367,13 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("显示我创建的队伍列表")
     @GetMapping("queryMyTeamList")
-    public ResultWrapper<List<MyTeamListVO>> queryMyTeamList(){
+    public ResultWrapper<List<MyTeamListVO>> queryMyTeamList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户Id
          */
-        String uesId = getCurrentUserInfo().getUserId();
-        List<MyTeamListVO> myTeamListVOList = userService.queryMyTeamList(uesId);
+        String userId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyTeamList(userId, pageable);
         return ResultWrapper.successWithData(myTeamListVOList);
     }
 
@@ -375,12 +383,13 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("显示我加入的队伍列表")
     @GetMapping("queryMyJoinTeamList")
-    public ResultWrapper<List<MyTeamListVO>> queryMyJoinTeamList(){
+    public ResultWrapper<List<MyTeamListVO>> queryMyJoinTeamList(
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取当前登录的用户Id
          */
-        String uesId = getCurrentUserInfo().getUserId();
-        List<MyTeamListVO> myTeamListVOList = userService.queryMyJoinTeamList(uesId);
+        String userId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyJoinTeamList(userId,pageable);
         return ResultWrapper.successWithData(myTeamListVOList);
     }
 

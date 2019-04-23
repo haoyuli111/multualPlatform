@@ -4,6 +4,7 @@ import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.Follow;
 import cn.lichuachua.mp.mpserver.entity.FollowPK;
 import cn.lichuachua.mp.mpserver.vo.FollowVO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,14 +22,14 @@ public interface IFollowService extends IBaseService<Follow, FollowPK> {
      * @param userId
      * @return
      */
-    List<FollowVO> queryMyFollowList(String userId);
+    List<FollowVO> queryMyFollowList(String userId, Pageable pageable);
 
     /**
      * 获取关注我的人的列表
      * @param userId
      * @return
      */
-    List<FollowVO> queryFollowedMeList(String userId);
+    List<FollowVO> queryFollowedMeList(String userId, Pageable pageable);
 
     /**
      * 更新头像
@@ -36,4 +37,5 @@ public interface IFollowService extends IBaseService<Follow, FollowPK> {
      * @param fileName
      */
     void updateAvatar(String userId, String fileName);
+
 }

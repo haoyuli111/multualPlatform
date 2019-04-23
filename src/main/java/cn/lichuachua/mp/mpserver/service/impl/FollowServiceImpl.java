@@ -15,6 +15,8 @@ import cn.lichuachua.mp.mpserver.vo.FollowVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -99,15 +101,13 @@ public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> impleme
      * @return
      */
     @Override
-    public List<FollowVO> queryMyFollowList(String userId) {
-
-        List<Follow> followList = selectAll();
+    public List<FollowVO> queryMyFollowList(String userId, Pageable pageable) {
+        Follow follow1 = new Follow();
+        follow1.setUserId(userId);
+        follow1.setStatus(FollowStatusEnum.FOLLOW_EXIT.getStatus());
+        Page<Follow> followList = selectPage(Example.of(follow1),pageable);
         List<FollowVO> followVOList = new ArrayList<>();
         for (Follow follow : followList){
-                /**
-                 * 查看我关注的用户和在关注表里面是否正常
-                 */
-                if (follow.getUserId().equals(userId)&&follow.getStatus().equals(FollowStatusEnum.FOLLOW_EXIT.getStatus())){
                     /**
                      * 查看该被关注用户账号是否正常
                      */
@@ -124,7 +124,6 @@ public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> impleme
                     BeanUtils.copyProperties(follow,followVO);
                     followVOList.add(followVO);
                 }
-            }
         }
         return followVOList;
     }
@@ -135,16 +134,13 @@ public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> impleme
      * @return
      */
     @Override
-    public List<FollowVO> queryFollowedMeList(String userId) {
-
-        List<Follow> followList = selectAll();
+    public List<FollowVO> queryFollowedMeList(String userId, Pageable pageable) {
+        Follow follow1 = new Follow();
+        follow1.setAttentionId(userId);
+        follow1.setStatus(FollowStatusEnum.FOLLOW_EXIT.getStatus());
+        Page<Follow> followList = selectPage(Example.of(follow1),pageable);
         List<FollowVO> followVOList = new ArrayList<>();
         for (Follow follow : followList){
-
-                /**
-                 * 查看关注我的用户和在关注表里面是否正常
-                 */
-                if (follow.getAttentionId().equals(userId)&&follow.getStatus().equals(FollowStatusEnum.FOLLOW_EXIT.getStatus())){
                     /**
                      * 查看关注我的用户账号是否正常
                      */
@@ -161,7 +157,6 @@ public class FollowServiceImpl extends BaseServiceImpl<Follow, FollowPK> impleme
                     BeanUtils.copyProperties(follow,followVO);
                     followVOList.add(followVO);
                 }
-            }
         }
         return followVOList;
     }

@@ -2,7 +2,6 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
-import cn.lichuachua.mp.mpserver.entity.Article;
 import cn.lichuachua.mp.mpserver.form.ArticleChangeForm;
 import cn.lichuachua.mp.mpserver.form.ArticlePublishForm;
 import cn.lichuachua.mp.mpserver.service.IArticleLikeService;
@@ -14,7 +13,6 @@ import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -182,7 +180,7 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     @ApiOperation("分页获取文章列表")
     @GetMapping("/queryListByPage/{pageable}")
     public ResultWrapper<List<ArticleListVO>> queryListByPage(
-            @PageableDefault(page = 0,value = 5, sort = {"articleId"},direction = Sort.Direction.DESC) Pageable pageable){
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 获取文章列表
          */
@@ -198,12 +196,12 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     @ApiOperation("根据用户Id查询文章用户文章列表")
     @GetMapping("/queryUserArticleList/{userId}")
     public ResultWrapper<List<ArticleListVO>> queryUserArticleList(
-            @PathVariable("userId") String userId){
+            @PathVariable("userId") String userId,
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
         /**
          * 根据用户Id查询文章用户文章列表
          */
-        List<ArticleListVO> articleVOList = articleService.queryUserArticleList(userId);
-
+        List<ArticleListVO> articleVOList = articleService.queryUserArticleList(userId,pageable);
         return ResultWrapper.successWithData(articleVOList);
 
     }
@@ -217,8 +215,9 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     @ApiOperation("根据文章Id查询当前作者的其他文章")
     @GetMapping("/queryArticleListByArticleId/{articleId}")
     public ResultWrapper<List<ArticleListVO>> queryArticleListByArticleId(
-            @PathVariable(value = "articleId") String articleId ){
-            List<ArticleListVO> articleListVOList = articleService.queryArticleListByArticleId(articleId);
+            @PathVariable(value = "articleId") String articleId,
+            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
+            List<ArticleListVO> articleListVOList = articleService.queryArticleListByArticleId(articleId,pageable);
             return ResultWrapper.successWithData(articleListVOList);
     }
 

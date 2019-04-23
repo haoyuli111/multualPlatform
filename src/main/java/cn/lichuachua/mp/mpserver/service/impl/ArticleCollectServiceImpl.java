@@ -19,6 +19,8 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -102,7 +104,7 @@ public class ArticleCollectServiceImpl extends BaseServiceImpl<ArticleCollect, A
      */
 
     @Override
-    public List<ArticleCollectVO> queryMyCollectList(String userId ) {
+    public List<ArticleCollectVO> queryMyCollectList(String userId, Pageable pageable) {
         /**
          * 查看该用户是否存在
          */
@@ -110,10 +112,12 @@ public class ArticleCollectServiceImpl extends BaseServiceImpl<ArticleCollect, A
         if (!userOptional.isPresent()){
             throw new UserException(ErrorCodeEnum.ERROR_USER);
         }else {
-            List<ArticleCollect> articleCollectList = selectAll();
+            ArticleCollect articleCollect1 = new ArticleCollect();
+            articleCollect1.setUserId(userId);
+            articleCollect1.setStatus(CollectEnum.COLLECT_EXIT.getStatus());
+            Page<ArticleCollect> articleCollectList = selectPage(Example.of(articleCollect1),pageable);
             List<ArticleCollectVO> articleCollectVOList = new ArrayList<>();
             for (ArticleCollect articleCollect : articleCollectList){
-                if (articleCollect.getUserId().equals(userId) && articleCollect.getStatus().equals(CollectEnum.COLLECT_EXIT.getStatus())){
                     /**
                      * 查看原文章是否存在，原文章不存在，提示原文章已被删除
                      */
@@ -132,7 +136,6 @@ public class ArticleCollectServiceImpl extends BaseServiceImpl<ArticleCollect, A
                         BeanUtils.copyProperties(articleCollect,articleCollectVO);
                         articleCollectVOList.add(articleCollectVO);
                     }
-                }
             }
             return articleCollectVOList;
         }

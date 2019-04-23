@@ -4,6 +4,7 @@ import cn.lichuachua.mp.core.support.service.IBaseService;
 import cn.lichuachua.mp.mpserver.entity.ArticleCollect;
 import cn.lichuachua.mp.mpserver.entity.ArticleCollectPK;
 import cn.lichuachua.mp.mpserver.vo.ArticleCollectVO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,10 +16,12 @@ public interface IArticleCollectService extends IBaseService<ArticleCollect, Art
      */
     Integer add(String articleId, String userId);
 
+
     /**
      * 获取收藏列表
      * @param userId
      * @return
      */
-    List<ArticleCollectVO> queryMyCollectList(String userId);
+    List<ArticleCollectVO> queryMyCollectList(String userId, Pageable pageable);
+
 }

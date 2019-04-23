@@ -141,7 +141,7 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
      * @param resourceId
      * @return
      */
-    @ApiOperation("/下载资料")
+    @ApiOperation("下载资料")
     @GetMapping("/download/{resourceId}")
     public void download(
             @PathVariable(value = "resourceId") String resourceId,

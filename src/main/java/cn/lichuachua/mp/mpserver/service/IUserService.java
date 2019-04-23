@@ -9,6 +9,7 @@ import cn.lichuachua.mp.mpserver.vo.MyTeamListVO;
 import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
 import com.aliyuncs.exceptions.ClientException;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -96,17 +97,17 @@ public interface IUserService extends IBaseService<User, String> {
 
     /**
      * 显示我创建的队伍列表
-     * @param uesId
+     * @param userId
      * @return
      */
-    List<MyTeamListVO> queryMyTeamList(String uesId);
-
+    List<MyTeamListVO> queryMyTeamList(String userId, Pageable pageable);
     /**
      * 显示我加入的队伍列表
-     * @param uesId
+     * @param userId
      * @return
      */
-    List<MyTeamListVO> queryMyJoinTeamList(String uesId);
+    List<MyTeamListVO> queryMyJoinTeamList(String userId, Pageable pageable);
+
 
 
 }

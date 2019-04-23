@@ -21,6 +21,8 @@ import com.aliyuncs.exceptions.ClientException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -456,19 +458,18 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
 
     /**
      * 显示我创建的队伍列表
-     * @param uesId
+     * @param userId
      * @return
      */
     @Override
-    public List<MyTeamListVO> queryMyTeamList(String uesId){
-        List<Team> teamList = teamService.selectAll();
+    public List<MyTeamListVO> queryMyTeamList(String userId, Pageable pageable){
+        Team team1 = new Team();
+        team1.setStatus(TeamStatusEnum.NORMAL.getStatus());
+        team1.setHeaderId(userId);
+        Page<Team> teamList = teamService.selectPage(Example.of(team1),pageable);
         List<MyTeamListVO> myTeamListVOList = new ArrayList<>();
         for (Team team : teamList){
-            /**
-             * 如果队伍存在并且是自己所创建
-             */
-            if (team.getStatus().equals(TeamStatusEnum.NORMAL.getStatus())&&team.getHeaderId().equals(uesId)){
-                MyTeamListVO myTeamListVO = new MyTeamListVO();
+            MyTeamListVO myTeamListVO = new MyTeamListVO();
                 myTeamListVO.setTeamId(team.getTeamId());
                 myTeamListVO.setTeamName(team.getTeamName());
                 myTeamListVO.setDescription(team.getDescription());
@@ -482,22 +483,24 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
                 BeanUtils.copyProperties(team, myTeamListVO);
                 myTeamListVOList.add(myTeamListVO);
             }
-        }
         return myTeamListVOList;
     }
 
 
     /**
      *显示我加入的队伍列表
-     * @param uesId
+     * @param userId
      * @return
      */
     @Override
-    public List<MyTeamListVO> queryMyJoinTeamList(String uesId){
+    public List<MyTeamListVO> queryMyJoinTeamList(String userId, Pageable pageable){
         /**
          * 查询出队伍成员
          */
-        List<TeamMember> teamMemberList = teamMemberService.selectAll();
+        TeamMember teamMember1 = new TeamMember();
+        teamMember1.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
+        teamMember1.setUserId(userId);
+        Page<TeamMember> teamMemberList = teamMemberService.selectPage(Example.of(teamMember1),pageable);
         List<MyTeamListVO> myTeamListVOList = new ArrayList<>();
         for (TeamMember teamMember : teamMemberList){
             /**
@@ -515,10 +518,6 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
                  * 判断是否是自己创建的队伍
                  */
                 if (!teamMember.getUserId().equals(teamOptional.get().getHeaderId())){
-                /**
-                 * 判断member是正常
-                 */
-                if (teamMember.getUserId().equals(uesId)&&teamMember.getStatus().equals(TeamMemberStatusEnum.NORMAL.getStatus())){
                     MyTeamListVO myTeamListVO = new MyTeamListVO();
                     myTeamListVO.setTeamId(teamMember.getTeamId());
                     myTeamListVO.setTeamName(teamOptional.get().getTeamName());
@@ -531,7 +530,6 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
                         myTeamListVO.setVisual(TeamVisualEnum.NO_VISUAL.getDesc());
                     }
                     myTeamListVOList.add(myTeamListVO);
-                     }
                 }
             }
         }

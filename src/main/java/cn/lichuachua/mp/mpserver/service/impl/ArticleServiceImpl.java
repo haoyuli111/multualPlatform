@@ -296,20 +296,17 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
      * @return
      */
     @Override
-    public List<ArticleListVO> queryUserArticleList(String userId){
-        List<Article> articleList = selectAll();
+    public List<ArticleListVO> queryUserArticleList(String userId, Pageable pageable){
+        Article article1 = new Article();
+        article1.setPublisherId(userId);
+        article1.setVisual(ArticleVisualEnum.VISUAL.getStatus());
+        article1.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        Page<Article> articleList = selectPage(Example.of(article1),pageable);
         List<ArticleListVO> articleVOList = new ArrayList<>();
         /**
          * 遍历所有文章
          */
         for (Article article : articleList){
-            /**
-             *  当userId1 为空的时候说明没有登录
-             *  未登录或者登录者不是发布文章者
-             *  直接选出文章存在并且符合查询的用户ID并且可见的文章
-             */
-            if (article.getStatus().equals(ArticleStatusEnum.NORMAL.getStatus())&&article.getPublisherId().equals(userId)
-                    &&article.getVisual().equals(ArticleVisualEnum.VISUAL.getStatus())){
                 ArticleListVO articleVO = new ArticleListVO();
                 articleVO.setArticleId(article.getArticleId());
                 articleVO.setPublisherNick(article.getPublisherNick());
@@ -331,7 +328,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                  * 将articleVo添加进去articleVOList
                  */
                 articleVOList.add(articleVO);
-            }
         }
         return articleVOList;
     }
@@ -343,19 +339,16 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
      * @return
      */
     @Override
-    public List<MyArticleListVO> queryMyArticleList(String userId){
-        List<Article> articleList = selectAll();
+    public List<MyArticleListVO> queryMyArticleList(String userId, Pageable pageable){
+        Article article1 = new Article();
+        article1.setPublisherId(userId);
+        article1.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        Page<Article> articleList = selectPage(Example.of(article1),pageable);
         List<MyArticleListVO> articleVOList = new ArrayList<>();
         /**
          * 遍历所有文章
          */
         for (Article article : articleList){
-            /**
-             *  当userId1 为空的时候说明没有登录
-             *  未登录或者登录者不是发布文章者
-             *  直接选出文章存在并且符合查询的用户ID并且可见的文章
-             */
-            if (article.getStatus().equals(ArticleStatusEnum.NORMAL.getStatus())&&article.getPublisherId().equals(userId)){
                 MyArticleListVO myArticleListVO = new MyArticleListVO();
                 myArticleListVO.setArticleId(article.getArticleId());
                 /**
@@ -375,7 +368,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                  * 将articleVo添加进去articleVOList
                  */
                 articleVOList.add(myArticleListVO);
-            }
         }
         return articleVOList;
     }
@@ -417,23 +409,26 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
      * @return
      */
     @Override
-    public  List<ArticleListVO> queryArticleListByArticleId(String articleId){
+    public List<ArticleListVO> queryArticleListByArticleId(String articleId, Pageable pageable){
         /**
          * 根据文章Id取出发布人Id
          */
         Optional<Article> articleOptional = selectByKey(articleId);
 
-        List<Article> articleList = selectAll();
+        Article article1 = new Article();
+        article1.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        article1.setPublisherId(articleOptional.get().getPublisherId());
+        article1.setVisual(ArticleVisualEnum.VISUAL.getStatus());
+        Page<Article> articleList = selectPage(Example.of(article1),pageable);
         List<ArticleListVO> articleVOList = new ArrayList<>();
         /**
          * 遍历所有文章
          */
         for (Article article : articleList){
             /**
-             * 如果发布人相同,且不是该文章
+             * 该文章不再显示
              */
             if (article.getPublisherId().equals(articleOptional.get().getPublisherId())&&(!article.getArticleId().equals(articleId))) {
-                if (article.getStatus().equals(ArticleStatusEnum.NORMAL.getStatus()) && article.getVisual().equals(ArticleVisualEnum.VISUAL.getStatus())) {
                     ArticleListVO articleVO = new ArticleListVO();
                     articleVO.setArticleId(article.getArticleId());
                     articleVO.setPublisherNick(article.getPublisherNick());
@@ -455,7 +450,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
                      * 将articleVo添加进去articleVOList
                      */
                     articleVOList.add(articleVO);
-                }
             }
         }
         return articleVOList;

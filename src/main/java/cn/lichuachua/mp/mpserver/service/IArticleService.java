@@ -65,7 +65,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @param userId
      * @return
      */
-    List<ArticleListVO> queryUserArticleList(String userId);
+    List<ArticleListVO> queryUserArticleList(String userId, Pageable pageable);
 
 
     /**
@@ -73,7 +73,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @param userId
      * @return
      */
-    List<MyArticleListVO> queryMyArticleList(String userId);
+    List<MyArticleListVO> queryMyArticleList(String userId, Pageable pageable);
 
 
     /**
@@ -88,7 +88,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @param articleId
      * @return
      */
-    List<ArticleListVO> queryArticleListByArticleId(String articleId);
+    List<ArticleListVO> queryArticleListByArticleId(String articleId, Pageable pageable);
 
     /**
      * 分页获取文章列表
@@ -96,6 +96,7 @@ public interface IArticleService extends IBaseService<Article, String> {
      * @return
      */
     List<ArticleListVO> queryListByPage(Pageable pageable);
+
 }
 
 
