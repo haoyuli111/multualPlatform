@@ -14,7 +14,6 @@ import cn.lichuachua.mp.mpserver.repository.redis.IRedisRepository;
 import cn.lichuachua.mp.mpserver.service.*;
 import cn.lichuachua.mp.mpserver.util.MD5Util;
 import cn.lichuachua.mp.mpserver.util.SendCodeUtil;
-import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.MyTeamListVO;
 import cn.lichuachua.mp.mpserver.vo.UserInforVO;
 import cn.lichuachua.mp.mpserver.vo.UserVO;
@@ -22,14 +21,16 @@ import com.aliyuncs.exceptions.ClientException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import sun.security.provider.MD5;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static cn.lichuachua.mp.mpserver.util.MD5Util.convertMD5;
+import static cn.lichuachua.mp.mpserver.util.MD5Util.string2MD5;
 
 /**
  * @author 李歘歘
@@ -90,7 +91,11 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         /**
          *  保存用户信息到数据库，完成注册
          */
-        user.setPassword(userRegisterForm.getPassword2());
+        /**
+         * 将password加密MD5加密
+         */
+        String password = string2MD5(userRegisterForm.getPassword2());
+        user.setPassword(password);
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
         user.setVisual(UserVisualEnum.VISUAL.getStatus());
@@ -191,10 +196,9 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
             }
         }
         /**
-         * 判断密码是否正确
+         * 对输入的密码进行再次加密并且判断密码是否正确
          */
-        //加密
-        if (!user.getPassword().equals(userLoginForm.getPassword())){
+        if (!user.getPassword().equals(string2MD5(userLoginForm.getPassword()))){
             throw new UserException(ErrorCodeEnum.PASSWORD_ERROR);
         }
 
@@ -340,7 +344,8 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         }
         user.setUserId(userOptional.get().getUserId());
         user.setVisual(userOptional.get().getVisual());
-        user.setPassword(forgetPasswordForm.getPassword());
+        //对密码进行加密
+        user.setPassword(string2MD5(forgetPasswordForm.getPassword()));
         user.setUpdatedAt(new Date());
         user.setUserAvatar(userOptional.get().getUserAvatar());
         user.setCreatedAt(userOptional.get().getCreatedAt());
@@ -365,7 +370,7 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
          */
         User user = new User();
         user.setUserId(userId);
-        user.setPassword(changePasswordForm.getFormerPassword());
+        user.setPassword(string2MD5(changePasswordForm.getFormerPassword()));
         user.setStatus(UserStatusEnum.NORMAL.getStatus());
         Optional<User> userOptional = selectOne(Example.of(user));
         if (!userOptional.isPresent()){
@@ -379,7 +384,7 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         }
         user.setMobile(userOptional.get().getMobile());
         user.setVisual(userOptional.get().getVisual());
-        user.setPassword(changePasswordForm.getPassword());
+        user.setPassword(string2MD5(changePasswordForm.getPassword()));
         user.setUpdatedAt(new Date());
         user.setUserAvatar(userOptional.get().getUserAvatar());
         user.setCreatedAt(userOptional.get().getCreatedAt());
