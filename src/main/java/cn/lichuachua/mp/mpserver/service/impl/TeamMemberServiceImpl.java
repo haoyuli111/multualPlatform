@@ -12,9 +12,7 @@ import cn.lichuachua.mp.mpserver.exception.TeamException;
 import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
 import cn.lichuachua.mp.mpserver.form.JoinPrivateTeamForm;
 import cn.lichuachua.mp.mpserver.form.RemoveMember;
-import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
-import cn.lichuachua.mp.mpserver.service.ITeamService;
-import cn.lichuachua.mp.mpserver.service.IUserService;
+import cn.lichuachua.mp.mpserver.service.*;
 import cn.lichuachua.mp.mpserver.vo.TeamMemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -38,6 +36,12 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IAcademyService academyService;
+
+    @Autowired
+    private ISchoolService schoolService;
 
 
     /**
@@ -186,6 +190,8 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
                     teamMemberVO.setMemberId(teamMember.getUserId());
                     teamMemberVO.setMemberAvatar(userOptional.get().getUserAvatar());
                     teamMemberVO.setMemberNick(userOptional.get().getUserNick());
+                    teamMemberVO.setAcademyName(academyService.queryAcademyName(userOptional.get().getUserId(),userOptional.get().getAcademyId()));
+                    teamMemberVO.setSchoolName(schoolService.querySchoolName(userOptional.get().getUserId(),userOptional.get().getSchoolId()));
                     teamMemberVOList.add(teamMemberVO);
                 }
             }

@@ -14,4 +14,8 @@ public class TeamMemberVO {
 
     public String memberNick;
 
+    public String schoolName;
+
+    public String academyName;
+
 }
