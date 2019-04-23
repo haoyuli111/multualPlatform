@@ -53,6 +53,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
          */
         Team team = new Team();
         team.setTeamName(teamPublishForm.getTeamName());
+        team.setStatus(TeamStatusEnum.NORMAL.getStatus());
         Optional<Team> teamOptional = selectOne(Example.of(team));
         if (teamOptional.isPresent()){
             throw new TeamException(ErrorCodeEnum.TEAM_EXIT);
@@ -281,7 +282,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         team.setVisual(teamChangeForm.getVisual());
         team.setType(teamChangeForm.getType());
         team.setPassword(teamOptional1.get().getPassword());
-        team.setTeamName(teamChangeForm.getTeamName());
+        team.setTeamName(teamOptional1.get().getTeamName());
         update(team);
     }
 

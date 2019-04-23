@@ -15,8 +15,6 @@ public class TeamChangeForm {
     @NotEmpty(message = "队伍Id不能为空")
     private String teamId;
 
-    @NotEmpty(message = "队伍名不能为空")
-    private String teamName;
 
     @NotEmpty(message = "队伍描述不能为空")
     private String description;
