@@ -30,6 +30,18 @@ public class FileUtil {
         out.write(file);
         out.flush();
         out.close();
+
+        File rootPath1 = new File(ResourceUtils.getURL("classpath:").getPath());
+        String filePath1 = rootPath1+path;
+        System.out.println(filePath1);
+        File targetFile1 = new File(String.valueOf(filePath1));
+        if(!targetFile1.exists()){
+            targetFile1.mkdirs();
+        }
+        FileOutputStream out1 = new FileOutputStream(filePath1+fileName);
+        out1.write(file);
+        out1.flush();
+        out1.close();
     }
 
 
