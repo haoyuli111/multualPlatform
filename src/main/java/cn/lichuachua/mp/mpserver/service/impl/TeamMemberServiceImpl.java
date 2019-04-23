@@ -8,10 +8,8 @@ import cn.lichuachua.mp.mpserver.entity.User;
 import cn.lichuachua.mp.mpserver.enums.ErrorCodeEnum;
 import cn.lichuachua.mp.mpserver.enums.TeamMemberStatusEnum;
 import cn.lichuachua.mp.mpserver.enums.TeamStatusEnum;
-import cn.lichuachua.mp.mpserver.enums.UserStatusEnum;
 import cn.lichuachua.mp.mpserver.exception.TeamException;
 import cn.lichuachua.mp.mpserver.exception.TeamMemberException;
-import cn.lichuachua.mp.mpserver.exception.UserException;
 import cn.lichuachua.mp.mpserver.form.JoinPrivateTeamForm;
 import cn.lichuachua.mp.mpserver.form.RemoveMember;
 import cn.lichuachua.mp.mpserver.service.ITeamMemberService;
@@ -22,11 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static cn.lichuachua.mp.mpserver.util.MD5Util.string2MD5;
 
 /**
  * @author 李歘歘
@@ -102,7 +101,7 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
         /**
          * 密码是否正确
          */
-        if (!teamOpenOption.get().getPassword().equals(joinPrivateTeamForm.getPassword())){
+        if (!teamOpenOption.get().getPassword().equals(string2MD5(joinPrivateTeamForm.getPassword()))){
             throw new TeamMemberException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         TeamMember teamMember = new TeamMember();
@@ -221,8 +220,14 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
         /**
          * 判断密码是否正确
          */
-        if (!teamOptional.get().getPassword().equals(removeMember.getPassword())){
+        if (!teamOptional.get().getPassword().equals(string2MD5(removeMember.getPassword()))){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
+        }
+        /**
+         * 队长不能将自己移除
+         */
+        if (userId.equals(removeMember.getMemberId())){
+            throw new TeamMemberException(ErrorCodeEnum.NO_REMOVE_SELF);
         }
         /**
          * 查看该成员是否在队伍
@@ -233,7 +238,7 @@ public class TeamMemberServiceImpl extends BaseServiceImpl<TeamMember, TeamMembe
         teamMember.setStatus(TeamMemberStatusEnum.NORMAL.getStatus());
         Optional<TeamMember> teamMemberOptional = selectOne(Example.of(teamMember));
         if (!teamMemberOptional.isPresent()){
-            throw new TeamMemberException(ErrorCodeEnum.TEAMMEMBER_NO_EXIT);
+            throw new TeamMemberException(ErrorCodeEnum.MEMBER_NO_EXIT);
         }
         /**
          * 移除该成员

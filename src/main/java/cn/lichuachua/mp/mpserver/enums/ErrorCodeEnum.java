@@ -67,6 +67,8 @@ public enum  ErrorCodeEnum {
      */
     TEAMMEMBER_EXIT(12211,"已在该队伍中"),
     TEAMMEMBER_NO_EXIT(12211,"您不在该队伍中"),
+    MEMBER_NO_EXIT(12233,"成员不存在"),
+    NO_REMOVE_SELF(12234,"不能移除自己"),
     /**
      * 队伍类型不存在
      */

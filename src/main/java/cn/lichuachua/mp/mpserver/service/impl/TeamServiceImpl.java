@@ -21,12 +21,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static cn.lichuachua.mp.mpserver.util.MD5Util.string2MD5;
 
 /**
  * @author 李歘歘
@@ -59,7 +59,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
             throw new TeamException(ErrorCodeEnum.TEAM_EXIT);
         }
         team.setDescription(teamPublishForm.getDescription());
-        team.setPassword(teamPublishForm.getPassword());
+        team.setPassword(string2MD5(teamPublishForm.getPassword()));
         /**
          * 查看队伍类型是否存在
          */
@@ -140,7 +140,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         /**
          * 判断密码是否正确
          */
-        if (!teamOptional.get().getPassword().equals(teamDeletedForm.getPassword())){
+        if (!teamOptional.get().getPassword().equals(string2MD5(teamDeletedForm.getPassword()))){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         team.setDescription(teamOptional.get().getDescription());
@@ -216,7 +216,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         /**
          * 判断原密码是否正确
          */
-        if (!teamOptional1.get().getPassword().equals(teamPasswordForm.getFormerPassword())){
+        if (!teamOptional1.get().getPassword().equals(string2MD5(teamPasswordForm.getFormerPassword()))){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         /**
@@ -234,7 +234,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         team.setHeaderAvatar(teamOptional1.get().getHeaderAvatar());
         team.setVisual(teamOptional1.get().getVisual());
         team.setType(teamOptional1.get().getType());
-        team.setPassword(teamPasswordForm.getPassword());
+        team.setPassword(string2MD5(teamPasswordForm.getPassword()));
         team.setTeamName(teamOptional1.get().getTeamName());
         update(team);
     }
@@ -269,7 +269,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         /**
          * 查看密码是否正确
          */
-        if (!teamOptional1.get().getPassword().equals(teamChangeForm.getPassword())){
+        if (!teamOptional1.get().getPassword().equals(string2MD5(teamChangeForm.getPassword()))){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         team.setDescription(teamChangeForm.getDescription());
@@ -326,7 +326,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         /**
          * 查看密码是否正确
          */
-        if (!teamOptional1.get().getPassword().equals(teamTransfer.getPassword())){
+        if (!teamOptional1.get().getPassword().equals(string2MD5(teamTransfer.getPassword()))){
             throw new TeamException(ErrorCodeEnum.PASSWORD_ERROR);
         }
         team.setDescription(teamOptional1.get().getDescription());
@@ -389,7 +389,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         team.setHeaderAvatar(teamOptional1.get().getHeaderAvatar());
         team.setVisual(teamOptional1.get().getVisual());
         team.setType(teamOptional1.get().getType());
-        team.setPassword(teamForgetPasswordForm.getPassword());
+        team.setPassword(string2MD5(teamForgetPasswordForm.getPassword()));
         team.setTeamName(teamOptional1.get().getTeamName());
         update(team);
     }
