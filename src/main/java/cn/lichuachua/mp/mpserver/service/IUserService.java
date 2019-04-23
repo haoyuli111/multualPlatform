@@ -97,17 +97,17 @@ public interface IUserService extends IBaseService<User, String> {
 
     /**
      * 显示我创建的队伍列表
-     * @param userId
+     * @param uesId
      * @return
      */
-    List<MyTeamListVO> queryMyTeamList(String userId, Pageable pageable);
+    List<MyTeamListVO> queryMyTeamList(String uesId);
+
     /**
      * 显示我加入的队伍列表
-     * @param userId
+     * @param uesId
      * @return
      */
-    List<MyTeamListVO> queryMyJoinTeamList(String userId, Pageable pageable);
-
+    List<MyTeamListVO> queryMyJoinTeamList(String uesId);
 
 
 }

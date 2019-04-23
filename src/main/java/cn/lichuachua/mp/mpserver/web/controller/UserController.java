@@ -360,20 +360,18 @@ public class UserController extends BaseController<UserInfoDTO> {
         return ResultWrapper.success();
     }
 
-
     /**
      * 显示我创建的队伍列表
      * @return
      */
     @ApiOperation("显示我创建的队伍列表")
     @GetMapping("queryMyTeamList")
-    public ResultWrapper<List<MyTeamListVO>> queryMyTeamList(
-            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
+    public ResultWrapper<List<MyTeamListVO>> queryMyTeamList(){
         /**
          * 获取当前登录的用户Id
          */
-        String userId = getCurrentUserInfo().getUserId();
-        List<MyTeamListVO> myTeamListVOList = userService.queryMyTeamList(userId, pageable);
+        String uesId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyTeamList(uesId);
         return ResultWrapper.successWithData(myTeamListVOList);
     }
 
@@ -383,13 +381,12 @@ public class UserController extends BaseController<UserInfoDTO> {
      */
     @ApiOperation("显示我加入的队伍列表")
     @GetMapping("queryMyJoinTeamList")
-    public ResultWrapper<List<MyTeamListVO>> queryMyJoinTeamList(
-            @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
+    public ResultWrapper<List<MyTeamListVO>> queryMyJoinTeamList(){
         /**
          * 获取当前登录的用户Id
          */
-        String userId = getCurrentUserInfo().getUserId();
-        List<MyTeamListVO> myTeamListVOList = userService.queryMyJoinTeamList(userId,pageable);
+        String uesId = getCurrentUserInfo().getUserId();
+        List<MyTeamListVO> myTeamListVOList = userService.queryMyJoinTeamList(uesId);
         return ResultWrapper.successWithData(myTeamListVOList);
     }
 
