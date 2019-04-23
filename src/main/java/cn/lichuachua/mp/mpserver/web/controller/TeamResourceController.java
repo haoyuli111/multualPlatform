@@ -60,7 +60,7 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
          */
         if (file!=(null)){
             //文件路径
-            String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/resource/";
+            String filePath = "/static/resource/";
             //文件名
             String fileName = file.getOriginalFilename();
             /**
@@ -136,16 +136,45 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
 
 
 
+//    /**
+//     * 下载文件
+//     * @param resourceId
+//     * @return
+//     */
+//    @ApiOperation("下载资料")
+//    @GetMapping("/download/{resourceId}")
+//    public void download(
+//            @PathVariable(value = "resourceId") String resourceId,
+//            HttpServletResponse response){
+//        /**
+//         * 查询出当前的登录的用户Id
+//         */
+//        String userId = getCurrentUserInfo().getUserId();
+//        /**
+//         * 根据资料的Id查询出文件名字
+//         */
+//        String fileName = teamResourceService.download(resourceId, userId);
+//        System.out.println(fileName);
+//        /**
+//         * 下载文件
+//         */
+//        String filePath = "/static/resource/";
+//        try {
+//            FileUtil.download(response,filePath,fileName);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     /**
-     * 下载文件
+     * 下载资料
      * @param resourceId
      * @return
      */
     @ApiOperation("下载资料")
     @GetMapping("/download/{resourceId}")
-    public void download(
-            @PathVariable(value = "resourceId") String resourceId,
-            HttpServletResponse response){
+    public ResultWrapper<String> download(
+            @PathVariable(value = "resourceId") String resourceId){
         /**
          * 查询出当前的登录的用户Id
          */
@@ -154,16 +183,8 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
          * 根据资料的Id查询出文件名字
          */
         String fileName = teamResourceService.download(resourceId, userId);
-        System.out.println(fileName);
-        /**
-         * 下载文件
-         */
-        String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/resource/";
-        try {
-            FileUtil.download(response,filePath,fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return ResultWrapper.successWithData(fileName);
     }
+
 
 }

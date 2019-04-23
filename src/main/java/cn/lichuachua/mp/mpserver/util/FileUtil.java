@@ -1,5 +1,7 @@
 package cn.lichuachua.mp.mpserver.util;
 
+import org.springframework.util.ResourceUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -9,11 +11,17 @@ public class FileUtil {
     /**
      * 文件上传
      * @param file
-     * @param filePath
+     * @param path
      * @param fileName
      * @throws Exception
      */
-    public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
+    public static void uploadFile(byte[] file, String path, String fileName) throws Exception {
+//        File rootPath = ResourceUtils.getFile("classpath:resources");
+//        File rootPath = new File(ResourceUtils.getURL("classpath:resources").getPath());
+//        String filePath = rootPath.getAbsolutePath()+path;
+        String rootPath ="C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources";
+        String filePath = rootPath+path;
+        System.out.println(filePath);
         File targetFile = new File(String.valueOf(filePath));
         if(!targetFile.exists()){
             targetFile.mkdirs();
@@ -25,8 +33,17 @@ public class FileUtil {
     }
 
 
-    public static void download(HttpServletResponse response, String FilePath, String fileName) throws UnsupportedEncodingException {
-        File file = new File(FilePath+fileName);
+    /**
+     * 文件下载
+     * @param response
+     * @param path
+     * @param fileName
+     * @throws UnsupportedEncodingException
+     */
+    public static void download(HttpServletResponse response, String path, String fileName) throws UnsupportedEncodingException {
+        String rootPath ="C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources";
+        String filePath = rootPath+path;
+        File file = new File(filePath+fileName);
             fileName = new String(file.getName().getBytes("UTF-8"),"iso-8859-1");
         if (file.exists()){
             //设置强制下载不打开

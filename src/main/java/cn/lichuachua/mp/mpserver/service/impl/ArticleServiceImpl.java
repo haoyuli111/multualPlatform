@@ -455,4 +455,29 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
         return articleVOList;
     }
 
+
+    /**
+     *下载附件
+     * @param articleId
+     * @param userId
+     * @return
+     */
+    @Override
+    public String download(String articleId, String userId){
+        /**
+         * 查看该附件是否存在
+         */
+        Article article = new Article();
+        article.setArticleId(articleId);
+        article.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        Optional<Article> articleOptional = selectOne(Example.of(article));
+        if (!articleOptional.isPresent()){
+            throw new ArticleException(ErrorCodeEnum.ARTICLE_NO_EXIT);
+        }
+        if (articleOptional.get().getAccessory()==null){
+            throw new ArticleException(ErrorCodeEnum.ACCESSARY_NO_EXIT);
+        }
+        return articleOptional.get().getAccessory();
+    }
+
 }

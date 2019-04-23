@@ -63,7 +63,7 @@ public class ArticleController extends BaseController<UserInfoDTO> {
          */
         if (file!=(null)){
             //文件路径
-            String filePath = "C:/Users/Administrator/Desktop/Mp/multualPlatform/src/main/resources/static/accessory/";
+            String filePath = "/static/accessory/";
             //文件名
             String fileName = file.getOriginalFilename();
             /**
@@ -219,6 +219,26 @@ public class ArticleController extends BaseController<UserInfoDTO> {
             @PageableDefault(page = 0,value = 10, sort = {"createdAt"},direction = Sort.Direction.DESC) Pageable pageable){
             List<ArticleListVO> articleListVOList = articleService.queryArticleListByArticleId(articleId,pageable);
             return ResultWrapper.successWithData(articleListVOList);
+    }
+
+    /**
+     * 下载资料
+     * @param articleId
+     * @return
+     */
+    @ApiOperation("下载附件")
+    @GetMapping("/download/{articleId}")
+    public ResultWrapper<String> download(
+            @PathVariable(value = "articleId") String articleId){
+        /**
+         * 查询出当前的登录的用户Id
+         */
+        String userId = getCurrentUserInfo().getUserId();
+        /**
+         * 根据资料的Id查询出文件名字
+         */
+        String fileName = articleService.download(articleId, userId);
+        return ResultWrapper.successWithData(fileName);
     }
 
 

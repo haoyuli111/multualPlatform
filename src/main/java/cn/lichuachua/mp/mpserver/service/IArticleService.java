@@ -97,6 +97,13 @@ public interface IArticleService extends IBaseService<Article, String> {
      */
     List<ArticleListVO> queryListByPage(Pageable pageable);
 
+    /**
+     * 下载附件
+     * @param articleId
+     * @param userId
+     * @return
+     */
+    String download(String articleId, String userId);
 }
 
 

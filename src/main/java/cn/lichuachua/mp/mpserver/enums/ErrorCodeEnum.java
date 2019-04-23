@@ -43,6 +43,7 @@ public enum  ErrorCodeEnum {
     ARTICLE_NO_VISUAL(12121,"文章不可见"),
 
     ARTICLE_NO_EXIT(12224,"文章不存在"),
+    ACCESSARY_NO_EXIT(12224,"附件不存在"),
     ARTICLE_DELETED(12225,"文章已被删除"),
     COLLECT_EXIT(12111,"收藏已存在"),
     COLLECT_NO_EXIT(12112,"收藏不存在"),
