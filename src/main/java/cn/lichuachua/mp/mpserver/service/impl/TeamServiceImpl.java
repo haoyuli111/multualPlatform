@@ -181,6 +181,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
                 teamListVO.setTeamId(team.getTeamId());
                 teamListVO.setTeamName(team.getTeamName());
                 teamListVO.setType(team.getType());
+                teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
                 BeanUtils.copyProperties(team, teamListVO);
                 teamListVOList.add(teamListVO);
             }
@@ -519,6 +520,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
                 teamListVO.setTeamId(team.getTeamId());
                 teamListVO.setTeamName(team.getTeamName());
                 teamListVO.setType(team.getType());
+                teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
                 BeanUtils.copyProperties(team, teamListVO);
                 teamListVOList.add(teamListVO);
             }
@@ -550,6 +552,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
                 teamListVO.setTeamId(team.getTeamId());
                 teamListVO.setTeamName(team.getTeamName());
                 teamListVO.setType(team.getType());
+                teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
                 BeanUtils.copyProperties(team, teamListVO);
                 teamListVOList.add(teamListVO);
             }
@@ -584,6 +587,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
                     teamListVO.setTeamId(team.getTeamId());
                     teamListVO.setTeamName(team.getTeamName());
                     teamListVO.setType(team.getType());
+                    teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
                     BeanUtils.copyProperties(team, teamListVO);
                     teamListVOList.add(teamListVO);
                 }
@@ -654,6 +658,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamListVO.setTeamId(teamOptional.get().getTeamId());
         teamListVO.setTeamName(teamOptional.get().getTeamName());
         teamListVO.setType(teamOptional.get().getType());
+        teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
         return teamListVO;
     }
 

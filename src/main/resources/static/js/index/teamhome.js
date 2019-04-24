@@ -84,6 +84,53 @@ var teamHome=new Vue({
                 console.log(reason)
             })
         },
+        //加入团队--公有
+        joinTeam:function(){
+            let token=document.querySelector('#token').value;
+            let commentForm = new FormData();
+            commentForm.append('accessToken', token);
+            commentForm.append('teamId',tar);
+            this.$http.post('http://localhost:8080/teamMember/joinPublicTeam/' + tar, commentForm, {
+                'Content-Type': 'Multipart/form-data'
+            }).then(
+                function (res) {
+                    if (res.body.code == 0) {
+                        new $.zui.Messager('加入成功', {
+                            type: 'success',
+                            placement: 'center',
+                            icon: 'icon-ok-sign'
+                        }).show();
+                    }else{
+                        new $.zui.Messager('加入未成功，'+res.body.message, {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                    }
+                    location.reload();
+                   // console.log(JSON.stringify(res))
+                },
+                function (res) {
+                    if (res.body.code == 1201) {
+                        new $.zui.Messager('未登陆账号，即将跳转', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                        window.location.href = 'login.html'
+                    } else {
+                        new $.zui.Messager('网络错误或未找到服务器，请检查网络后重新刷新', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                    }
+                    console.log(JSON.stringify(res))
+                }
+            ).catch(function (reason) {
+                console.log(reason);
+            })
+        }
     },
     filters:{
         capitalize:function(value){

@@ -76,6 +76,13 @@
     overflow: hidden;
 }
 
+.main .itemnew{
+    padding: 10px 50px;
+    height: 80px !important;
+    overflow: hidden;
+    font-size: 16px;
+}
+
 @media screen and (max-width:580px) {
     .banner {
         height: 200px;

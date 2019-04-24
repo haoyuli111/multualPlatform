@@ -66,11 +66,13 @@ var app=new Vue({
                     id:{}
                 }
             }
-        }
+        },
+        followpeople:{}
     },
     mounted:function(){
         this.get();
         this.other_article();
+        this.followuser();
     },
     methods: {
         get:function(){
@@ -171,7 +173,7 @@ var app=new Vue({
             formData.append('accessToken',token);
             formData.append('content',content);
             formData.append('parentId',tar)
-            this.$http.post('http://127.0.0.1:8080/artircle/comment/publish',formData,{'Content-Type':'Multipart/form-data'}).then(
+            this.$http.post('http://localhost:8080/artircle/comment/publish',formData,{'Content-Type':'Multipart/form-data'}).then(
                 function(res){
                     if(res.body.code==1001){
                         new $.zui.Messager('未填写内容，请重新填写评论',{
@@ -309,14 +311,20 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('commentId', articleId)
-            this.$http.put('http://127.0.0.1:8080/article/likes/' + tar,commentForm, {
+            this.$http.put('http://localhost:8080/article/likes/' + tar,commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function(res){
                     if(res.body.code==0){
-                        let spanlove=document.querySelector('#article-love');
-                        spanlove.innerHTML="已点赞";
-                        spanlove.style.color="#e83737"
+                        if(res.body.data==0){
+                            let spanlove=document.querySelector('#article-love');
+                            spanlove.innerHTML="已点赞";
+                            spanlove.style.color="#e83737"
+                        }else{
+                            let spanlove=document.querySelector('#article-love');
+                            spanlove.innerHTML="点赞";
+                            spanlove.style.color="#353535;"
+                        }
                     }else{
                         new $.zui.Messager('点赞失败，错误原因:' + res.body.message, {
                             type: 'danger',
@@ -343,6 +351,166 @@ var app=new Vue({
                     }
                 }
             )
+        },
+        //关注作者
+        follow:function(){
+            let token=document.querySelector('#token').value;
+            let userId=document.querySelector('#userid').innerHTML;
+            let commentForm = new FormData();
+            commentForm.append('accessToken', token);
+            commentForm.append('userId',userId);
+            this.$http.post('http://localhost:8080/follow/'+userId, commentForm, {
+                'Content-Type': 'Multipart/form-data'
+            }).then(
+                function (res) {
+                    if (res.body.code == 0) {
+                        // new $.zui.Messager('关注成功', {
+                        //     type: 'success',
+                        //     placement: 'center',
+                        //     icon: 'icon-ok-sign'
+                        // }).show();
+                        if(res.body.data==0){
+                            let FollowArticle=document.querySelector('#FollowArticle');
+                            FollowArticle.innerHTML='已关注'
+                        }else{
+                            let FollowArticle=document.querySelector('#FollowArticle');
+                            FollowArticle.innerHTML='关注'
+                        }
+                    }else{
+                        new $.zui.Messager('关注未成功，'+res.body.message, {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                    }
+                    console.log(res)
+                },
+                function (res) {
+                    console.log(res)
+                }
+            ).catch(function (reason) {
+                console.log(reason);
+            })
+        },
+        //关注作者列表
+        followuser:function(){
+            let self=this;
+            let token=document.querySelector('#token').value;
+            this.$http.get("http://localhost:8080/user/queryFollowedMeList", {
+                params: {
+                    accessToken: token
+                }
+            }).then(
+                function(res){
+                    self.followpeople=res.body.data;
+                    //console.log(res);
+                },function(res){
+                    console.log(res);
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
+        },
+        //下载资源
+        downloadR:function(){
+            let self=this;
+            let token=document.querySelector('#token').value;
+            this.$http.get("http://localhost:8080/teamResource/download/"+tar, {
+                params: {
+                    accessToken: token
+                }
+            }).then(
+                function(res){
+                    // if (res.body.code == 0) {
+                    //     new $.zui.Messager('正在下载', {
+                    //         type: 'success',
+                    //         placement: 'center',
+                    //         icon: 'icon-ok-sign'
+                    //     }).show();
+                    // }else{
+                    //     new $.zui.Messager('下载失败，'+res.body.message, {
+                    //         type: 'danger',
+                    //         placement: 'center',
+                    //         icon: 'icon-exclamation-sign'
+                    //     }).show();
+                    // }
+                    console.log(res);
+                },function(res){
+                    if (res.body.code == 1201) {
+                        new $.zui.Messager('未登陆账号，即将跳转', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                        window.location.href = 'login.html'
+                    } else {
+                        new $.zui.Messager('网络错误或未找到服务器，请检查网络后重新刷新', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                    }
+                    //console.log(res);
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
+        },
+        //收藏文章
+        collectA:function(){
+            let token=document.querySelector('#token').value;
+            let commentForm = new FormData();
+            commentForm.append('accessToken', token);
+            commentForm.append('articleId ', tar)
+            this.$http.post('http://localhost:8080/article/collect/' + tar, commentForm, {
+                'Content-Type': 'Multipart/form-data'
+            }).then(
+                function (res) {
+                    if (res.body.code == 0) {
+                        if(res.body.data==0){
+                            let spancollect=document.querySelector('#article-collect');
+                            spancollect.innerHTML="已收藏";
+                            spancollect.style.color="#e83737"
+                        }else{
+                            let spancollect=document.querySelector('#article-collect');
+                            spancollect.innerHTML="收藏";
+                            spancollect.style.color="#353535;"
+                        }
+                        console.log(res)
+                    }else{
+                        new $.zui.Messager('收藏失败，'+res.body.message, {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                    }
+                },
+                function (res) {
+                    if (res.body.code == 1201) {
+                        new $.zui.Messager('未登陆账号，即将跳转', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                        window.location.href = 'login.html'
+                    } else {
+                        new $.zui.Messager('网络错误或未找到服务器，请检查网络后重新刷新', {
+                            type: 'danger',
+                            placement: 'center',
+                            icon: 'icon-exclamation-sign'
+                        }).show();
+                        console.log(res)
+                    }
+                }
+            ).catch(function (reason) {
+                console.log(reason);
+            })
+        }
+    },
+    computed:{
+        //计算被关注人数
+        FollowUser:function(){
+            return this.followpeople.length;
         }
     },
     filters:{
@@ -353,11 +521,3 @@ var app=new Vue({
         }
     }
 })
-//多刷新一次解决渲染不到的bug
-// $(document).ready(function () {
-//
-//     let begin=setInterval(function(){
-//         window.location.reload();
-//     },1000)
-//     clearInterval(begin)
-// })

@@ -8,6 +8,7 @@ import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * @author 李歘歘
  */
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @Api(value = "SchoolController", tags = {"学校类API"})
 @RestController
 @RequestMapping(value = "/school")

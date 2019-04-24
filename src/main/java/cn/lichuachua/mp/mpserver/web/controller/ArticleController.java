@@ -9,10 +9,12 @@ import cn.lichuachua.mp.mpserver.service.IArticleService;
 import cn.lichuachua.mp.mpserver.util.FileUtil;
 import cn.lichuachua.mp.mpserver.vo.ArticleListVO;
 import cn.lichuachua.mp.mpserver.vo.ArticleVO;
+import cn.lichuachua.mp.mpserver.wrapper.FileWrapper;
 import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -240,6 +242,24 @@ public class ArticleController extends BaseController<UserInfoDTO> {
         String fileName = articleService.download(articleId, userId);
         return ResultWrapper.successWithData(fileName);
     }
+
+    @ApiOperation("文章图片上传")
+    @PostMapping(value = "editormdPic",produces = "application/json;charset=UTF-8")
+    public FileWrapper editormdPic (@RequestParam(value = "editormd-image-file", required = true) MultipartFile file) throws Exception{
+        /**
+         * 上传图片
+         */
+        String filePath = "/static/articleImg/";
+        String fileName = file.getOriginalFilename();
+        try {
+            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return FileWrapper.success("C:/Users/Administrator/Desktop/Mp/mutualPlatform/target/classes"+fileName);
+    }
+
 
 
 }

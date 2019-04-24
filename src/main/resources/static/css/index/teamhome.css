@@ -3,7 +3,7 @@
  * @LastAuthor: Do not edit
  * @Github: https://github.com/tyutjohn
  * @since: 2019-04-10 10:24:35
- * @lastTime: 2019-04-10 17:41:16
+ * @lastTime: 2019-04-19 19:28:35
  */
  .banner {
     height: 400px;
@@ -115,6 +115,18 @@
     color: rgba(243, 228, 14, 0.863);
 }
 
+.main .team .join{
+    background: #fafafa;
+    color: #2f3044;
+    text-align: center;
+}
+
+.main .team .join h1{
+    font-size: 26px;
+    margin-top: 0;
+    padding-top: 30px;
+}
+
 @media screen and (max-width:580px) {
     .banner {
         height: 100px;
@@ -148,7 +160,7 @@
 
     .main .team .share_exp {
         width: 90%;
-        height: 300px;
+        height: 380px;
         margin: 10px auto;
     }
 

@@ -34,20 +34,32 @@
                         <a href="share.html">share</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">team</a>
+                        <a href="team.html">team</a>
                     </li>
                     <li>
                         <a href="user.html">个人主页</a>
                     </li>
-                    <li>
+                    <li id="login">
                         <a href="login.html">登陆</a>
                     </li>
                 </ul>
             </div>
+            <!--登陆后个人信息-->
+            <!-- <div id="nav_user" class="header_nav_persion" @mousemove="UserMove()" @mouseout="UserOut()">
+                <a href="#" class="">
+                    <img width="40" height="40" :src="'avatar/'+user.userAvatar" id="header_nav_img">
+                </a>
+                <div class="menu" id="header_nav_menu" style="height: 0;overflow:hidden;">
+                    <div class="group"><a href="user.html"><span class="icon icon-user"></span>个人中心</a></div>
+                    <div class="group"><a href="userset.html"><span class="icon icon-cogs"></span>帐号设置</a></div>
+                    <div class="group"><a href="#" @click="quit_log"><span class="icon icon-signin"></span>退出</a></div>
+                </div>
+            </div> -->
             <a href="javascript:void(0)" id="navToggle">
                 <span></span>
             </a>
         </div>
+        <input type="hidden" name="accessToken" id="token" />
     </header>
     <!--移动端的导航-->
     <div class="m_nav">
@@ -62,29 +74,14 @@
             <li class="active">
                 <a href="index.html">首页</a>
             </li>
-            <!--<li class="dropdown">-->
-            <!--<a href="st'">-->
-            <!---->
-            <!--</a>-->
-            <!--&lt;!&ndash;<div class="dropdown_menu">&ndash;&gt;-->
-            <!--&lt;!&ndash;<a href="#">Menu-one</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;<a href="#">Menu-two</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;<a href="#">Menu-three</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--</li>-->
             <li class="dropdown">
-                <a href="study.html)">study</a>
-                <!--<div class="dropdown_menu">-->
-                <!--<a href="#">Custom Menu</a>-->
-                <!--<a href="#">Custom Menu</a>-->
-                <!--<a href="#">Custom Menu</a>-->
-                <!--</div>-->
+                <a href="study.html">study</a>
             </li>
             <li>
                 <a href="share.html">share</a>
             </li>
             <li>
-                <a href="javascript:void(0)">team</a>
+                <a href="team.html">team</a>
             </li>
             <li>
                 <a href="user.html">个人主页</a>
@@ -99,31 +96,42 @@
         <img src="image/index/share-banner.jpg">
     </div>
     <!--main-->
-    <div class="main">
+    <div class="main" id="share">
         <div class="container">
             <section class="main-nav">
                 <div class="persion">
                     <div class="persionbox">
                         <a class="card" href="###">
-                            <img src="image/index/man1.webp">
+                            <img :src="'avatar/'+user.userAvatar">
                             <div class="card-actions">
                                 <button type="button" class="btn btn-danger share_button" style="margin-left:0"><i
-                                        class="icon-heart"></i> 喜欢</button>
-                                <div class="pull-right text-danger"><i class="icon-heart-empty"></i> 520 人喜欢</div>
+                                        class="icon-heart"></i> 关注</button>
+                                <div class="pull-right text-danger"><i class="icon-heart-empty"></i> {{FollowUser}}人关注
+                                </div>
                             </div>
                         </a>
                     </div>
                     <div class="persionbox">
                         <a class="card" href="###">
-                            <div class="card-heading" style="color:#494c51;font-size:20px"><strong>张无忌</strong></div>
+                            <div class="card-heading" style="color:#494c51;font-size:20px">
+                                <strong>{{user.userNick}}</strong></div>
                             <div class="card-content text-muted">
                                 <h1 style="border-bottom:1px solid #e5e5e5;margin:10px auto">个人签名</h1>
                                 分享《九阳真经》，一起研究"乾坤大挪移",加入明教团队
                             </div>
                         </a>
                     </div>
+                    <div class="persionbox">
+                        <div class="panel panel-primary" style="width:300px">
+                            <div class="panel-heading" contenteditable="">公告</div>
+                            <div class="panel-body" contenteditable="" v-for="panelLists in panelList">
+                                <div>{{panelLists.title}}</div>
+                                <div>{{panelLists.content}}</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="persionbox boxicon">
-                        <a href="#"> <i class="icon icon-cog  icon-3x"></i></a>
+                        <a href="user.html"> <i class="icon icon-cog  icon-3x"></i></a>
                     </div>
                 </div>
             </section>
@@ -178,12 +186,15 @@
                     <section>
                         <form class="form-horizontal">
                             <div class="form-group" id="label">
-                                <label for="exampleInputType" class="col-sm-2">标签(文章类型)</label>
+                                <label for="exampleInputType" class="col-sm-2">文章类型</label>
                                 <div class="col-md-6 col-sm-10">
                                     <!--<input type="text" class="form-control" id="exampleInputType"-->
-                                        <!--placeholder="起一个引人注目的标签吧" name="articleType">-->
-                                    <select style="width:100%;height:30px;border-radius:4px;border:1px solid #38b03f;" id="exampleInputType" @change="changeLable()" value="1">
-                                        <option v-for="labels in label.data" :value="labels.typeId">{{labels.typeName}}</option>
+                                    <!--placeholder="起一个引人注目的标签吧" name="articleType">-->
+                                    <select style="width:100%;height:30px;border-radius:4px;border:1px solid #38b03f;"
+                                        id="exampleInputType" @change="changeLable()" value="1"
+                                        class="chosen-select form-control">
+                                        <option v-for="labels in label.data" :value="labels.typeId">{{labels.typeName}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -197,35 +208,56 @@
                             <div class="form-group">
                                 <div class="switch" style="margin-left:170px;">
                                     <input type="checkbox" class="col-md-1" name="visual" checked value="0"
-                                        id="exampleInputcheck" />
+                                        id="exampleInputcheck" @click="check" />
                                     <label>设置文章是否可见</label>
                                 </div>
                             </div>
                             <textarea id="exampleMarkdown" name="content" value="" style="display:none"></textarea>
-                            <input type="hidden" name="accessToken" id="token"/>
+                            <input type="hidden" name="accessToken" id="token" />
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="button" class="btn btn-default" id="set">发布</button>
+                                    <button type="button" class="btn btn-default" id="set"
+                                        @click="setarticle">发布</button>
                                 </div>
                             </div>
                         </form>
                     </section>
                 </div>
                 <div class="tab-pane" id="tabContent2">
-                    <div id='uploaderHorder' class="uploader" data-ride="uploader" data-url="your/file/upload/url">
-                        <div class="uploader-message text-center">
-                            <div class="content"></div>
-                            <button type="button" class="close">×</button>
+                    <form class="form" style="margin:20px auto">
+                        <div class="form-group">
+                            <label for="redourceTitle">资源名称</label>
+                            <input type="text" class="form-control" id="redourceTitle" placeholder="此处填写资源名称"
+                                name="redourceTitle">
+                            <label for="redourceContent">资源描述</label>
+                            <input type="text" class="form-control" id="redourceContent" placeholder="此处填写资源的描述"
+                                name="redourceName">
+                            <label for="resourceType">资源类型</label>
+                            <select style="width:100%;height:30px;border-radius:4px;border:1px solid #38b03f;"
+                                id="resourceType" @change="changeLable2()" value="1" class="chosen-select form-control">
+                                <option v-for="labels in label.data" :value="labels.typeId">{{labels.typeName}}</option>
+                            </select>
                         </div>
-                        <div class="uploader-files file-list file-list-lg" data-drag-placeholder="请拖拽文件到此处"></div>
-                        <div class="uploader-actions">
-                            <div class="uploader-status pull-right text-muted"></div>
-                            <button type="button" class="btn btn-link uploader-btn-browse"><i
-                                    class="icon icon-plus"></i> 选择文件</button>
-                            <button type="button" class="btn btn-link uploader-btn-start"><i
-                                    class="icon icon-cloud-upload"></i> 开始上传</button>
+                        <div class="form-group">
+                            <div class="file-wrapper" style="display:none" id="file-show">
+                                <div class="file-icon" style="color: rgb(173, 31, 62);margin-right:10px"><i
+                                        class="icon icon-file-code file-icon-css" data-type="text/css"
+                                        data-ext="css"></i></div>
+                                <div class="content">
+                                    <div class="file-name" id="file-name"></div>
+                                </div>
+                                <div class="actions">
+                                    <button type="button" data-toggle="tooltip"
+                                        class="btn btn-link btn-rename-file pull-right" title=""
+                                        data-original-title="重命名"><i class="icon icon-pencil"></i></button>
+                                </div>
+                            </div>
+                            <div class="btn btn-info btn-block" @click="setadd">点击选择上传资源</div>
+                            <input type="file" class="form-control" id="file" name="file" placeholder="点击上传"
+                                style="display:none" ref="resourceadd" @change="tirggerFile" />
                         </div>
-                    </div>
+                        <button type="button" class="btn btn-primary" @click="pushResource">发布资源</button>
+                    </form>
                 </div>
             </div>
         </div>

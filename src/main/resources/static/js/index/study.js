@@ -124,7 +124,7 @@ let app=new Vue({
             ).catch(function (reason) {
                 console.log(reason);
             })
-        }
+        },
     },
     filters:{
         capitalize:function(value){

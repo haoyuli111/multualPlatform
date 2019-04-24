@@ -7,14 +7,12 @@ import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 李歘歘
  */
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @Api(value = "FollowController",tags = {"关注API"})
 @RestController
 @RequestMapping(value = "/follow")

@@ -32,20 +32,32 @@
                         <a href="share.html">share</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">team</a>
+                        <a href="team.html">team</a>
                     </li>
                     <li>
                         <a href="user.html">个人主页</a>
                     </li>
-                    <li>
+                    <li id="login">
                         <a href="login.html">登陆</a>
                     </li>
                 </ul>
             </div>
+            <!--登陆后个人信息-->
+            <!-- <div id="nav_user" class="header_nav_persion" @mousemove="UserMove()" @mouseout="UserOut()">
+                <a href="#" class="">
+                    <img width="40" height="40" :src="'avatar/'+user.userAvatar" id="header_nav_img">
+                </a>
+                <div class="menu" id="header_nav_menu" style="height: 0;overflow:hidden;">
+                    <div class="group"><a href="user.html"><span class="icon icon-user"></span>个人中心</a></div>
+                    <div class="group"><a href="userset.html"><span class="icon icon-cogs"></span>帐号设置</a></div>
+                    <div class="group"><a href="#" @click="quit_log"><span class="icon icon-signin"></span>退出</a></div>
+                </div>
+            </div> -->
             <a href="javascript:void(0)" id="navToggle">
                 <span></span>
             </a>
         </div>
+        <input type="hidden" name="accessToken" id="token" />
     </header>
     <!--移动端的导航-->
     <div class="m_nav">
@@ -61,13 +73,13 @@
                 <a href="index.html">首页</a>
             </li>
             <li class="dropdown">
-                <a href="study.html)">study</a>
+                <a href="study.html">study</a>
             </li>
             <li>
                 <a href="share.html">share</a>
             </li>
             <li>
-                <a href="javascript:void(0)">team</a>
+                <a href="team.html">team</a>
             </li>
             <li>
                 <a href="user.html">个人主页</a>
@@ -146,12 +158,14 @@
                         <div class="card-actions">
                             <span class="label label-success pull-right"><i class="icon-flag"
                                     style="margin-right:4px"></i>队长</span>
-                            <div class="flex"><img :src="'avatar/'+teamlists.headerAvatar" class="img-circle" alt="圆形图片"></div>
+                            <div class="flex"><img :src="'avatar/'+teamlists.headerAvatar" class="img-circle"
+                                    alt="圆形图片"></div>
                             <div class="flex card-teamname">
                                 <div><i class="icon-venus"></i>队长:{{teamlists.headerNick}}</div>
                                 <div class="icon-teamid"><i class="icon-lightbulb"></i>团队属性:{{teamlists.visual}}</div>
                             </div>
-                            <span class="label label-info pull-right" style="bottom:10px"><i class="icon-time" style="margin-right:4px"></i>创建时间:{{teamlists.createdAt | capitalize}}</span>
+                            <span class="label label-info pull-right" style="bottom:10px"><i class="icon-time"
+                                    style="margin-right:4px"></i>创建时间:{{teamlists.createdAt | capitalize}}</span>
                         </div>
                     </a>
                 </div>

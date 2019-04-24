@@ -3,7 +3,7 @@
  * @LastAuthor: Do not edit
  * @Github: https://github.com/tyutjohn
  * @since: 2019-04-10 08:54:27
- * @lastTime: 2019-04-18 09:44:50
+ * @lastTime: 2019-04-19 19:11:46
  */
 $(function () {
     //超过一定高度导航添加类名
@@ -46,7 +46,12 @@ var team=new Vue({
     methods:{
         teamList:function(){
             let self=this;
-            this.$http.get("http://127.0.0.1:8080/team/queryList").then(
+            let visual='0';
+            this.$http.get("http://127.0.0.1:8080/team/queryAllList",{
+                params:{
+                    visual:visual
+                }
+            }).then(
                 function(res){
                     self.teamlist=res.body.data;
                     new $.zui.Messager('加载成功',{

@@ -33,20 +33,32 @@
                         <a href="share.html">share</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">team</a>
+                        <a href="team.html">team</a>
                     </li>
                     <li>
                         <a href="user.html">个人主页</a>
                     </li>
-                    <li>
+                    <li id="login">
                         <a href="login.html">登陆</a>
                     </li>
                 </ul>
             </div>
+            <!--登陆后个人信息-->
+            <!-- <div id="nav_user" class="header_nav_persion" @mousemove="UserMove()" @mouseout="UserOut()">
+                <a href="#" class="">
+                    <img width="40" height="40" :src="'avatar/'+user.userAvatar" id="header_nav_img">
+                </a>
+                <div class="menu" id="header_nav_menu" style="height: 0;overflow:hidden;">
+                    <div class="group"><a href="user.html"><span class="icon icon-user"></span>个人中心</a></div>
+                    <div class="group"><a href="userset.html"><span class="icon icon-cogs"></span>帐号设置</a></div>
+                    <div class="group"><a href="#" @click="quit_log"><span class="icon icon-signin"></span>退出</a></div>
+                </div>
+            </div> -->
             <a href="javascript:void(0)" id="navToggle">
                 <span></span>
             </a>
         </div>
+        <input type="hidden" name="accessToken" id="token" />
     </header>
     <!--移动端的导航-->
     <div class="m_nav">
@@ -61,29 +73,14 @@
             <li class="active">
                 <a href="index.html">首页</a>
             </li>
-            <!--<li class="dropdown">-->
-                <!--<a href="st'">-->
-                    <!---->
-                <!--</a>-->
-                <!--&lt;!&ndash;<div class="dropdown_menu">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<a href="#">Menu-one</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<a href="#">Menu-two</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<a href="#">Menu-three</a>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--</li>-->
             <li class="dropdown">
-                <a href="study.html)">study</a>
-                <!--<div class="dropdown_menu">-->
-                    <!--<a href="#">Custom Menu</a>-->
-                    <!--<a href="#">Custom Menu</a>-->
-                    <!--<a href="#">Custom Menu</a>-->
-                <!--</div>-->
+                <a href="study.html">study</a>
             </li>
             <li>
                 <a href="share.html">share</a>
             </li>
             <li>
-                <a href="javascript:void(0)">team</a>
+                <a href="team.html">team</a>
             </li>
             <li>
                 <a href="user.html">个人主页</a>
@@ -103,21 +100,23 @@
             <section class="main_header">
                 <div class="share_exp">
                     <a class="card" href="#">
-                        <img :src="'avatar/'+user.data.userAvatar" alt="圆形图片"/>
+                        <img :src="'avatar/'+user.data.userAvatar" alt="圆形图片" />
                         <div class="card-heading" style="color:#494c51"><strong>{{user.data.userNick}}</strong></div>
                         <div class="card-content text-muted">分享《九阳真经》，一起研究"乾坤大挪移",加入明教团队</div>
                         <div class="card-actions">
                             <div class="pull-left text-danger" style="margin-right:30px"><i
-                                    class="icon icon-diamond"></i>粉丝:10</div>
-                            <div class="pull-left text-danger"><i class="icon icon-star"></i>关注:100</div>
+                                    class="icon icon-diamond"></i>粉丝:{{FollowUsernum}}</div>
+                            <div class="pull-left text-danger"><i class="icon icon-star"></i>关注:{{Ilove}}</div>
                             <div class="pull-right text-danger"><i class="icon-heart-empty"></i> 被赞次数:210</div>
                         </div>
                     </a>
                 </div>
                 <div class="header_other">
                     <a class="card" href="###" style="padding-top:10px">
-                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学校:{{user.data.schoolName}}</div>
-                        <div class="card-content text-muted"><span class="icon icon-star"></span>&nbsp;学院:{{user.data.academyName}}</div>
+                        <div class="card-content text-muted"><span
+                                class="icon icon-star"></span>&nbsp;学校:{{user.data.schoolName}}</div>
+                        <div class="card-content text-muted"><span
+                                class="icon icon-star"></span>&nbsp;学院:{{user.data.academyName}}</div>
                     </a>
                 </div>
                 <div class="persionbox boxicon">
@@ -127,17 +126,24 @@
             <section class="main-content">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="###" data-target="#tab2Content1" data-toggle="tab" id="tabclick1"><i
-                        class="icon icon-edit"></i>文章:20</a>
+                                class="icon icon-edit"></i>发布列表:{{ArticleNum}}</a>
                     </li>
                     <li><a href="###" data-target="#tab2Content2" data-toggle="tab" id="tabclick2" @click="checktab"><i
-                        class="icon icon-download-alt"></i>资源:10</a></li>
+                                class="icon icon-cubes"></i>收藏列表</a></li>
+                    <li><a href="###" data-target="#tab2Content3" data-toggle="tab" id="tabclick3" @click="checktab2"><i
+                                class="icon icon-tag"></i>我创建的团队</a></li>
+                    <li><a href="###" data-target="#tab2Content4" data-toggle="tab" id="tabclick4" @click="checktab3"><i
+                                class="icon icon-tags"></i>我加入的团队</a></li>
+                    <li><a href="###" data-target="#tab2Content5" data-toggle="tab" id="tabclick5" @click="checktab4"><i
+                            class="icon icon-tags"></i>我的关注</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="tab2Content1">
                         <div class="items items-hover">
-                            <div class="item" v-for="item in items.data">
+                            <div class="item" v-for="item in items" style="font-size:16px;height:90px">
                                 <div class="item-heading">
-                                    <div class="pull-right"><span class="text-muted">{{item.updatedAt | capitalize}}</span> &nbsp;
+                                    <div class="pull-right"><span
+                                            class="text-muted">{{item.updatedAt | capitalize}}</span> &nbsp;
                                         <a href="#" class="text-muted"><i class="icon-comments"></i> 243</a></div>
                                     <h4><a :href="'article.html?'+item.articleId">{{item.title}}</a></h4>
                                 </div>
@@ -146,12 +152,64 @@
                                 </div>
                                 <a href="#" class="pull-right" @click="delete_article($event)">删除</a>
                                 <div style="display:none">{{item.articleId}}</div>
-                                <input type="hidden" name="accessToken" id="token"/>
+                                <input type="hidden" name="accessToken" id="token" />
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tab2Content2">
-                        <p>标签2的内容。</p>
+                        <div class="item itemnew" v-for="collects in collect">
+                            <div class="item-content">
+                                <div class="pull-right"><span
+                                        class="text-muted">{{collects.createdAt | capitalize}}</span>
+                                </div>
+                                <h4><a :href="'article.html?'+collects.articleId">{{collects.title}}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2Content3">
+                        <div class="items items-hover">
+                            <div class="item itemnew" v-for="teamMs in teamM">
+                                <div class="item-heading">
+                                    <div class="pull-right">
+                                        <span class="text-muted">{{teamMs.createdAt | capitalize}}</span>
+                                    </div>
+                                    <h4><a :href="'teamroom.html?'+teamMs.teamId">{{teamMs.teamName}}</a></h4>
+                                </div>
+                                <div class="item-content">
+                                    <div class="text">{{teamMs.description}}</div>
+                                </div>
+                                <span class="label label-success pull-right"><i class="icon-tag"
+                                        style="margin-right:4px"></i>类型:{{teamMs.type}}</span>
+                                <span class="icon-flag pull-right label label-info"
+                                    style="margin-right:4px">{{teamMs.visual}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2Content4">
+                        <div class="items items-hover">
+                            <div class="item itemnew" v-for="teamJoins in teamJoin">
+                                <div class="item-heading">
+                                    <div class="pull-right">
+                                        <span class="text-muted">{{teamJoins.createdAt | capitalize}}</span>
+                                        <span class="label label-success pull-right"><i class="icon-tag"
+                                                style="margin-right:4px"></i>类型:{{teamJoins.type}}</span>
+                                    </div>
+                                    <h4><a :href="'teamroom.html?'+teamJoins.teamId">{{teamJoins.teamName}}</a></h4>
+                                </div>
+                                <div class="item-content">
+                                    <div class="text">{{teamJoins.description}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2Content5">
+                        <div class="item itemnew" v-for="mfollows in mfollow">
+                            <div class="item-content">
+                                <img :src="'avatar/'+mfollows.followerAvatar"/>
+                                <p>{{mfollows.followerNick}}</p>
+                                <span class="label">{{mfollows.followerCreatedAt| capitalize}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

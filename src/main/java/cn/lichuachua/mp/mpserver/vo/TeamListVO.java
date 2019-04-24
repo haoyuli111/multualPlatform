@@ -20,6 +20,8 @@ public class TeamListVO {
 
     private Integer type;
 
+    private String typeName;
+
     private String visual;
 
     private Date createdAt;

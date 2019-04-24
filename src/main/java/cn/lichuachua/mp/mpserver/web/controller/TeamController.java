@@ -2,7 +2,6 @@ package cn.lichuachua.mp.mpserver.web.controller;
 
 import cn.lichuachua.mp.core.support.web.controller.BaseController;
 import cn.lichuachua.mp.mpserver.dto.UserInfoDTO;
-import cn.lichuachua.mp.mpserver.enums.TeamVisualEnum;
 import cn.lichuachua.mp.mpserver.form.*;
 import cn.lichuachua.mp.mpserver.service.ITeamService;
 import cn.lichuachua.mp.mpserver.service.IUserService;

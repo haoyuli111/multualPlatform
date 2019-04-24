@@ -71,7 +71,7 @@ let app = new Vue({
         get:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/school/queryList", {
+            this.$http.get("http://localhost:8080/school/queryList", {
                 params: {
                     accessToken: token
                 }
@@ -90,7 +90,7 @@ let app = new Vue({
         userData:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyInformation", {
+            this.$http.get("http://localhost:8080/user/queryMyInformation", {
                 params: {
                     accessToken: token
                 }
@@ -109,7 +109,7 @@ let app = new Vue({
         loadData:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/academy/queryList", {
+            this.$http.get("http://localhost:8080/academy/queryList", {
                 params: {
                     accessToken: token
                 }
@@ -227,7 +227,7 @@ let app = new Vue({
             formData.append('userNick',userNick);
             formData.append('userNumber',userNumber);
             formData.append('visual',visual);
-            this.$http.post('http://localhost:8080/user/infor',formData,{'Content-Type':'Multipart/form-data'}).then(
+            this.$http.put('http://localhost:8080/user/infor',formData,{'Content-Type':'Multipart/form-data'}).then(
                 function(res){
                     if(res.body.code==0){
                         new $.zui.Messager('修改信息成功',{
