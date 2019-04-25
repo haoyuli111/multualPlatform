@@ -7,6 +7,7 @@
 	<groupId>cn.lichuahcua</groupId>
 	<artifactId>mp</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -142,6 +143,8 @@
 					<fork>true</fork>
 					<!--支持静态文件热部署-->
 					<addResources>true</addResources>
+					<!--打包-->
+					<mainClass>cn.lichuachua.mp.MutualPlatformServerApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -22,14 +22,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import sun.security.provider.MD5;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static cn.lichuachua.mp.mpserver.util.MD5Util.convertMD5;
 import static cn.lichuachua.mp.mpserver.util.MD5Util.string2MD5;
 
 /**
