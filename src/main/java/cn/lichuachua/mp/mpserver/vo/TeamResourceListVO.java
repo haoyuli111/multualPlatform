@@ -16,6 +16,8 @@ public class TeamResourceListVO {
 
     private String resourceName;
 
+    private String resource;
+
     private Date createdAt;
 
 }

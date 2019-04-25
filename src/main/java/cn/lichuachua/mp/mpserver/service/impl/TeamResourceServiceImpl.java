@@ -174,6 +174,7 @@ public class TeamResourceServiceImpl extends BaseServiceImpl<TeamResource, Strin
             if (teamResource.getTeamId().equals(teamId)&&teamResource.getStatus().equals(TeamResourceStatusEnum.NORMAL.getStatus())){
                 teamResourceListVO.setCreatedAt(teamResource.getCreatedAt());
                 teamResourceListVO.setPublisherNick(teamResource.getPublisherNick());
+                teamResourceListVO.setResource(teamResource.getResource());
                 teamResourceListVO.setResourceId(teamResource.getResourceId());
                 teamResourceListVO.setResourceName(teamResource.getResourceName());
                 BeanUtils.copyProperties(teamResource, teamResourceListVO);

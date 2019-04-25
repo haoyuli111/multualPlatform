@@ -23,6 +23,8 @@ public class TeamVO {
 
     private Integer type;
 
+    private String typeName;
+
     private Date createdAt;
 
     List<TeamMemberVO> teamMemberVOList = new ArrayList<>();

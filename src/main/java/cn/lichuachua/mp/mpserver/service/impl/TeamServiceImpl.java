@@ -420,7 +420,8 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamVO.setHeaderId(teamOptional.get().getHeaderId());
         teamVO.setHeaderAvatar(teamOptional.get().getHeaderAvatar());
         teamVO.setHeaderNick(teamOptional.get().getHeaderNick());
-        teamVO.setType(team.getType());
+        teamVO.setType(teamOptional.get().getType());
+        teamVO.setTypeName(teamTypeService.queryTypeName(teamOptional.get().getType()));
         teamVO.setCreatedAt(teamOptional.get().getCreatedAt());
         /**
          * 队伍是私有的
@@ -472,7 +473,8 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamVO.setHeaderId(teamOptional.get().getHeaderId());
         teamVO.setHeaderAvatar(teamOptional.get().getHeaderAvatar());
         teamVO.setHeaderNick(teamOptional.get().getHeaderNick());
-        teamVO.setType(team.getType());
+        teamVO.setType(teamOptional.get().getType());
+        teamVO.setTypeName(teamTypeService.queryTypeName(teamOptional.get().getType()));
         teamVO.setCreatedAt(teamOptional.get().getCreatedAt());
         /**
          * 队伍是公有的
@@ -658,7 +660,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team, String> implements IT
         teamListVO.setTeamId(teamOptional.get().getTeamId());
         teamListVO.setTeamName(teamOptional.get().getTeamName());
         teamListVO.setType(teamOptional.get().getType());
-        teamListVO.setTypeName(teamTypeService.queryTypeName(team.getType()));
+        teamListVO.setTypeName(teamTypeService.queryTypeName(teamOptional.get().getType()));
         return teamListVO;
     }
 
