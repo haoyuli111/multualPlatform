@@ -11,7 +11,11 @@ spring:
   redis:
     host: localhost
     port: 6379
+server:
+  port: 8080
+#image:
+#  location: C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources/static/articleImg/
 
-servlet:
-  port : 8080
+
+
 

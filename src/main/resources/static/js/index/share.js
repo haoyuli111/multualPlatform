@@ -54,7 +54,7 @@ $(function () {
         //上传图片设置
         imageUpload:true,
         imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL : "/articleImg/",//后端的上传图片服务地址
+        imageUploadURL : "/articleImg",//后端的上传图片服务地址
     });
 })
 

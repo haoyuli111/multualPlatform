@@ -68,6 +68,7 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
              */
             try {
                 FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+                FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }

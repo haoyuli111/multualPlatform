@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.Date;
 
 public class FileUtil {
     /**
@@ -19,6 +20,8 @@ public class FileUtil {
 //        File rootPath = ResourceUtils.getFile("classpath:resources");
 //        File rootPath = new File(ResourceUtils.getURL("classpath:resources").getPath());
 //        String filePath = rootPath.getAbsolutePath()+path;
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String newFileName = new Date().getTime() + "." + suffix;
         String rootPath ="C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources";
         String filePath = rootPath+path;
         System.out.println(filePath);
@@ -26,23 +29,27 @@ public class FileUtil {
         if(!targetFile.exists()){
             targetFile.mkdirs();
         }
-        FileOutputStream out = new FileOutputStream(filePath+fileName);
+        FileOutputStream out = new FileOutputStream(filePath+newFileName);
         out.write(file);
         out.flush();
         out.close();
-
-        File rootPath1 = new File(ResourceUtils.getURL("classpath:").getPath());
-        String filePath1 = rootPath1+path;
-        System.out.println(filePath1);
-        File targetFile1 = new File(String.valueOf(filePath1));
-        if(!targetFile1.exists()){
-            targetFile1.mkdirs();
-        }
-        FileOutputStream out1 = new FileOutputStream(filePath1+fileName);
-        out1.write(file);
-        out1.flush();
-        out1.close();
     }
+    public static void uploadFile1(byte[] file, String path, String fileName) throws Exception {
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String newFileName = new Date().getTime() + "." + suffix;
+        File rootPath = new File(ResourceUtils.getURL("classpath:").getPath());
+        String filePath = rootPath+path;
+        System.out.println(filePath);
+        File targetFile = new File(String.valueOf(filePath));
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        FileOutputStream out = new FileOutputStream(filePath+newFileName);
+        out.write(file);
+        out.flush();
+        out.close();
+    }
+
 
 
     /**

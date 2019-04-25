@@ -14,7 +14,6 @@ import cn.lichuachua.mp.mpserver.wrapper.ResultWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -73,6 +72,7 @@ public class ArticleController extends BaseController<UserInfoDTO> {
              */
             try {
                 FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+                FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -244,21 +244,29 @@ public class ArticleController extends BaseController<UserInfoDTO> {
     }
 
     @ApiOperation("文章图片上传")
-    @PostMapping(value = "editormdPic",produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/editormdPic",produces = "application/json;charset=UTF-8")
     public FileWrapper editormdPic (@RequestParam(value = "editormd-image-file", required = true) MultipartFile file) throws Exception{
         /**
          * 上传图片
          */
-        String filePath = "/static/articleImg/";
-        String fileName = file.getOriginalFilename();
+        String filePath = "/static/articleImages/";
+        String trueFileName = file.getOriginalFilename();
+
+        String suffix = trueFileName.substring(trueFileName.lastIndexOf("."));
+
+        String fileName = System.currentTimeMillis()+"_"+suffix;
+        System.out.println(fileName);
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+            FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return FileWrapper.success("C:/Users/Administrator/Desktop/Mp/mutualPlatform/target/classes"+fileName);
+        return FileWrapper.success("C:/Users/Administrator/Desktop/Mp/mutualPlatform/target/classes/static/articleImg/"+fileName);
     }
+
+
 
 
 

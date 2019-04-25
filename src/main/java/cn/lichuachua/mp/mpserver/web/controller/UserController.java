@@ -348,6 +348,7 @@ public class UserController extends BaseController<UserInfoDTO> {
         String fileName = file.getOriginalFilename();
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+            FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
