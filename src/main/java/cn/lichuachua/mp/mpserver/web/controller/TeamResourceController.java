@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,16 +64,18 @@ public class TeamResourceController extends BaseController<UserInfoDTO> {
             String filePath = "/static/resource/";
             //文件名
             String fileName = file.getOriginalFilename();
+            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            String newFileName = new Date().getTime() + "." + suffix;
             /**
              * 调用上传文件方法
              */
             try {
-                FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-                FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
+                FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
+                FileUtil.uploadFile1(file.getBytes(), filePath, newFileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            teamResourceService.publish(teamResourcePublishForm,fileName, userId);
+            teamResourceService.publish(teamResourcePublishForm,newFileName, userId);
         }else {
             teamResourceService.publish(teamResourcePublishForm,null, userId);
         }

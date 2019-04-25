@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -346,9 +347,11 @@ public class UserController extends BaseController<UserInfoDTO> {
             @PathVariable(value = "file") MultipartFile file) {
         String filePath = "/static/avatar/";
         String fileName = file.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String newFileName = new Date().getTime() + "." + suffix;
         try {
-            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-            FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
+            FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
+            FileUtil.uploadFile1(file.getBytes(), filePath, newFileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -357,7 +360,7 @@ public class UserController extends BaseController<UserInfoDTO> {
          * 获取当前登录用户
          */
         String userId= getCurrentUserInfo().getUserId();
-        userService.updateAvatar(fileName, userId);
+        userService.updateAvatar(newFileName, userId);
         return ResultWrapper.success();
     }
 

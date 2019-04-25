@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,16 +68,18 @@ public class ArticleController extends BaseController<UserInfoDTO> {
             String filePath = "/static/accessory/";
             //文件名
             String fileName = file.getOriginalFilename();
+            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            String newFileName = new Date().getTime() + "." + suffix;
             /**
              * 调用上传文件方法
              */
             try {
-                FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-                FileUtil.uploadFile1(file.getBytes(), filePath, fileName);
+                FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
+                FileUtil.uploadFile1(file.getBytes(), filePath, newFileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            articleService.publish(articlePublishForm, userId, fileName);
+            articleService.publish(articlePublishForm, userId, newFileName);
         }else {
             articleService.publish(articlePublishForm, userId, null);
         }
@@ -253,7 +256,6 @@ public class ArticleController extends BaseController<UserInfoDTO> {
         String trueFileName = file.getOriginalFilename();
 
         String suffix = trueFileName.substring(trueFileName.lastIndexOf("."));
-
         String fileName = System.currentTimeMillis()+"_"+suffix;
         System.out.println(fileName);
         try {

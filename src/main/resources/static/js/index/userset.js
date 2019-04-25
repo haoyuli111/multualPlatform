@@ -157,7 +157,7 @@ let app = new Vue({
                 console.log(file);
                 image.append('accessToken',token);
                 image.append('file', this.$refs.avatarInput.files[0]);
-                this.$http.put('http://127.0.0.1:8080/user/updateAvatar/'+file,image,{
+                this.$http.put('http://localhost:8080/user/updateAvatar/'+file,image,{
                     'Content-Type': 'Multipart/form-data'
                 }).then(
                     function(res){

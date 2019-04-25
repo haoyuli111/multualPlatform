@@ -20,8 +20,6 @@ public class FileUtil {
 //        File rootPath = ResourceUtils.getFile("classpath:resources");
 //        File rootPath = new File(ResourceUtils.getURL("classpath:resources").getPath());
 //        String filePath = rootPath.getAbsolutePath()+path;
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String newFileName = new Date().getTime() + "." + suffix;
         String rootPath ="C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources";
         String filePath = rootPath+path;
         System.out.println(filePath);
@@ -29,14 +27,12 @@ public class FileUtil {
         if(!targetFile.exists()){
             targetFile.mkdirs();
         }
-        FileOutputStream out = new FileOutputStream(filePath+newFileName);
+        FileOutputStream out = new FileOutputStream(filePath+fileName);
         out.write(file);
         out.flush();
         out.close();
     }
     public static void uploadFile1(byte[] file, String path, String fileName) throws Exception {
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String newFileName = new Date().getTime() + "." + suffix;
         File rootPath = new File(ResourceUtils.getURL("classpath:").getPath());
         String filePath = rootPath+path;
         System.out.println(filePath);
@@ -44,7 +40,7 @@ public class FileUtil {
         if(!targetFile.exists()){
             targetFile.mkdirs();
         }
-        FileOutputStream out = new FileOutputStream(filePath+newFileName);
+        FileOutputStream out = new FileOutputStream(filePath+fileName);
         out.write(file);
         out.flush();
         out.close();
