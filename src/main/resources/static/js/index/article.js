@@ -67,7 +67,8 @@ var app=new Vue({
                 }
             }
         },
-        followpeople:{}
+        followpeople:{},
+        otherarticle:{}
     },
     mounted:function(){
         this.get();
@@ -116,7 +117,22 @@ var app=new Vue({
         },
         //作者的其他文章
         other_article:function(){
-
+            let self=this;
+            let token=document.querySelector('#token').value;
+            this.$http.get("http://localhost:8080/article/queryArticleListByArticleId/"+tar, {
+                params: {
+                    accessToken: token
+                }
+            }).then(
+                function(res){
+                    self.otherarticle=res.body.data;
+                    //console.log(res);
+                },function(res){
+                    console.log(res);
+                }
+            ).catch(function(reason){
+                console.log(reason);
+            })
         },
         //举报文章
         report_article: function () {

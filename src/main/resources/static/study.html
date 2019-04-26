@@ -96,7 +96,7 @@
         <img src="image/banner/04.jpg">
     </div>
     <!--main-->
-    <div class="main">
+    <div class="main" id="main">
         <div class="container">
             <!--描述-->
             <section class="describe">
@@ -138,8 +138,8 @@
                 </nav>
             </section>
             <!--列表-->
-            <section class="content" id="main">
-                <div class="list">
+            <section class="content">
+                <div class="list" id="list">
                     <header>
                         <h3 style="display:inline-block"><i class="icon-list-ul"></i> 编辑推荐<small></small></h3>
                         <span class="text-muted" id="time"></span>
@@ -157,7 +157,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>`
+                <span class="icon-arrow-up icon-2x" style="position: fixed;right:10px;bottom:50px;color: cornflowerblue;cursor:pointer" v-show="up" @click="uphtml"></span>
                 <div data-loading="正在加载..." class="load-indicator" id="loadIndicator1"></div>
             </section>
         </div>

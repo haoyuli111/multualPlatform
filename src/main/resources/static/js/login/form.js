@@ -88,7 +88,7 @@ ReadyRegister.onclick = function () {
                 icon:'icon-ok-sign'
             }).show();
             if(data.code==0) {
-                window.location.href="index.html"
+                window.location.href="login.html"
             }
         })
         return false;

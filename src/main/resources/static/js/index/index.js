@@ -61,7 +61,7 @@ var app = new Vue({
             //获取个人登陆信息
             let self = this;
             let token = document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyInformation", {
+            this.$http.get("http://localhost:8080/user/queryMyInformation", {
                 params: {
                     accessToken: token
                 }

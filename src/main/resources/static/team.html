@@ -131,9 +131,9 @@
                                 <li><a href="#">我的团队</a></li>
                                 <form class="navbar-form navbar-left" role="search">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="搜索">
+                                        <input type="text" class="form-control" placeholder="搜索" name="teamName" id="teamName">
                                     </div>
-                                    <button type="submit" class="btn btn-info">搜索</button>
+                                    <button type="button" class="btn btn-info" @click="search">搜索</button>
                                 </form>
                             </ul>
                         </div><!-- END .navbar-collapse -->
@@ -149,7 +149,7 @@
                         <div class="card-heading"><strong class="card-title">{{teamlists.teamName}}</strong>
                             <dd class="pull-right" style="top:40px">
                                 <span class="label label-success"><i class="icon-tag"
-                                        style="margin-right:4px"></i>类型:{{teamlists.type}}</span>
+                                        style="margin-right:4px"></i>类型:{{teamlists.typeName}}</span>
                             </dd>
                         </div>
                         <div class="card-content text-muted">{{teamlists.description}}

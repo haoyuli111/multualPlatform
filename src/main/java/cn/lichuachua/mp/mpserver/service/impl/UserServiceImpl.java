@@ -94,6 +94,7 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
          */
         String password = string2MD5(userRegisterForm.getPassword2());
         user.setPassword(password);
+        user.setUserAvatar("default.webp");
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
         user.setVisual(UserVisualEnum.VISUAL.getStatus());

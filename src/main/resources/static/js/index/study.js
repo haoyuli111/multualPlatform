@@ -59,32 +59,34 @@ $(document).ready(function () {
     $("#time").append(now);
 })
 
-//滚动加载
-$(window).scroll(
-    function(){
-        let scrollTop=$(this).scrollTop();
-        let scrollHeight=$(document).height();
-        let windowHeight=$(this).height();
-        if(scrollTop+windowHeight==scrollHeight){
-            //alert("加载下一页内容");
-            document.querySelector("#loadIndicator1").classList.add("loading");
-            // $.get("/data.json",function(data){
-            //     let str=data.slice(0,9);
-            //     alert(JSON.stringify(str));
-            // })
-           /* $.post("url",function(data){
-                alert("加载成功");
-            })*/
-        }
-       // $.ajaxSettings.async=false;
-    }
-)
-
 //vue模板渲染接口
 let app=new Vue({
     el:"#main",
     data:{
-        lists:[]
+        lists:[],
+        page:0,//当前页码
+        pageable:0,//页面加载接口
+        size:10,//每次加载的数据量
+        up:false//向上
+    },
+    created(){
+        //滚动加载
+        var self=this;
+        $(window).scroll(function(){
+            let scrollTop=$(this).scrollTop();
+            let scrollHeight=$(document).height();
+            let windowHeight=$(this).height();
+            if(scrollHeight-windowHeight<=scrollTop){
+                document.querySelector('#loadIndicator1').classList.add('loading');
+                window.setTimeout(function(){
+                    document.querySelector('#loadIndicator1').classList.remove('loading');
+                    self.size=self.size+10;
+                    self.get();
+                    self.up=true;
+                },2000);
+                console.log(self.size)
+            }
+        })
     },
     mounted:function() {
         this.get();
@@ -92,7 +94,12 @@ let app=new Vue({
     methods: {
         get:function(){
             let self=this;
-            this.$http.get("http://127.0.0.1:8080/article/queryList").then(
+            this.$http.get("http://127.0.0.1:8080/article/queryListByPage/"+self.pageable,{
+                params: {
+                    page:self.page,
+                    size:self.size
+                }
+            }).then(
                 function(res){
                     self.lists=res.data;
                     new $.zui.Messager('加载成功',{
@@ -124,7 +131,12 @@ let app=new Vue({
             ).catch(function (reason) {
                 console.log(reason);
             })
+            console.log(self.page);
         },
+        //点击滑动顶部
+        uphtml:function(){
+            window.scrollTo(0,0)
+        }
     },
     filters:{
         capitalize:function(value){

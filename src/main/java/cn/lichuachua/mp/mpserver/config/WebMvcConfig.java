@@ -32,6 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/plugins/**",
                         "/examples/**",
                         "/articleImages/**",
+                        "/accessory/**",
                         "/avatar/**",
                         "/js/**",
                         "/image/**",

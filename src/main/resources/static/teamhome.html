@@ -96,7 +96,6 @@
     <!--main-->
     <div class="main" id="teamHome">
         <div class="container">
-            <input type="hidden" name="accessToken" id="token" />
             <!--团队简介-->
             <section class="team">
                 <div class="team-header">
@@ -111,7 +110,7 @@
                         <dd class="pull-right" style="bottom:0px;position:absolute;right:0">
                             <div style="display:inline-block">
                                 <span class="label label-success"><i class="icon-tag"
-                                        style="margin-right:4px"></i>类型:{{teammation.type}}</span>
+                                        style="margin-right:4px"></i>类型:{{teammation.typeName}}</span>
                             </div>
                             <div style="display:inline-block">
                                 <span class="label label-info"><i
@@ -144,10 +143,10 @@
                                         alt="圆形图片">
                                     <div class="card-inline">
                                         <div class="card-content text-muted"><span
-                                                class="icon icon-star"></span>&nbsp;学校:
+                                                class="icon icon-star"></span>&nbsp;学校:{{teammations.schoolName}}
                                         </div>
                                         <div class="card-content text-muted"><span
-                                                class="icon icon-star"></span>&nbsp;学院:
+                                                class="icon icon-star"></span>&nbsp;学院:{{teammations.academyName}}
                                         </div>
                                     </div>
                                 </div>

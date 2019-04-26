@@ -160,33 +160,8 @@
                         <div class="card-head">作者其他文章</div>
                         <hr />
                         <ul>
-                            <li>
-                                <a href="/articles/695746">SaaS加速器 III 技术中心：提供SaaS
-                                    Launchkit，快速定制，一云多端等能力，一云多端将通过小程序云实现</a>
-                            </li>
-                            <li>
-                                <a href="/articles/695744">SaaS加速器 I 商业中心:提供商业助力 共享商业成功</a>
-                            </li>
-                            <li>
-                                <a href="/articles/695561">“练好内功坚持被集成”，阿里云发布SaaS加速器</a>
-                            </li>
-                            <li>
-                                <a href="/articles/691448">畅游采购季，就用云分期！两成首付，轻松上云！</a>
-                            </li>
-                            <li>
-                                <a href="/articles/688548">阿里云数字化转型方案再升级，移动研发平台EMAS助力海底捞超级App“云上捞”</a>
-                            </li>
-                            <li>
-                                <a href="/articles/688270">浙江信访，从统一到智能的互联网转型之路</a>
-                            </li>
-                            <li>
-                                <a href="/articles/672159">揭秘天猫双11背后：20万商家600万张海报，背后只有一个鹿班</a>
-                            </li>
-                            <li>
-                                <a href="/articles/672156">阿里云云效如何保障双11大型项目管理</a>
-                            </li>
-                            <li>
-                                <a href="/articles/672155">阿里云移动研发平台EMAS，是如何连续5年安全护航双11的？</a>
+                            <li v-for="otherarticles in otherarticle">
+                                <a :href="'article.html/'+otherarticles.articleId">{{otherarticles.title}}</a>
                             </li>
                         </ul>
                     </a>
