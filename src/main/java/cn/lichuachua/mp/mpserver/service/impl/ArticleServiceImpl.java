@@ -260,6 +260,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, String> impleme
     public List<ArticleListVO> queryListByPage(Pageable pageable){
         Article article = new Article();
         article.setStatus(ArticleStatusEnum.NORMAL.getStatus());
+        article.setVisual(ArticleVisualEnum.VISUAL.getStatus());
         Page<Article> articleList = selectPage(Example.of(article),pageable);
         List<ArticleListVO> articleListVOList= new ArrayList<>();
         for (Article article1 : articleList){

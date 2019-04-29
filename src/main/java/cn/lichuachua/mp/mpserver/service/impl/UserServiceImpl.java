@@ -164,6 +164,7 @@ public class UserServiceImpl extends BaseServiceImpl<User,String> implements IUs
         user.setStatus(UserStatusEnum.NORMAL.getStatus());
         user.setCreatedAt(userOptional.get().getCreatedAt());
         user.setMobile(userOptional.get().getMobile());
+        user.setUserAvatar(userOptional.get().getUserAvatar());
         user.setPassword(userOptional.get().getPassword());
         user.setUpdatedAt(new Date());
         update(user);
