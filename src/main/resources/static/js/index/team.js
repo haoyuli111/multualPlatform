@@ -54,7 +54,7 @@ var team=new Vue({
         teamList:function(){
             let self=this;
             let visual='0';
-            this.$http.get("http://127.0.0.1:8080/team/queryAllList",{
+            this.$http.get("http://www.lichuachua.com:8082/team/queryAllList",{
                 params:{
                     visual:visual
                 }
@@ -84,7 +84,7 @@ var team=new Vue({
             let self=this;
             let teamName=document.querySelector('#teamName').value;
             let token=document.querySelector('#token').value
-            this.$http.get("http://127.0.0.1:8080/team/queryTeamByTeamName/"+teamName,{
+            this.$http.get("http://www.lichuachua.com:8082/team/queryTeamByTeamName/"+teamName,{
                 params:{
                     accessToken:token,
                 }

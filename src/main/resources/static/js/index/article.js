@@ -79,7 +79,7 @@ var app=new Vue({
         get:function(){
             let self=this;
             //
-            this.$http.get("http://127.0.0.1:8080/article/query/"+tar).then(
+            this.$http.get("http://www.lichuachua.com:8082/article/query/"+tar).then(
                 function(res){
                     self.article=res.data;
                     new $.zui.Messager('加载成功',{
@@ -119,7 +119,7 @@ var app=new Vue({
         other_article:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/article/queryArticleListByArticleId/"+tar, {
+            this.$http.get("http://www.lichuachua.com:8082/article/queryArticleListByArticleId/"+tar, {
                 params: {
                     accessToken: token
                 }
@@ -140,7 +140,7 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('articleId',tar);
-            this.$http.post('http://127.0.0.1:8080/inform/article/publish/' + tar, commentForm, {
+            this.$http.post('http://www.lichuachua.com:8082/inform/article/publish/' + tar, commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -189,7 +189,7 @@ var app=new Vue({
             formData.append('accessToken',token);
             formData.append('content',content);
             formData.append('parentId',tar)
-            this.$http.post('http://127.0.0.1:8080/artircle/comment/publish',formData,{'Content-Type':'Multipart/form-data'}).then(
+            this.$http.post('http://www.lichuachua.com:8082/artircle/comment/publish',formData,{'Content-Type':'Multipart/form-data'}).then(
                 function(res){
                     if(res.body.code==1001){
                         new $.zui.Messager('未填写内容，请重新填写评论',{
@@ -239,7 +239,7 @@ var app=new Vue({
             let commentForm=new FormData();
             commentForm.append('accessToken',token);
             commentForm.append('commentId',commentId)
-            this.$http.delete('http://127.0.0.1:8080/artircle/comment/delete/'+commentId,{body:commentForm},{
+            this.$http.delete('http://www.lichuachua.com:8082/artircle/comment/delete/'+commentId,{body:commentForm},{
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -280,7 +280,7 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('commentId', commentId)
-            this.$http.post('http://127.0.0.1:8080/inform/comment/publish/' + commentId, commentForm, {
+            this.$http.post('http://www.lichuachua.com:8082/inform/comment/publish/' + commentId, commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -327,7 +327,7 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('commentId', articleId)
-            this.$http.put('http://127.0.0.1:8080/article/likes/' + tar,commentForm, {
+            this.$http.put('http://www.lichuachua.com:8082/article/likes/' + tar,commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function(res){
@@ -375,7 +375,7 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('userId',userId);
-            this.$http.post('http://127.0.0.1:8080/follow/'+userId, commentForm, {
+            this.$http.post('http://www.lichuachua.com:8082/follow/'+userId, commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -412,7 +412,7 @@ var app=new Vue({
         followuser:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryFollowedMeList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryFollowedMeList", {
                 params: {
                     accessToken: token
                 }
@@ -431,7 +431,7 @@ var app=new Vue({
         downloadR:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/teamResource/download/"+tar, {
+            this.$http.get("http://www.lichuachua.com:8082/teamResource/download/"+tar, {
                 params: {
                     accessToken: token
                 }
@@ -478,7 +478,7 @@ var app=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('articleId ', tar)
-            this.$http.post('http://127.0.0.1:8080/article/collect/' + tar, commentForm, {
+            this.$http.post('http://www.lichuachua.com:8082/article/collect/' + tar, commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {

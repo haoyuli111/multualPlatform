@@ -9,14 +9,14 @@ spring:
     username: root
     password: lcc1314..
   redis:
-    host: 127.0.0.1
+    host: 47.103.48.175
     port: 6379
   servlet:
     multipart:
       max-file-size: 30MB
       max-request-size: 50MB
 server:
-  port: 8080
+  port: 8082
 #image:
 #  location: C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources/static/articleImg/
 
