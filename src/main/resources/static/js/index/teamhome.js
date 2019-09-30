@@ -90,7 +90,7 @@ var teamHome=new Vue({
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
             commentForm.append('teamId',tar);
-            this.$http.post('http://localhost:8080/teamMember/joinPublicTeam/' + tar, commentForm, {
+            this.$http.post('http://127.0.0.1:8080/teamMember/joinPublicTeam/' + tar, commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {

@@ -54,13 +54,13 @@ The <abbr title="Hyper Text Markup Language">HTML</abbr> specification is mainta
 
 引用的行内混合 Blockquotes
                     
-> 引用：如果想要插入空白换行`即<br />标签`，在插入处先键入两个以上的空格然后回车即可，[普通链接](http://localhost/)。
+> 引用：如果想要插入空白换行`即<br />标签`，在插入处先键入两个以上的空格然后回车即可，[普通链接](http://127.0.0.1/)。
 
 ### 锚点与链接 Links
 
-[普通链接](http://localhost/)
+[普通链接](http://127.0.0.1/)
 
-[普通链接带标题](http://localhost/ "普通链接带标题")
+[普通链接带标题](http://127.0.0.1/ "普通链接带标题")
 
 直接链接：<https://github.com>
 

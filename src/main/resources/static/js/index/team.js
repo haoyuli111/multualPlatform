@@ -84,7 +84,7 @@ var team=new Vue({
             let self=this;
             let teamName=document.querySelector('#teamName').value;
             let token=document.querySelector('#token').value
-            this.$http.get("http://localhost:8080/team/queryTeamByTeamName/"+teamName,{
+            this.$http.get("http://127.0.0.1:8080/team/queryTeamByTeamName/"+teamName,{
                 params:{
                     accessToken:token,
                 }

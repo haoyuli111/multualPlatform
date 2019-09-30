@@ -112,7 +112,7 @@ var teammake=new Vue({
         teamtype:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://localhost:8080/teamType/queryList", {
+            this.$http.get("http://127.0.0.1:8080/teamType/queryList", {
                 params: {
                     accessToken: token
                 }
