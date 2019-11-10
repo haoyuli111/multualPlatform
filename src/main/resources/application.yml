@@ -16,7 +16,7 @@ spring:
       max-file-size: 30MB
       max-request-size: 50MB
 server:
-  port: 8080
+  port: 8082
 #image:
 #  location: C:/Users/Administrator/Desktop/Mp/mutualPlatform/src/main/resources/static/articleImg/
 

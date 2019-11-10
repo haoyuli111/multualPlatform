@@ -71,7 +71,7 @@ var app=new Vue({
     methods: {
         get:function(){
             let that=this;
-            this.$http.get('http://127.0.0.1:8080/user/queryMyArticleList',{
+            this.$http.get('http://www.lichuachua.com:8082/user/queryMyArticleList',{
                 params:{
                     accessToken:token
                 }
@@ -109,7 +109,7 @@ var app=new Vue({
         loadData:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyInformation", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryMyInformation", {
                 params: {
                     accessToken: token
                 }
@@ -130,7 +130,7 @@ var app=new Vue({
             let token=document.querySelector('#token').value;
             let commentForm = new FormData();
             commentForm.append('accessToken', token);
-            this.$http.post('http://127.0.0.1:8080/user/queryMyCollectList', commentForm, {
+            this.$http.post('http://www.lichuachua.com:8082/user/queryMyCollectList', commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -148,7 +148,7 @@ var app=new Vue({
         checktab2:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyTeamList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryMyTeamList", {
                 params: {
                     accessToken: token
                 }
@@ -167,7 +167,7 @@ var app=new Vue({
         checktab3:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyJoinTeamList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryMyJoinTeamList", {
                 params: {
                     accessToken: token
                 }
@@ -186,7 +186,7 @@ var app=new Vue({
         checktab4:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyFollowList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryMyFollowList", {
                 params: {
                     accessToken: token
                 }
@@ -209,7 +209,7 @@ var app=new Vue({
             let commentForm=new FormData();
             commentForm.append('accessToken',token);
             commentForm.append('commentId',articlrId)
-            this.$http.put('http://127.0.0.1:8080/article/delete/'+articlrId,commentForm, {
+            this.$http.put('http://www.lichuachua.com:8082/article/delete/'+articlrId,commentForm, {
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function (res) {
@@ -247,7 +247,7 @@ var app=new Vue({
         BfollowMe:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryFollowedMeList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryFollowedMeList", {
                 params: {
                     accessToken: token
                 }
@@ -266,7 +266,7 @@ var app=new Vue({
         Mefollow:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/user/queryMyFollowList", {
+            this.$http.get("http://www.lichuachua.com:8082/user/queryMyFollowList", {
                 params: {
                     accessToken: token
                 }

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author 李歘歘
  */
-@CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
+@CrossOrigin(origins = "http://www.lichuachua.com:8082", maxAge = 3600)
 @Api(value = "TeamController", tags = {"队伍API"})
 @RestController
 @RequestMapping(value = "/team")

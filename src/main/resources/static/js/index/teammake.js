@@ -67,7 +67,7 @@ var teammake=new Vue({
             commentForm.append('number', number);
             commentForm.append('type', type);
             commentForm.append('visual', visual);
-            this.$http.post('http://127.0.0.1:8080/team/publish',commentForm,{
+            this.$http.post('http://www.lichuachua.com:8082/team/publish',commentForm,{
                 'Content-Type': 'Multipart/form-data'
             }).then(
                 function(res){
@@ -112,7 +112,7 @@ var teammake=new Vue({
         teamtype:function(){
             let self=this;
             let token=document.querySelector('#token').value;
-            this.$http.get("http://127.0.0.1:8080/teamType/queryList", {
+            this.$http.get("http://www.lichuachua.com:8082/teamType/queryList", {
                 params: {
                     accessToken: token
                 }

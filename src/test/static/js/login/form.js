@@ -32,7 +32,7 @@ code.onclick = function () {
     //console.log(phone);
     if (phone != '') {
         let phone = document.querySelector("#exampleInputPhone").value;
-        $.post("http://127.0.0.1:8080/user/sendCode", {
+        $.post("http://www.lichuachua.com:8082/user/sendCode", {
             "mobile": phone
         }, function (data) {
             alert(JSON.stringify(data));
@@ -66,7 +66,7 @@ ReadyRegister.onclick = function () {
     let userphone = document.querySelector("#exampleInputPhone").value;
     let usercode = document.querySelector("#exampleInputCode").value;
     if (userpassword && confirmPassword && userphone && usercode != '') {
-        $.post("http://127.0.0.1:8080/user/register", {
+        $.post("http://www.lichuachua.com:8082/user/register", {
             "password2": userpassword,
             "confirmPassword": confirmPassword,
             "mobile": userphone,

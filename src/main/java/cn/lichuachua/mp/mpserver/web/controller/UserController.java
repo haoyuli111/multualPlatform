@@ -33,7 +33,7 @@ import java.util.List;
  * @author 李歘歘
  * 用户接口
  */
-@CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
+@CrossOrigin(origins = "http://www.lichuachua.com:8082", maxAge = 3600)
 @Api(value = "UserController", tags = {"用户API"})
 @RestController
 @RequestMapping(value = "/user")
