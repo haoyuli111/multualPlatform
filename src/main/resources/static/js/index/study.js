@@ -94,7 +94,7 @@ let app=new Vue({
     methods: {
         get:function(){
             let self=this;
-            this.$http.get("http://www.lichuachua.com:8082/article/queryListByPage/"+self.pageable,{
+            this.$http.get("http://127.0.0.1:8080/article/queryListByPage/"+self.pageable,{
                 params: {
                     page:self.page,
                     size:self.size

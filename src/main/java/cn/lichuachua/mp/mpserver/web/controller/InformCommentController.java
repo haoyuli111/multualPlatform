@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author 李歘歘
  */
-@CrossOrigin(origins = "http://www.lichuachua.com:8082", maxAge = 3600)
+@CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
 @Api(value = "InformArticleController", tags = {"评论举报API"})
 @RestController
 @RequestMapping(value = "/inform/comment")

@@ -57,7 +57,7 @@ ReadyRegister.onclick = function () {
     let usercode = document.querySelector("#exampleInputCode").value;
     if (userpassword && confirmPassword && userphone && usercode != '') {
         $.ajax({
-            url:"http://www.lichuachua.com:8082/user/forget",
+            url:"http://127.0.0.1:8080/user/forget",
             type:"put",
             data:{
                 "password": userpassword,

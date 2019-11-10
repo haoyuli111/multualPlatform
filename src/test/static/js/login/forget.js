@@ -12,7 +12,7 @@ code.onclick = function () {
     //console.log(phone);
     if (phone != '') {
         let phone = document.querySelector("#exampleInputPhone").value;
-        $.post("http://www.lichuachua.com:8082/user/sendCode", {
+        $.post("http://127.0.0.1:8080/user/sendCode", {
             "mobile": phone
         }, function (data) {
             alert(JSON.stringify(data));
