@@ -24,9 +24,9 @@ public class SysConstant {
 
     public final static String DOMAIN = "dysmsapi.aliyuncs.com";
 
-    public final static String ACCESS_KEY_ID = "LTAIyUpZ2UVjWtk1";
+    public final static String ACCESS_KEY_ID = "xxxxxx";
 
-    public final static String ACCESS_KEY_SECRET = "CnYLyTpe1dAl5gL9eCfoPrpkLvPhiA";
+    public final static String ACCESS_KEY_SECRET = "xxxxxx";
 
 
 }
